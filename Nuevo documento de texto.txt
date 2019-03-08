@@ -1,0 +1,4 @@
+
+
+	- Hay que sacar evidencias de los usuarios piloto, donde se comprometan a usar y probar la aplicación. Tener un compromiso cerrado con ellos.
+	- No puede haber roles no técnicos a tiempo completo (quizá se salva el project manager).
