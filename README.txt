@@ -1,1 +1,0 @@
-Hello we are the group 20 of D&T and we are here to get a pass on this amazing subject. We love you all, thank you for your attention.
