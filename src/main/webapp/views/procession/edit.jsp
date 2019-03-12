@@ -24,28 +24,28 @@
 
 <%-- Stored message variables --%>
 
-<spring:message code="procession.edit" var="edit" />
-<spring:message code="procession.save" var="save" />
-<spring:message code="procession.cancel" var="cancel" />
-<spring:message code="procession.title" var="title" />
-<spring:message code="procession.description" var="description" />
-<spring:message code="procession.moment" var="msgMoment" />
-<spring:message code="procession.maxColumn" var="maxColumn" />
-<spring:message code="procession.maxRow" var="maxRow" />
+<spring:message code="parade.edit" var="edit" />
+<spring:message code="parade.save" var="save" />
+<spring:message code="parade.cancel" var="cancel" />
+<spring:message code="parade.title" var="title" />
+<spring:message code="parade.description" var="description" />
+<spring:message code="parade.moment" var="msgMoment" />
+<spring:message code="parade.maxColumn" var="maxColumn" />
+<spring:message code="parade.maxRow" var="maxRow" />
 
-<spring:message code="procession.finalMode" var="finalMode" />
+<spring:message code="parade.finalMode" var="finalMode" />
 
-<spring:message code="procession.save" var="msgSave" />
-<spring:message code="procession.delete" var="msgDel" />
-<spring:message code="procession.delete.confirm" var="msgConf" />
-<spring:message code="procession.cancel" var="msgCancel" />
+<spring:message code="parade.save" var="msgSave" />
+<spring:message code="parade.delete" var="msgDel" />
+<spring:message code="parade.delete.confirm" var="msgConf" />
+<spring:message code="parade.cancel" var="msgCancel" />
 
 
 
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
-<form:form action="${requestURI}" modelAttribute="procession">
+<form:form action="${requestURI}" modelAttribute="parade">
 
 	<%-- Form fields --%>
 
@@ -103,27 +103,27 @@
 	
 	
 	<acme:textbox
-		 code="procession.title" 
+		 code="parade.title" 
 		 path="title"/>
 		 <br />
 		 
 	<acme:textarea
-		 code="procession.description" 
+		 code="parade.description" 
 		 path="description"/>
 		 <br />
 		 
 	<acme:textbox
-		 code="procession.maxRow" 
+		 code="parade.maxRow" 
 		 path="maxRow"/>
 		 <br />
 	<acme:textbox
-		 code="procession.maxColumn" 
+		 code="parade.maxColumn" 
 		 path="maxColumn"/>
 		 <br />
 		 
 	<acme:textbox 
-	     placeholder="procession.ph"
-		 code = "procession.moment" 
+	     placeholder="parade.ph"
+		 code = "parade.moment" 
 		 path="moment"/>
 		 <br/>
 		 
@@ -139,22 +139,22 @@
 	
 	
 			<%-- Buttons --%>
-<!-- A brotherhood cannot organise any processions until they selected an area -->
-	<jstl:if test="${not empty procession.brotherhood.area}">
+<!-- A brotherhood cannot organise any parades until they selected an area -->
+	<jstl:if test="${not empty parade.brotherhood.area}">
 		<%-- <input type="submit" name="save" value="${msgSave}"> --%>
 		
-				<acme:submit code="procession.save" name="save"/>
+				<acme:submit code="parade.save" name="save"/>
 		
 
-		<jstl:if test="${procession.id != 0}">
+		<jstl:if test="${parade.id != 0}">
 			<input type="submit" name="delete" value="${msgDel}"
 				onclick="return confirm('${msgConf}')">
 		</jstl:if>
 
 		<%-- <input type="button" name="cancel" value="${msgCancel}"
-			onclick="javascript: relativeRedir('procession/brotherhood/list.do');" /> --%>
+			onclick="javascript: relativeRedir('parade/brotherhood/list.do');" /> --%>
 			
-		<acme:cancel code="procession.cancel" url ="/procession/brotherhood/list.do" />
+		<acme:cancel code="parade.cancel" url ="/parade/brotherhood/list.do" />
 			
 	</jstl:if>
 </form:form>

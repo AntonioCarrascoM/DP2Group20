@@ -19,26 +19,26 @@
 
 <%-- Stored message variables --%>
 
-<spring:message code="procession.edit" var="edit" />
-<spring:message code="procession.save" var="save" />
-<spring:message code="procession.cancel" var="cancel" />
-<spring:message code="procession.ticker" var="ticker" />
-<spring:message code="procession.title" var="title" />
-<spring:message code="procession.display" var="display" />
-<spring:message code="procession.delete" var="msgDelete" />
-<spring:message code="procession.delete.confirm" var="msgConfirm" />
-<spring:message code="procession.moment" var="moment" />
-<spring:message code="procession.formatDate" var="formatDate" />
-<spring:message code="procession.create" var="msgCreate" />
-<spring:message code="procession.request" var="msgCreateRequest" />
-<spring:message code="procession.requestList" var="msgListRequest" />
-<spring:message code="procession.area.empty" var="msgAreaEmpty" />
+<spring:message code="parade.edit" var="edit" />
+<spring:message code="parade.save" var="save" />
+<spring:message code="parade.cancel" var="cancel" />
+<spring:message code="parade.ticker" var="ticker" />
+<spring:message code="parade.title" var="title" />
+<spring:message code="parade.display" var="display" />
+<spring:message code="parade.delete" var="msgDelete" />
+<spring:message code="parade.delete.confirm" var="msgConfirm" />
+<spring:message code="parade.moment" var="moment" />
+<spring:message code="parade.formatDate" var="formatDate" />
+<spring:message code="parade.create" var="msgCreate" />
+<spring:message code="parade.request" var="msgCreateRequest" />
+<spring:message code="parade.requestList" var="msgListRequest" />
+<spring:message code="parade.area.empty" var="msgAreaEmpty" />
 
 
 
-<%-- Procession list view --%>
+<%-- Parade list view --%>
 
-<display:table pagesize="5" class="displaytag" name="processions"
+<display:table pagesize="5" class="displaytag" name="parades"
 	requestURI="${requestURI}" id="row">
 
 	<%-- Attributes --%>
@@ -61,7 +61,7 @@
 			<a href="${requestsUrl}"><jstl:out value="${msgListRequest}" /></a>
 		</display:column>
 	<%-- Display --%>
-		<spring:url var="displayUrl" value="procession/display.do">
+		<spring:url var="displayUrl" value="parade/display.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
 		<display:column title="${display}">
@@ -70,7 +70,7 @@
 		
 	<%-- Edit --%>
 		
-		<spring:url var="editUrl" value="procession/brotherhood/edit.do">
+		<spring:url var="editUrl" value="parade/brotherhood/edit.do">
 		<spring:param name="varId" value="${row.id}" />
 	</spring:url>
 	<display:column title="${edit}">
@@ -85,7 +85,7 @@
 	
 	
 	
-		<spring:url var="deleteUrl" value="procession/brotherhood/delete.do">
+		<spring:url var="deleteUrl" value="parade/brotherhood/delete.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
 		<display:column title="${msgDelete}">
@@ -111,13 +111,13 @@
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
-<!-- A brotherhood cannot organise any processions until they selected an area -->
+<!-- A brotherhood cannot organise any parades until they selected an area -->
 	<jstl:if test="${empty brotherhood.area}">
 	<br>
 	<jstl:out value="${msgAreaEmpty}" />
 	</jstl:if>
 	<jstl:if test="${not empty brotherhood.area}">
-	<spring:url var="createUrl" value="procession/brotherhood/create.do"/>
+	<spring:url var="createUrl" value="parade/brotherhood/create.do"/>
 	<a href="${createUrl}"><jstl:out value="${msgCreate}"/></a>
 	</jstl:if>
 </security:authorize>	

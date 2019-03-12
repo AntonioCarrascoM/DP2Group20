@@ -18,11 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AreaService;
 import services.ConfigurationService;
 import services.FinderService;
-import services.ProcessionService;
+import services.ParadeService;
 import controllers.AbstractController;
 import domain.Area;
 import domain.Finder;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
 @RequestMapping("finder/member")
@@ -37,7 +37,7 @@ public class FinderMemberController extends AbstractController {
 	private AreaService				areaService;
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService			paradeService;
 
 	@Autowired
 	private ConfigurationService	configurationService;
@@ -50,13 +50,13 @@ public class FinderMemberController extends AbstractController {
 		final ModelAndView result;
 
 		final Finder finder = this.finderService.findPrincipalFinder();
-		Collection<Procession> processions = finder.getProcessions();
+		Collection<Parade> parades = finder.getParades();
 		final Long millis = this.configurationService.findAll().iterator().next().getExpireFinderMinutes() * 60000L;
 		if (finder.getMoment() == null || (new Date(System.currentTimeMillis()).getTime() - finder.getMoment().getTime()) > millis)
-			processions = this.finderService.limitResults(this.processionService.findAll());
+			parades = this.finderService.limitResults(this.paradeService.findAll());
 
-		result = new ModelAndView("procession/list");
-		result.addObject("processions", processions);
+		result = new ModelAndView("parade/list");
+		result.addObject("parades", parades);
 		result.addObject("requestURI", "finder/member/list.do");
 
 		return result;
@@ -83,15 +83,15 @@ public class FinderMemberController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final Finder finder, final BindingResult binding) {
 		ModelAndView result;
-		Collection<Procession> processions = new ArrayList<Procession>();
+		Collection<Parade> parades = new ArrayList<Parade>();
 
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(finder);
 		else
 			try {
 
-				processions = this.finderService.find(finder);
-				finder.setProcessions(processions);
+				parades = this.finderService.find(finder);
+				finder.setParades(parades);
 
 				this.finderService.save(finder);
 				result = new ModelAndView("redirect:/welcome/index.do");

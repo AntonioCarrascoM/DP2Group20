@@ -23,7 +23,7 @@
 <spring:message code="request.customRow" var="customRow" />
 <spring:message code="request.customColumn" var="customColumn" />
 <spring:message code="request.reason" var="reason" />
-<spring:message code="request.procession" var="procession" />
+<spring:message code="request.parade" var="parade" />
 <spring:message code="request.edit" var="edit" />
 <spring:message code="request.position" var="positionMsg" />
 <spring:message code="request.changeStatus" var="changeStatusMsg" />
@@ -47,7 +47,7 @@
 
 	<%-- Attributes --%>
 		
-	<display:column property="procession.ticker" title="${procession}" sortable="true" />
+	<display:column property="parade.ticker" title="${parade}" sortable="true" />
 	<display:column property="customRow" title="${customRow}" sortable="true" />
 	<display:column property="customColumn" title="${customColumn}" sortable="true" />
 	
@@ -101,7 +101,7 @@
 
 	<%-- Attributes --%>
 	
-	<display:column property="procession.ticker" title="${procession}" />
+	<display:column property="parade.ticker" title="${parade}" />
 	
 	<jstl:if test="${row.status.name == 'PENDING'}">
 		<jstl:set var="colorValue" value="grey"/>
