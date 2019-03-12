@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -25,8 +26,9 @@ public class LegalRecord extends Record {
 		return this.legalName;
 	}
 
+	@NotNull
 	@Min(0)
-	public Integer getvatNumber() {
+	public Integer getVatNumber() {
 		return this.vatNumber;
 	}
 
@@ -41,11 +43,11 @@ public class LegalRecord extends Record {
 		this.legalName = legalName;
 	}
 
-	public void setEndYear(final Integer vatNumber) {
+	public void setVatNumber(final Integer vatNumber) {
 		this.vatNumber = vatNumber;
 	}
 
-	public void setPhotos(final String applicableLaws) {
+	public void setApplicableLaws(final String applicableLaws) {
 		this.applicableLaws = applicableLaws;
 	}
 

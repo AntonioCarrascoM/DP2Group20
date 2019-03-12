@@ -5,6 +5,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -20,11 +21,13 @@ public class PeriodRecord extends Record {
 
 	//Getters
 
+	@NotNull
 	@Min(0)
 	public Integer getStartYear() {
 		return this.startYear;
 	}
 
+	@NotNull
 	@Min(0)
 	public Integer getEndYear() {
 		return this.endYear;
