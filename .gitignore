@@ -187,3 +187,4 @@ motorlog.userlibraries
 .idea/inspectionProfiles/fault.xml
 .idea/inspectionProfiles/Project_Default.xml
 .idea/dataSources.xml
+.classpath
