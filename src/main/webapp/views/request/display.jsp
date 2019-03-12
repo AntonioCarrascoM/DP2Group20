@@ -28,7 +28,7 @@
 <spring:message code="request.customColumn" var="customColumn" />
 <spring:message code="request.reason" var="reason" />
 <spring:message code="request.member" var="member" />
-<spring:message code="request.procession" var="procession" />
+<spring:message code="request.parade" var="parade" />
 
 
 
@@ -69,12 +69,12 @@
 	<a href="${memberUrl}"><jstl:out value="${request.member.name} ${request.member.middleName} ${request.member.surname}" /></a>
 	<br />
 	
-	<!-- Procession display -->
-	<jstl:out value="${procession}" />:
-		<spring:url var="processionUrl" value="procession/display.do">
-			<spring:param name="varId" value="${request.procession.id}"/>
+	<!-- Parade display -->
+	<jstl:out value="${parade}" />:
+		<spring:url var="paradeUrl" value="parade/display.do">
+			<spring:param name="varId" value="${request.parade.id}"/>
 		</spring:url>
-		<a href="${processionUrl}"><jstl:out value="${request.procession.ticker}" /></a>
+		<a href="${paradeUrl}"><jstl:out value="${request.parade.ticker}" /></a>
 	<br />
 	
 

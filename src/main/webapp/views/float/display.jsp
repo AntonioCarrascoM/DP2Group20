@@ -25,7 +25,7 @@
 <spring:message code="float.title" var="title" />
 <spring:message code="float.description" var="description" />
 <spring:message code="float.pictures" var="pictures" />
-<spring:message code="float.procession" var="procession" />
+<spring:message code="float.parade" var="parade" />
 
 
 

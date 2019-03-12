@@ -64,7 +64,7 @@
   		
   		<tr>
     		<td><jstl:out value="${queryc5}" /></td>
-    		<td><jstl:out value="${processionsBefore30Days}" /></td> 
+    		<td><jstl:out value="${paradesBefore30Days}" /></td> 
   		</tr>
   		
   		<tr>

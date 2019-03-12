@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.ProcessionService;
+import services.ParadeService;
 import controllers.AbstractController;
 import domain.Brotherhood;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
-@RequestMapping("procession/brotherhood")
+@RequestMapping("parade/brotherhood")
 public class ProcessionBrotherhoodController extends AbstractController {
 
 	//Services
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 
 
 	//Listing
@@ -36,16 +36,16 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
-		final Collection<Procession> processions;
+		final Collection<Parade> parades;
 		Brotherhood brotherhood;
 
 		brotherhood = (Brotherhood) this.actorService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 
-		result = new ModelAndView("procession/list");
-		result.addObject("processions", processions);
+		result = new ModelAndView("parade/list");
+		result.addObject("parades", parades);
 		result.addObject("brotherhood", brotherhood);
-		result.addObject("requestURI", "procession/brotherhood/list.do");
+		result.addObject("requestURI", "parade/brotherhood/list.do");
 
 		return result;
 	}
@@ -55,10 +55,10 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		Procession procession;
+		Parade parade;
 
-		procession = this.processionService.create();
-		result = this.createEditModelAndView(procession);
+		parade = this.paradeService.create();
+		result = this.createEditModelAndView(parade);
 
 		return result;
 	}
@@ -68,42 +68,42 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int varId) {
 		final ModelAndView result;
-		Procession procession = this.processionService.findOne(varId);
+		Parade parade = this.paradeService.findOne(varId);
 
-		if (procession.getBrotherhood().getId() != this.actorService.findByPrincipal().getId() || procession.getFinalMode() == true)
+		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId() || parade.getFinalMode() == true)
 			return new ModelAndView("redirect:/welcome/index.do");
 
-		procession = this.processionService.findOne(varId);
+		parade = this.paradeService.findOne(varId);
 
-		Assert.notNull(procession);
-		result = this.createEditModelAndView(procession);
+		Assert.notNull(parade);
+		result = this.createEditModelAndView(parade);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Procession procession, final BindingResult binding) {
+	public ModelAndView save(Parade parade, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
-			procession = this.processionService.reconstruct(procession, binding);
+			parade = this.paradeService.reconstruct(parade, binding);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(procession, "procession.commit.error");
+			return result = this.createEditModelAndView(parade, "parade.commit.error");
 		}
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(procession);
+			result = this.createEditModelAndView(parade);
 		else
 			try {
 
-				if (procession.getFinalMode() == true) {
-					procession.setFinalMode(false);
-					this.processionService.save(procession, true);
+				if (parade.getFinalMode() == true) {
+					parade.setFinalMode(false);
+					this.paradeService.save(parade, true);
 				} else
-					this.processionService.save(procession, false);
+					this.paradeService.save(parade, false);
 
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(procession, "procession.commit.error");
+				result = this.createEditModelAndView(parade, "parade.commit.error");
 			}
 		return result;
 	}
@@ -111,19 +111,19 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	//Delete
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(Procession procession, final BindingResult binding) {
+	public ModelAndView delete(Parade parade, final BindingResult binding) {
 		ModelAndView result;
 
-		procession = this.processionService.findOne(procession.getId());
+		parade = this.paradeService.findOne(parade.getId());
 
-		if (procession.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
-			result = this.createEditModelAndView(procession, "procession.delete.error");
+		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			result = this.createEditModelAndView(parade, "parade.delete.error");
 		else
 			try {
-				this.processionService.delete(procession);
+				this.paradeService.delete(parade);
 				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(procession, "procession.commit.error");
+				result = this.createEditModelAndView(parade, "parade.commit.error");
 			}
 		return result;
 	}
@@ -133,24 +133,24 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public ModelAndView delete(@RequestParam final int varId) {
 		ModelAndView result;
-		Collection<Procession> processions;
+		Collection<Parade> parades;
 		Brotherhood brotherhood;
-		Procession procession;
+		Parade parade;
 
-		result = new ModelAndView("procession/list");
+		result = new ModelAndView("parade/list");
 		brotherhood = (Brotherhood) this.actorService.findByPrincipal();
-		processions = brotherhood.getProcessions();
+		parades = brotherhood.getParades();
 
-		procession = this.processionService.findOne(varId);
+		parade = this.paradeService.findOne(varId);
 
-		if (procession.getBrotherhood().getId() != this.actorService.findByPrincipal().getId() || procession.getFinalMode() == true) {
+		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId() || parade.getFinalMode() == true) {
 			result = new ModelAndView("redirect:/welcome/index.do");
 			return result;
 		} else
 			try {
-				this.processionService.delete(procession);
-				result.addObject("processions", processions);
-				result.addObject("requestURI", "procession/list.do");
+				this.paradeService.delete(parade);
+				result.addObject("parades", parades);
+				result.addObject("requestURI", "parade/list.do");
 			} catch (final Throwable oops) {
 				result = new ModelAndView("redirect:list.do");
 			}
@@ -160,21 +160,21 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 	//Ancillary methods
 
-	protected ModelAndView createEditModelAndView(final Procession procession) {
+	protected ModelAndView createEditModelAndView(final Parade parade) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(procession, null);
+		result = this.createEditModelAndView(parade, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Procession procession, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Parade parade, final String messageCode) {
 		ModelAndView result;
 
-		result = new ModelAndView("procession/edit");
-		result.addObject("procession", procession);
+		result = new ModelAndView("parade/edit");
+		result.addObject("parade", parade);
 		result.addObject("message", messageCode);
-		result.addObject("requestURI", "procession/brotherhood/edit.do");
+		result.addObject("requestURI", "parade/brotherhood/edit.do");
 
 		return result;
 

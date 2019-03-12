@@ -22,15 +22,15 @@ public class Request extends DomainEntity {
 
 	//Attributes
 
-	private Status		status;
-	private Integer		customRow;
-	private Integer		customColumn;
-	private String		reason;
+	private Status	status;
+	private Integer	customRow;
+	private Integer	customColumn;
+	private String	reason;
 
 	//Relationships
 
-	private Member		member;
-	private Procession	procession;
+	private Member	member;
+	private Parade	parade;
 
 
 	//Getters
@@ -66,14 +66,14 @@ public class Request extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public Procession getProcession() {
-		return this.procession;
+	public Parade getParade() {
+		return this.parade;
 	}
 
 	//Setters
 
-	public void setProcession(final Procession procession) {
-		this.procession = procession;
+	public void setParade(final Parade parade) {
+		this.parade = parade;
 	}
 
 	public void setMember(final Member member) {

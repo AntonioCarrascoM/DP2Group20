@@ -23,15 +23,15 @@ public class Finder extends DomainEntity {
 
 	//Attributes
 
-	private String					keyWord;
-	private Date					minimumDate;
-	private Date					maximumDate;
-	private Date					moment;
+	private String				keyWord;
+	private Date				minimumDate;
+	private Date				maximumDate;
+	private Date				moment;
 
 	//Relationships
 
-	private Area					area;
-	private Collection<Procession>	processions;
+	private Area				area;
+	private Collection<Parade>	parades;
 
 
 	//Getters
@@ -62,8 +62,8 @@ public class Finder extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToMany
-	public Collection<Procession> getProcessions() {
-		return this.processions;
+	public Collection<Parade> getParades() {
+		return this.parades;
 	}
 
 	@Valid
@@ -90,8 +90,8 @@ public class Finder extends DomainEntity {
 		this.moment = moment;
 	}
 
-	public void setProcessions(final Collection<Procession> processions) {
-		this.processions = processions;
+	public void setParades(final Collection<Parade> parades) {
+		this.parades = parades;
 	}
 
 	public void setArea(final Area area) {

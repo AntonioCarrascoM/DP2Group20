@@ -20,7 +20,7 @@ import domain.Box;
 import domain.Brotherhood;
 import domain.Enrolment;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 import domain.SocialProfile;
 import forms.FormObjectBrotherhood;
 
@@ -60,7 +60,7 @@ public class BrotherhoodService {
 		brotherhood.setUserAccount(account);
 		brotherhood.setBoxes(new ArrayList<Box>());
 
-		brotherhood.setProcessions(new ArrayList<Procession>());
+		brotherhood.setParades(new ArrayList<Parade>());
 		brotherhood.setEnrolments(new ArrayList<Enrolment>());
 		brotherhood.setFloats(new ArrayList<Float>());
 

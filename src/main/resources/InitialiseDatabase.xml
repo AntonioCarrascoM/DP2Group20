@@ -147,7 +147,7 @@
 		<property name="welcomeES"
 			value="¡Bienvenidos a Acme Madrugá! El lugar para organizar tus procesiones." />
 		<property name="welcomeEN"
-			value="Welcome to Acme Madrugá, the site to organise your processions." />
+			value="Welcome to Acme Madrugá, the site to organise your parades." />
 		<property name="spamWords">
 			<list>
 				<value>sex</value>

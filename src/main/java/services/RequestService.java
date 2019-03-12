@@ -68,14 +68,14 @@ public class RequestService {
 		Assert.notNull(request);
 
 		//Assertion that the user modifying this request has the correct privilege.
-		Assert.isTrue(this.actorService.findByPrincipal().getId() == request.getMember().getId() || this.actorService.findByPrincipal().getId() == request.getProcession().getBrotherhood().getId());
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == request.getMember().getId() || this.actorService.findByPrincipal().getId() == request.getParade().getBrotherhood().getId());
 
 		//Assertion to make sure that the column and row numbers are less than the maximum allowed.
 		if (request.getCustomColumn() != null && request.getCustomRow() != null)
-			Assert.isTrue(request.getCustomColumn() <= request.getProcession().getMaxColumn() && request.getCustomRow() <= request.getProcession().getMaxRow());
+			Assert.isTrue(request.getCustomColumn() <= request.getParade().getMaxColumn() && request.getCustomRow() <= request.getParade().getMaxRow());
 
 		//Sending request status has changed notification
-		if (this.actorService.findByPrincipal().getId() == request.getProcession().getBrotherhood().getId())
+		if (this.actorService.findByPrincipal().getId() == request.getParade().getBrotherhood().getId())
 			if ((request.getStatus() == Status.APPROVED || request.getStatus() == Status.REJECTED) && (request.getCustomRow() == null || request.getCustomColumn() == null))
 				this.messageService.requestStatusNotification(request);
 
@@ -96,7 +96,7 @@ public class RequestService {
 		Assert.notNull(request);
 
 		//Assertion that the user modifying this request has the correct privilege.
-		Assert.isTrue(this.actorService.findByPrincipal().getId() == request.getMember().getId() || this.actorService.findByPrincipal().getId() == request.getProcession().getBrotherhood().getId());
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == request.getMember().getId() || this.actorService.findByPrincipal().getId() == request.getParade().getBrotherhood().getId());
 
 		this.requestRepository.delete(request);
 	}
@@ -105,14 +105,14 @@ public class RequestService {
 
 	public Request calculatePosition(final Request r) {
 
-		final Integer maxRow = r.getProcession().getMaxRow();
-		final Integer maxColumn = r.getProcession().getMaxColumn();
+		final Integer maxRow = r.getParade().getMaxRow();
+		final Integer maxColumn = r.getParade().getMaxColumn();
 		Boolean salir = false;
 		int i = 0;
 		int j = 0;
 		for (i = 0; i < maxColumn; i++) {
 			for (j = 0; j < maxRow; j++)
-				if (this.requestForRowColumnAndProcession(i, j, r.getProcession().getId()).isEmpty()) {
+				if (this.requestForRowColumnAndParade(i, j, r.getParade().getId()).isEmpty()) {
 					salir = true;
 					r.setCustomColumn(i);
 					r.setCustomRow(j);
@@ -128,7 +128,7 @@ public class RequestService {
 		Boolean res = false;
 		Collection<Request> reqs = new ArrayList<Request>();
 
-		reqs = this.requestForRowColumnAndProcession(r.getCustomRow(), r.getCustomColumn(), r.getProcession().getId());
+		reqs = this.requestForRowColumnAndParade(r.getCustomRow(), r.getCustomColumn(), r.getParade().getId());
 
 		if (reqs.isEmpty() || reqs.iterator().next() == r)
 			res = true;
@@ -148,7 +148,7 @@ public class RequestService {
 
 		if (r.getId() == 0) {
 			result = this.create();
-			result.setProcession(r.getProcession());
+			result.setParade(r.getParade());
 		} else {
 			result = this.requestRepository.findOne(r.getId());
 
@@ -164,11 +164,11 @@ public class RequestService {
 		this.validator.validate(result, binding);
 
 		//Assertion that the user modifying this request has the correct privilege.
-		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getMember().getId() || this.actorService.findByPrincipal().getId() == result.getProcession().getBrotherhood().getId());
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getMember().getId() || this.actorService.findByPrincipal().getId() == result.getParade().getBrotherhood().getId());
 
 		//Assertion to make sure that the column and row numbers are less than the maximum allowed.
 		if (result.getCustomColumn() != null && result.getCustomRow() != null)
-			Assert.isTrue(result.getCustomColumn() <= result.getProcession().getMaxColumn() && result.getCustomRow() <= result.getProcession().getMaxRow());
+			Assert.isTrue(result.getCustomColumn() <= result.getParade().getMaxColumn() && result.getCustomRow() <= result.getParade().getMaxRow());
 
 		//Calculating automatically the position for a request.
 		if (result.getStatus() == Status.APPROVED && (result.getCustomRow() == null || result.getCustomColumn() == null))
@@ -181,7 +181,7 @@ public class RequestService {
 		return result;
 
 	}
-	//The ratio of requests to march in a procession, grouped by their status.
+	//The ratio of requests to march in a parade, grouped by their status.
 
 	public Double[] ratioRequestsByStatus(final int id) {
 		return this.requestRepository.ratioRequestsByStatus(id);
@@ -192,13 +192,13 @@ public class RequestService {
 		return this.requestRepository.ratioRequestsByStatus();
 	}
 
-	//List of the approved requests for a certain procession.
-	public Collection<Request> approvedRequestsForProcession(final int id) {
-		return this.requestRepository.approvedRequestsForProcession(id);
+	//List of the approved requests for a certain parade.
+	public Collection<Request> approvedRequestsForParade(final int id) {
+		return this.requestRepository.approvedRequestsForParade(id);
 	}
 
-	//Returns a request for a certain column number, row number and procession.
-	public Collection<Request> requestForRowColumnAndProcession(final int row, final int column, final int pid) {
-		return this.requestRepository.requestForRowColumnAndProcession(row, column, pid);
+	//Returns a request for a certain column number, row number and parade.
+	public Collection<Request> requestForRowColumnAndParade(final int row, final int column, final int pid) {
+		return this.requestRepository.requestForRowColumnAndParade(row, column, pid);
 	}
 }

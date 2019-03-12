@@ -21,14 +21,14 @@ public class Float extends DomainEntity {
 
 	//Attributes
 
-	private String					title;
-	private String					description;
-	private String					pictures;
+	private String				title;
+	private String				description;
+	private String				pictures;
 
 	//Relationships
 
-	private Brotherhood				brotherhood;
-	private Collection<Procession>	processions;
+	private Brotherhood			brotherhood;
+	private Collection<Parade>	parades;
 
 
 	//Getters
@@ -57,8 +57,8 @@ public class Float extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToMany
-	public Collection<Procession> getProcessions() {
-		return this.processions;
+	public Collection<Parade> getParades() {
+		return this.parades;
 	}
 
 	//Setters
@@ -74,8 +74,8 @@ public class Float extends DomainEntity {
 	public void setPictures(final String pictures) {
 		this.pictures = pictures;
 	}
-	public void setProcessions(final Collection<Procession> processions) {
-		this.processions = processions;
+	public void setParades(final Collection<Parade> parades) {
+		this.parades = parades;
 	}
 
 	public void setBrotherhood(final Brotherhood brotherhood) {
