@@ -24,4 +24,4 @@
 	<a href="welcome/terms.do"> <spring:message code="master.page.legislation.terms" /></a> - 
 	<a href="welcome/about.do"> <spring:message code="master.page.legislation.about" /></a> - 
 
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Madruga Co., Inc.</b>
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Parade Co., Inc.</b>
