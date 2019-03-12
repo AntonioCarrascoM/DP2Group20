@@ -22,47 +22,47 @@
 
 <%-- Stored message variables --%>
 
-<spring:message code="procession.ticker" var="ticker" />
-<spring:message code="procession.title" var="title" />
-<spring:message code="procession.description" var="description" />
-<spring:message code="procession.moment" var="moment" />
-<spring:message code="procession.finalMode" var="finalMode" />
-<spring:message code="procession.floats" var="floats" />
-<spring:message code="procession.brotherhood" var="brotherhood" />
-<spring:message code="procession.maxRow" var="maxRow" />
-<spring:message code="procession.maxColumn" var="maxColumn" />
-<spring:message code="procession.formatDate" var="formatDate" />
+<spring:message code="parade.ticker" var="ticker" />
+<spring:message code="parade.title" var="title" />
+<spring:message code="parade.description" var="description" />
+<spring:message code="parade.moment" var="moment" />
+<spring:message code="parade.finalMode" var="finalMode" />
+<spring:message code="parade.floats" var="floats" />
+<spring:message code="parade.brotherhood" var="brotherhood" />
+<spring:message code="parade.maxRow" var="maxRow" />
+<spring:message code="parade.maxColumn" var="maxColumn" />
+<spring:message code="parade.formatDate" var="formatDate" />
 
 
 
-<%-- For the selected procession, display the following information: --%>
+<%-- For the selected parade, display the following information: --%>
 
 	<jstl:out value="${ticker}" />:
-	<jstl:out value="${procession.ticker}" />
+	<jstl:out value="${parade.ticker}" />
 	<br />
 
 	<jstl:out value="${title}" />:
-	<jstl:out value="${procession.title}" />
+	<jstl:out value="${parade.title}" />
 	<br />
 
 	<jstl:out value="${description}" />:
-	<jstl:out value="${procession.description}"/>
+	<jstl:out value="${parade.description}"/>
 	<br />
 
 	<jstl:out value="${maxRow}" />:
-	<jstl:out value="${procession.maxRow}"/>
+	<jstl:out value="${parade.maxRow}"/>
 	<br />
 
 	<jstl:out value="${maxColumn}" />:
-	<jstl:out value="${procession.maxColumn}"/>
+	<jstl:out value="${parade.maxColumn}"/>
 	<br />
 
 	<jstl:out value="${moment}" />:
-	<fmt:formatDate value="${procession.moment}" pattern="${formatDate}"/>
+	<fmt:formatDate value="${parade.moment}" pattern="${formatDate}"/>
 	<br />
 
 	<jstl:out value="${finalMode}" />:
-	<jstl:out value="${procession.finalMode}"/>
+	<jstl:out value="${parade.finalMode}"/>
 	<br />
 
 
@@ -71,8 +71,8 @@
 	<security:authorize access="hasRole('BROTHERHOOD')">
 
 	<jstl:out value="${floats}" />:
-		<spring:url var="floatsUrl" value="float/brotherhood/listByProcession.do">
-			<spring:param name="varId" value="${procession.id}"/>
+		<spring:url var="floatsUrl" value="float/brotherhood/listByParade.do">
+			<spring:param name="varId" value="${parade.id}"/>
 		</spring:url>
 		<a href="${floatsUrl}"><jstl:out value="${floats}" /></a>
 	<br />
@@ -83,5 +83,5 @@
 	<%-- The brotherhood --%>
 	<jstl:out value="${brotherhood}" />:
 
-	<jstl:out value="${procession.brotherhood.name} ${procession.brotherhood.middleName} ${procession.brotherhood.surname}" />
+	<jstl:out value="${parade.brotherhood.name} ${parade.brotherhood.middleName} ${parade.brotherhood.surname}" />
 	<br />

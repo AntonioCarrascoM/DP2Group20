@@ -15,7 +15,7 @@ import security.Authority;
 import domain.Actor;
 import domain.Finder;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -38,14 +38,14 @@ public class FinderService {
 	private MemberService			memberService;
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService			paradeService;
 
 
 	//Simple CRUD methods --------------------------------
 
 	public Finder create() {
 		final Finder f = new Finder();
-		f.setProcessions(new ArrayList<Procession>());
+		f.setParades(new ArrayList<Parade>());
 		return f;
 	}
 
@@ -96,10 +96,10 @@ public class FinderService {
 			return m.getFinder();
 	}
 
-	public Collection<Procession> find(final Finder finder) {
+	public Collection<Parade> find(final Finder finder) {
 		Assert.notNull(finder);
-		Collection<Procession> processions = new ArrayList<>();
-		Collection<Procession> results = new ArrayList<>();
+		Collection<Parade> parades = new ArrayList<>();
+		Collection<Parade> results = new ArrayList<>();
 		String keyWord = finder.getKeyWord();
 		Date minimumDate = finder.getMinimumDate();
 		Date maximumDate = finder.getMaximumDate();
@@ -111,41 +111,41 @@ public class FinderService {
 		if (finder.getMaximumDate() == null)
 			maximumDate = new Date(2524694400000L);
 
-		final Collection<Procession> firstResults = this.findProcessions(keyWord, minimumDate, maximumDate);
-		Collection<Procession> secondResults = new ArrayList<>();
+		final Collection<Parade> firstResults = this.findParades(keyWord, minimumDate, maximumDate);
+		Collection<Parade> secondResults = new ArrayList<>();
 
 		if (finder.getArea() != null)
-			secondResults = this.processionService.processionsByArea(finder.getArea().getId());
+			secondResults = this.paradeService.paradesByArea(finder.getArea().getId());
 		else
-			secondResults = this.processionService.findAll();
+			secondResults = this.paradeService.findAll();
 
-		processions = this.intersection(firstResults, secondResults);
-		results = this.limitResults(processions);
+		parades = this.intersection(firstResults, secondResults);
+		results = this.limitResults(parades);
 		return results;
 	}
 
-	public Collection<Procession> limitResults(final Collection<Procession> processions) {
-		Collection<Procession> results = new ArrayList<>();
+	public Collection<Parade> limitResults(final Collection<Parade> parades) {
+		Collection<Parade> results = new ArrayList<>();
 		final int maxResults = this.configurationService.findAll().iterator().next().getMaxFinderResults();
-		if (processions.size() > maxResults)
-			results = new ArrayList<Procession>(((ArrayList<Procession>) processions).subList(0, maxResults));
+		if (parades.size() > maxResults)
+			results = new ArrayList<Parade>(((ArrayList<Parade>) parades).subList(0, maxResults));
 		else
-			results = processions;
+			results = parades;
 		return results;
 	}
 
-	private Collection<Procession> intersection(final Collection<Procession> a, final Collection<Procession> b) {
-		final Collection<Procession> c = new ArrayList<>();
-		final Collection<Procession> mayor = a.size() > b.size() ? a : b;
-		for (final Procession f : mayor)
+	private Collection<Parade> intersection(final Collection<Parade> a, final Collection<Parade> b) {
+		final Collection<Parade> c = new ArrayList<>();
+		final Collection<Parade> mayor = a.size() > b.size() ? a : b;
+		for (final Parade f : mayor)
 			if (a.contains(f) && b.contains(f))
 				c.add(f);
 		return c;
 	}
 
-	//Search processions 
-	public Collection<Procession> findProcessions(final String keyWord, final Date minimunDate, final Date maximunDate) {
-		return this.finderRepository.findProcessions(keyWord, minimunDate, maximunDate);
+	//Search parades 
+	public Collection<Parade> findParades(final String keyWord, final Date minimunDate, final Date maximunDate) {
+		return this.finderRepository.findParades(keyWord, minimunDate, maximunDate);
 	}
 
 	//The minimum, the maximum, the average, and the standard deviation of the number of results in the finders.

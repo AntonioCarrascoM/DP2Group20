@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Controller
@@ -25,13 +25,13 @@ public class RequestBrotherhoodController {
 	//Supporting services
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 	@Autowired
-	private RequestService		requestService;
+	private RequestService	requestService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 
 
 	//Listing
@@ -41,12 +41,12 @@ public class RequestBrotherhoodController {
 		final ModelAndView result;
 		Collection<Request> requests;
 
-		final Procession procession = this.processionService.findOne(varId);
+		final Parade parade = this.paradeService.findOne(varId);
 
-		if (procession.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
 			return new ModelAndView("redirect:/welcome/index.do");
 
-		requests = procession.getRequests();
+		requests = parade.getRequests();
 
 		result = new ModelAndView("request/list");
 		result.addObject("requests", requests);
@@ -79,7 +79,7 @@ public class RequestBrotherhoodController {
 		final Request request = this.requestService.findOne(varId);
 		Assert.notNull(request);
 
-		if (request.getProcession().getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+		if (request.getParade().getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
 			return new ModelAndView("redirect:/welcome/index.do");
 
 		result = this.createEditModelAndView(request);
@@ -97,7 +97,7 @@ public class RequestBrotherhoodController {
 		try {
 			request = this.requestService.reconstruct(request, binding);
 		} catch (final Throwable oops) {
-			final Collection<Request> requests = req.getProcession().getRequests();
+			final Collection<Request> requests = req.getParade().getRequests();
 			result = new ModelAndView("request/list");
 			result.addObject("requests", requests);
 			result.addObject("message", "request.reconstruct.error");
@@ -111,7 +111,7 @@ public class RequestBrotherhoodController {
 		else
 			try {
 				saved = this.requestService.save(request);
-				result = new ModelAndView("redirect:/request/brotherhood/list.do?varId=" + saved.getProcession().getId());
+				result = new ModelAndView("redirect:/request/brotherhood/list.do?varId=" + saved.getParade().getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(request, "request.commit.error");
 			}

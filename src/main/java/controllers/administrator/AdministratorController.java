@@ -30,8 +30,8 @@ import services.AreaService;
 import services.BrotherhoodService;
 import services.FinderService;
 import services.MemberService;
+import services.ParadeService;
 import services.PositionService;
-import services.ProcessionService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Actor;
@@ -60,7 +60,7 @@ public class AdministratorController extends AbstractController {
 	private RequestService			requestService;
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService			paradeService;
 
 	@Autowired
 	private PositionService			positionService;
@@ -168,7 +168,7 @@ public class AdministratorController extends AbstractController {
 		result.addObject("largestBrotherhoods", this.brotherhoodService.largestBrotherhoods());
 		result.addObject("smallestBrotherhoods", this.brotherhoodService.smallestBrotherhoods());
 		result.addObject("ratioRequestsByStatus", this.requestService.ratioRequestsByStatus());
-		result.addObject("processionsBefore30Days", this.processionService.processionsBefore30Days());
+		result.addObject("paradesBefore30Days", this.paradeService.paradesBefore30Days());
 		result.addObject("histogramOfPositions1", this.positionService.histogramOfPositions1());
 		result.addObject("histogramOfPositions2", this.positionService.histogramOfPositions2());
 		result.addObject("ratioOfBrotherhoodsByArea", this.areaService.ratioOfBrotherhoodsByArea());

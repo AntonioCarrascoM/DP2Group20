@@ -30,7 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(indexes = {
 	@Index(columnList = "ticker, title, description, moment, finalMode")
 })
-public class Procession extends DomainEntity {
+public class Parade extends DomainEntity {
 
 	//Attributes
 
@@ -41,6 +41,8 @@ public class Procession extends DomainEntity {
 	private Integer				maxColumn;
 	private Date				moment;
 	private Boolean				finalMode;
+	private ParadeStatus		paradeStatus;
+	private String				rejectionReason;
 
 	//Relationships
 
@@ -92,6 +94,17 @@ public class Procession extends DomainEntity {
 		return this.finalMode;
 	}
 
+	@NotNull
+	@Valid
+	public ParadeStatus getStatus() {
+		return this.paradeStatus;
+	}
+
+	@NotBlank
+	public String getRejectionReason() {
+		return this.rejectionReason;
+	}
+
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
@@ -108,7 +121,7 @@ public class Procession extends DomainEntity {
 
 	@Valid
 	@NotNull
-	@OneToMany(mappedBy = "procession", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "parade", fetch = FetchType.EAGER)
 	public Collection<Request> getRequests() {
 		return this.requests;
 	}

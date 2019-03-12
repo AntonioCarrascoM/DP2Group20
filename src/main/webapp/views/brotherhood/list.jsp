@@ -25,7 +25,7 @@
 <spring:message code="brotherhood.display" var="msgDisplay" />
 <spring:message code="brotherhood.members" var="msgMembers" />
 <spring:message code="brotherhood.floats" var="msgFloats" />
-<spring:message code="brotherhood.processions" var="msgProcessions"/>
+<spring:message code="brotherhood.parades" var="msgParades"/>
 
 
 
@@ -47,12 +47,12 @@
 		<a href="${displayUrl}"><jstl:out value="${msgDisplay}" /></a>
 	</display:column>
 
-	<spring:url var="processionsUrl" value="procession/listByBrotherhood.do">
+	<spring:url var="paradesUrl" value="parade/listByBrotherhood.do">
 		<spring:param name="varId" value="${row.id}" />
 	</spring:url>
 
-	<display:column title="${msgProcessions}">
-		<a href="${processionsUrl}"><jstl:out value="${msgProcessions}" /></a>
+	<display:column title="${msgParades}">
+		<a href="${paradesUrl}"><jstl:out value="${msgParades}" /></a>
 	</display:column>
 
 	<spring:url var="floatUrl" value="float/listByBrotherhood.do">
