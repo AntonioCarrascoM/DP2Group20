@@ -48,10 +48,13 @@ public class Sponsorship extends DomainEntity {
 		return this.sponsor;
 	}
 
+	@NotNull
+	@Valid
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
 
+	@NotNull
 	public Boolean getIsActive() {
 		return this.isActive;
 	}
