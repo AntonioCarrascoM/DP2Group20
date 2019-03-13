@@ -38,7 +38,7 @@
 	<%-- Form fields --%>
 	<form:hidden path="id" />
 	<form:hidden path="version" />
-	<form:hidden path="processions" />
+	<form:hidden path="parades" />
 	<form:hidden path="moment" />
 
 		<%-- 	<form:label path="keyWord">

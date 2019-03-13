@@ -106,11 +106,13 @@ public class Configuration extends DomainEntity {
 	}
 
 	@Min(0)
+	@NotNull
 	public Double getVat() {
 		return this.vat;
 	}
 
 	@Min(0)
+	@NotNull
 	public Double getFare() {
 		return this.fare;
 	}

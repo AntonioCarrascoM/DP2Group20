@@ -22,7 +22,7 @@ import domain.Configuration;
 import domain.Enrolment;
 import domain.Member;
 import domain.Message;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Service
@@ -283,27 +283,27 @@ public class MessageService {
 		Assert.notNull(e);
 
 		final Message msg = this.create();
-		msg.setSubject("An enrolment has been registered / Se ha registrado una inscripción");
-		msg.setBody("An enrolment has been registered / Se ha registrado una inscripción.");
+		msg.setSubject("An enrolment has been registered / Se ha registrado una inscripcion");
+		msg.setBody("An enrolment has been registered / Se ha registrado una inscripcion.");
 		msg.setPriority("HIGH");
-		msg.setTags("Enrolment created / Inscripción registrada");
+		msg.setTags("Enrolment created / Inscripcion registrada");
 		msg.setSent(new Date(System.currentTimeMillis() - 1));
 
 		this.send(msg, e.getMember());
 	}
 
-	//Sends a message to the brotherhoods members when a procession is published.
-	public void processionPublished(final Procession p) {
+	//Sends a message to the brotherhoods members when a parade is published.
+	public void paradePublished(final Parade p) {
 		Assert.notNull(p);
 
 		final Brotherhood b = p.getBrotherhood();
 		final Collection<Member> activeMembers = this.memberService.activeMembersOfBrotherhood(b.getId());
 
 		final Message msg = this.create();
-		msg.setSubject("A procession has been published / Se ha publicado una procesión.");
-		msg.setBody("A procession has been published / Se ha publicado una procesión.");
+		msg.setSubject("A parade has been published / Se ha publicado una procesion.");
+		msg.setBody("A parade has been published / Se ha publicado una procesion.");
 		msg.setPriority("HIGH");
-		msg.setTags("Procession published / Procesión publicada");
+		msg.setTags("Parade published / Procesion publicada");
 		msg.setSent(new Date(System.currentTimeMillis() - 1));
 
 		if (!activeMembers.isEmpty())

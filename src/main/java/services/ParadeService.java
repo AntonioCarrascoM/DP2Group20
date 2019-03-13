@@ -15,46 +15,46 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
-import repositories.ProcessionRepository;
+import repositories.ParadeRepository;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Service
 @Transactional
-public class ProcessionService {
+public class ParadeService {
 
 	//Managed repository
 
 	@Autowired
-	private ProcessionRepository	processionRepository;
+	private ParadeRepository	paradeRepository;
 
 	//Supporting services
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService		actorService;
 
 	@Autowired
-	private RequestService			requestService;
+	private RequestService		requestService;
 
 	@Autowired
-	private FloatService			floatService;
+	private FloatService		floatService;
 
 	@Autowired
-	private BrotherhoodService		brotherhoodService;
+	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private MessageService			messageService;
+	private MessageService		messageService;
 
 	@Autowired
-	private Validator				validator;
+	private Validator			validator;
 
 
 	//Simple CRUD methods
 
-	public Procession create() {
-		final Procession p = new Procession();
+	public Parade create() {
+		final Parade p = new Parade();
 
 		p.setTicker(this.generateTicker());
 
@@ -66,17 +66,17 @@ public class ProcessionService {
 
 		return p;
 	}
-	public Procession findOne(final int id) {
+	public Parade findOne(final int id) {
 		Assert.notNull(id);
 
-		return this.processionRepository.findOne(id);
+		return this.paradeRepository.findOne(id);
 	}
 
-	public Collection<Procession> findAll() {
-		return this.processionRepository.findAll();
+	public Collection<Parade> findAll() {
+		return this.paradeRepository.findAll();
 	}
 
-	public Procession save(final Procession p, final boolean b) {
+	public Parade save(final Parade p, final boolean b) {
 		Assert.notNull(p);
 		final Date date = p.getMoment();
 		final DateFormat fecha = new SimpleDateFormat("yyyy/MM/dd");
@@ -88,7 +88,7 @@ public class ProcessionService {
 		Assert.isTrue(!year.startsWith("00"));
 
 		Assert.notNull(p.getBrotherhood().getArea());
-		//Assertion to make sure that the procession is not on final mode.
+		//Assertion to make sure that the parade is not on final mode.
 		Assert.isTrue(p.getFinalMode() == false);
 
 		//Assertion that the user modifying this task has the correct privilege.
@@ -97,74 +97,74 @@ public class ProcessionService {
 		if (b == true)
 			p.setFinalMode(true);
 
-		final Procession saved = this.processionRepository.save(p);
+		final Parade saved = this.paradeRepository.save(p);
 
 		//Sending notification to members
 		if (saved.getFinalMode() == true)
-			this.messageService.processionPublished(saved);
+			this.messageService.paradePublished(saved);
 
 		return saved;
 	}
 
-	public Procession saveAux(final Procession p) {
+	public Parade saveAux(final Parade p) {
 		Assert.notNull(p);
 
 		//Assertion that the user modifying this task has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == p.getBrotherhood().getId());
 
-		final Procession saved = this.processionRepository.save(p);
+		final Parade saved = this.paradeRepository.save(p);
 
 		return saved;
 	}
 
-	public void delete(final Procession p) {
+	public void delete(final Parade p) {
 		Assert.notNull(p);
 
-		//A procession cannot be deleted if it's in final mode.
+		//A parade cannot be deleted if it's in final mode.
 		Assert.isTrue(p.getFinalMode() == false);
 
-		//A procession cannot be deleted if it has any float.
+		//A parade cannot be deleted if it has any float.
 		Assert.isTrue(p.getFloats().isEmpty());
 
-		//A procession cannot be deleted if it has any request.
+		//A parade cannot be deleted if it has any request.
 		Assert.isTrue(p.getRequests().isEmpty());
 
 		//Assertion that the user deleting this task has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == p.getBrotherhood().getId());
 
 		final Brotherhood b = p.getBrotherhood();
-		final Collection<Procession> processions = b.getProcessions();
+		final Collection<Parade> parades = b.getParades();
 		final Collection<Float> floats = p.getFloats();
 		final Collection<Request> requests = p.getRequests();
 
-		processions.remove(p);
+		parades.remove(p);
 
-		b.setProcessions(processions);
+		b.setParades(parades);
 		this.brotherhoodService.save(b);
 
 		if (!(floats.isEmpty()))
 			for (final Float f : floats) {
-				final Collection<Procession> floatProcessions = f.getProcessions();
-				floatProcessions.remove(p);
-				f.setProcessions(floatProcessions);
+				final Collection<Parade> floatParades = f.getParades();
+				floatParades.remove(p);
+				f.setParades(floatParades);
 				this.floatService.save(f);
 			}
 
 		if (!(requests.isEmpty()))
 			for (final Request req : requests)
 				this.requestService.delete(req);
-		this.processionRepository.delete(p);
+		this.paradeRepository.delete(p);
 	}
 
 	//Reconstruct
 
-	public Procession reconstruct(final Procession p, final BindingResult binding) {
-		Procession result;
+	public Parade reconstruct(final Parade p, final BindingResult binding) {
+		Parade result;
 
 		if (p.getId() == 0)
 			result = this.create();
 		else
-			result = this.processionRepository.findOne(p.getId());
+			result = this.paradeRepository.findOne(p.getId());
 		result.setTitle(p.getTitle());
 		result.setDescription(p.getDescription());
 		result.setMaxColumn(p.getMaxColumn());
@@ -229,32 +229,32 @@ public class ProcessionService {
 
 	//Other methods
 
-	//The processions that are going to be organised in 30 days or less.
-	public Collection<Procession> processionsBefore30Days() {
-		return this.processionRepository.processionsBefore30Days();
+	//The parades that are going to be organised in 30 days or less.
+	public Collection<Parade> paradesBefore30Days() {
+		return this.paradeRepository.paradesBefore30Days();
 	}
 
-	//Processions by area
-	public Collection<Procession> processionsByArea(final int id) {
-		return this.processionRepository.processionsByArea(id);
+	//Parades by area
+	public Collection<Parade> paradesByArea(final int id) {
+		return this.paradeRepository.paradesByArea(id);
 	}
-	//Processions with final mode = true
-	public Collection<Procession> getFinalProcessions() {
-		return this.processionRepository.getFinalProcessions();
-	}
-
-	//Listing of processions with finalMode = true that belong to a certain brotherhood.
-	public Collection<Procession> finalProcessionsForBrotherhood(final int varId) {
-		return this.processionRepository.finalProcessionsForBrotherhood(varId);
+	//Parades with final mode = true
+	public Collection<Parade> getFinalParades() {
+		return this.paradeRepository.getFinalParades();
 	}
 
-	//Processions which a member can do requests
-	public Collection<Procession> processionsForRequestByMember(final int varId) {
-		Collection<Procession> processions = new ArrayList<>();
-		processions = this.processionRepository.processionsForRequestByMember(varId);
-		if (processions == null)
+	//Listing of parades with finalMode = true that belong to a certain brotherhood.
+	public Collection<Parade> finalParadesForBrotherhood(final int varId) {
+		return this.paradeRepository.finalParadesForBrotherhood(varId);
+	}
+
+	//Parades which a member can do requests
+	public Collection<Parade> paradesForRequestByMember(final int varId) {
+		Collection<Parade> parades = new ArrayList<>();
+		parades = this.paradeRepository.paradesForRequestByMember(varId);
+		if (parades == null)
 			return new ArrayList<>();
 		else
-			return processions;
+			return parades;
 	}
 }

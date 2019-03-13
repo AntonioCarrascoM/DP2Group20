@@ -141,8 +141,8 @@
 				<li class="arrow"></li>
 			<li><a href="float/brotherhood/list.do"><spring:message
 						code="master.page.float.list" /></a></li>
-			<li><a href="procession/brotherhood/list.do"><spring:message
-						code="master.page.procession.list" /></a></li>
+			<li><a href="parade/brotherhood/list.do"><spring:message
+						code="master.page.parade.list" /></a></li>
 			<li><a href="member/brotherhood/enrolableList.do"><spring:message
 								code="master.page.member.enrolableList" /></a>
 					</li>

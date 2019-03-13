@@ -14,11 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.FloatService;
-import services.ProcessionService;
+import services.ParadeService;
 import controllers.AbstractController;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
 @RequestMapping("float/brotherhood")
@@ -27,13 +27,13 @@ public class FloatBrotherhoodController extends AbstractController {
 	//Services
 
 	@Autowired
-	private FloatService		floatService;
+	private FloatService	floatService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 
 	//Listing
@@ -59,8 +59,8 @@ public class FloatBrotherhoodController extends AbstractController {
 		final ModelAndView result;
 		Collection<Float> floats;
 
-		final Procession procession = this.processionService.findOne(varId);
-		floats = procession.getFloats();
+		final Parade parade = this.paradeService.findOne(varId);
+		floats = parade.getFloats();
 
 		result = new ModelAndView("float/list");
 		result.addObject("floats", floats);

@@ -14,7 +14,7 @@ import org.springframework.validation.Validator;
 import repositories.FloatRepository;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -34,7 +34,7 @@ public class FloatService {
 	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService		paradeService;
 
 	@Autowired
 	private Validator			validator;
@@ -49,7 +49,7 @@ public class FloatService {
 		final Brotherhood b = (Brotherhood) this.actorService.findByPrincipal();
 		f.setBrotherhood(b);
 
-		f.setProcessions(new ArrayList<Procession>());
+		f.setParades(new ArrayList<Parade>());
 
 		return f;
 	}
@@ -82,13 +82,13 @@ public class FloatService {
 		//Assertion that the user deleting this administrator has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == f.getBrotherhood().getId());
 
-		final Collection<Procession> processions = f.getProcessions();
-		if (!(processions.isEmpty()))
-			for (final Procession p : processions) {
-				final Collection<Float> processionFloats = p.getFloats();
-				processionFloats.remove(f);
-				p.setFloats(processionFloats);
-				this.processionService.saveAux(p);
+		final Collection<Parade> parades = f.getParades();
+		if (!(parades.isEmpty()))
+			for (final Parade p : parades) {
+				final Collection<Float> paradeFloats = p.getFloats();
+				paradeFloats.remove(f);
+				p.setFloats(paradeFloats);
+				this.paradeService.saveAux(p);
 
 			}
 		else

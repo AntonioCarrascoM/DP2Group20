@@ -28,7 +28,7 @@
 <spring:message code="request.customRow" var="customRow" />
 <spring:message code="request.customColumn" var="customColumn" />
 <spring:message code="request.reason" var="reason" />
-<spring:message code="request.procession" var="procession" />
+<spring:message code="request.parade" var="parade" />
 <spring:message code="request.status.delete.error" var="deleteStatus" />
 <spring:message code="request.reason.disclaimer" var="reasonDisclaimer" />
 
@@ -119,19 +119,19 @@
 
 <security:authorize access="hasRole('MEMBER')">
 	
-		<form:label path="procession">
-		<jstl:out value="${procession}" />:
+		<form:label path="parade">
+		<jstl:out value="${parade}" />:
 		</form:label>
-			<form:select path="procession" >
+			<form:select path="parade" >
 				<form:option
 					label="----"
 					value="0" />
 				<form:options 
-					items="${processions}" 
+					items="${parades}" 
 					itemLabel="title"
 					itemValue="id" />
 			</form:select>
-			<form:errors cssClass="error" path="procession" />
+			<form:errors cssClass="error" path="parade" />
 	<br />
 
 </security:authorize>
