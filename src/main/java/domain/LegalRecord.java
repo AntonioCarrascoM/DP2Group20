@@ -15,7 +15,7 @@ public class LegalRecord extends Record {
 
 	//Attributes
 	private String	legalName;
-	private Integer	vatNumber;
+	private Double	vatNumber;
 	private String	applicableLaws;
 
 
@@ -28,7 +28,7 @@ public class LegalRecord extends Record {
 
 	@NotNull
 	@Min(0)
-	public Integer getVatNumber() {
+	public Double getVatNumber() {
 		return this.vatNumber;
 	}
 
@@ -43,7 +43,7 @@ public class LegalRecord extends Record {
 		this.legalName = legalName;
 	}
 
-	public void setVatNumber(final Integer vatNumber) {
+	public void setVatNumber(final Double vatNumber) {
 		this.vatNumber = vatNumber;
 	}
 
