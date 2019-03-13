@@ -39,7 +39,7 @@
 		<security:intercept-url pattern="/welcome/**" access="permitAll" />
 		<security:intercept-url pattern="/brotherhood/**" access="permitAll"  />
 		<security:intercept-url pattern="/member/**" access="permitAll" />
-		<security:intercept-url pattern="/procession/**" access="permitAll" />
+		<security:intercept-url pattern="/parade/**" access="permitAll" />
 		<security:intercept-url pattern="/float/**" access="permitAll" />
 
 
@@ -58,7 +58,7 @@
 
 		<security:intercept-url pattern="/enrolment/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/float/brotherhood/**" access="hasRole('BROTHERHOOD')" />
-		<security:intercept-url pattern="/procession/brotherhood/**" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/parade/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/request/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/member/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 

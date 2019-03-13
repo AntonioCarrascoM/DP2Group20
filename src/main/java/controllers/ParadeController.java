@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.ProcessionService;
-import domain.Procession;
+import services.ParadeService;
+import domain.Parade;
 
 @Controller
-@RequestMapping("procession")
-public class ProcessionController extends AbstractController {
+@RequestMapping("parade")
+public class ParadeController extends AbstractController {
 
 	//Services
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 
 	//	@Autowired
@@ -31,13 +31,13 @@ public class ProcessionController extends AbstractController {
 	@RequestMapping(value = "/listByBrotherhood", method = RequestMethod.GET)
 	public ModelAndView listByBrotherhood(@RequestParam final int varId) {
 		final ModelAndView result;
-		final Collection<Procession> processions;
+		final Collection<Parade> parades;
 
-		processions = this.processionService.finalProcessionsForBrotherhood(varId);
+		parades = this.paradeService.finalParadesForBrotherhood(varId);
 
-		result = new ModelAndView("procession/list");
-		result.addObject("processions", processions);
-		result.addObject("requestURI", "procession/listByBrotherhood.do");
+		result = new ModelAndView("parade/list");
+		result.addObject("parades", parades);
+		result.addObject("requestURI", "parade/listByBrotherhood.do");
 
 		return result;
 	}
@@ -45,13 +45,13 @@ public class ProcessionController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
-		Collection<Procession> processions;
+		Collection<Parade> parades;
 
-		processions = this.processionService.getFinalProcessions();
+		parades = this.paradeService.getFinalParades();
 
-		result = new ModelAndView("procession/list");
-		result.addObject("processions", processions);
-		result.addObject("requestURI", "procession/list.do");
+		result = new ModelAndView("parade/list");
+		result.addObject("parades", parades);
+		result.addObject("requestURI", "parade/list.do");
 
 		return result;
 	}
@@ -59,13 +59,13 @@ public class ProcessionController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;
-		Procession procession;
+		Parade parade;
 
-		procession = this.processionService.findOne(varId);
+		parade = this.paradeService.findOne(varId);
 
-		result = new ModelAndView("procession/display");
-		result.addObject("procession", procession);
-		result.addObject("requestURI", "procession/display.do");
+		result = new ModelAndView("parade/display");
+		result.addObject("parade", parade);
+		result.addObject("requestURI", "parade/display.do");
 
 		return result;
 	}

@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -31,6 +32,9 @@ public class Configuration extends DomainEntity {
 	private Collection<String>	positiveWords;
 	private Collection<String>	negativeWords;
 	private Collection<String>	priorityList;
+	private Collection<String>	creditCardList;
+	private Double				vat;
+	private Double				fare;
 
 
 	//Getters
@@ -95,6 +99,22 @@ public class Configuration extends DomainEntity {
 		return this.priorityList;
 	}
 
+	@ElementCollection
+	@NotEmpty
+	public Collection<String> getCreditCardList() {
+		return this.creditCardList;
+	}
+
+	@Min(0)
+	public Double getVat() {
+		return this.vat;
+	}
+
+	@Min(0)
+	public Double getFare() {
+		return this.fare;
+	}
+
 	//Setters
 
 	public void setSystemName(final String systemName) {
@@ -139,6 +159,18 @@ public class Configuration extends DomainEntity {
 
 	public void setPriorityList(final Collection<String> priorityList) {
 		this.priorityList = priorityList;
+	}
+
+	public void setCreditCardList(final Collection<String> creditCardList) {
+		this.creditCardList = creditCardList;
+	}
+
+	public void setVat(final Double vat) {
+		this.vat = vat;
+	}
+
+	public void setFare(final Double fare) {
+		this.fare = fare;
 	}
 
 }

@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 import domain.Status;
 
@@ -28,13 +28,13 @@ public class RequestMemberController extends AbstractController {
 	//Services
 
 	@Autowired
-	private RequestService		requestService;
+	private RequestService	requestService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 
 	@Autowired
-	private ProcessionService	processionService;
+	private ParadeService	paradeService;
 
 
 	//Creation
@@ -43,11 +43,11 @@ public class RequestMemberController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView result;
 		Request request;
-		final Collection<Procession> processions = this.processionService.processionsForRequestByMember((this.actorService.findByPrincipal()).getId());
+		final Collection<Parade> parades = this.paradeService.paradesForRequestByMember((this.actorService.findByPrincipal()).getId());
 
 		request = this.requestService.create();
 		result = this.createEditModelAndView(request);
-		result.addObject("processions", processions);
+		result.addObject("parades", parades);
 
 		return result;
 	}
@@ -63,7 +63,7 @@ public class RequestMemberController extends AbstractController {
 		try {
 			request = this.requestService.reconstruct(request, binding);
 		} catch (final Throwable oops) {
-			final Collection<Request> requests = req.getProcession().getRequests();
+			final Collection<Request> requests = req.getParade().getRequests();
 			result = new ModelAndView("request/list");
 			result.addObject("requests", requests);
 			result.addObject("message", "request.reconstruct.error");
