@@ -94,7 +94,6 @@ public class Parade extends DomainEntity {
 		return this.finalMode;
 	}
 
-	@NotNull
 	@Valid
 	public ParadeStatus getStatus() {
 		return this.paradeStatus;
@@ -166,5 +165,11 @@ public class Parade extends DomainEntity {
 
 	public void setMaxColumn(final Integer maxColumn) {
 		this.maxColumn = maxColumn;
+	}
+	public void setRejectionReason(final String rejectionReason) {
+		this.rejectionReason = rejectionReason;
+	}
+	public void setParadeStatus(final ParadeStatus paradeStatus) {
+		this.paradeStatus = paradeStatus;
 	}
 }
