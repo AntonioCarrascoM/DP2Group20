@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.MiscellaneousRecordRepository;
 import domain.Brotherhood;
@@ -25,6 +27,9 @@ public class MiscellaneousRecordService {
 
 	@Autowired
 	private ActorService					actorService;
+
+	@Autowired
+	private Validator						validator;
 
 
 	//Simple CRUD Methods --------------------------------
@@ -66,5 +71,22 @@ public class MiscellaneousRecordService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == miscellaneousRecord.getBrotherhood().getId());
 
 		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
+	}
+	public MiscellaneousRecord reconstruct(final MiscellaneousRecord mr, final BindingResult binding) {
+		MiscellaneousRecord result;
+
+		if (mr.getId() == 0)
+			result = this.create();
+		else
+			result = this.miscellaneousRecordRepository.findOne(mr.getId());
+		result.setTitle(mr.getTitle());
+		result.setDescription(mr.getDescription());
+		this.validator.validate(result, binding);
+
+		//Assertion that the user modifying this configuration has the correct privilege.
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+
+		return result;
+
 	}
 }

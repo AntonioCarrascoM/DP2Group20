@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PeriodRecordRepository;
 import domain.Brotherhood;
@@ -25,6 +27,9 @@ public class PeriodRecordService {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	//Simple CRUD Methods --------------------------------
@@ -66,5 +71,28 @@ public class PeriodRecordService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == periodRecord.getBrotherhood().getId());
 
 		this.periodRecordRepository.delete(periodRecord);
+	}
+
+	//Reconstruct
+
+	public PeriodRecord reconstruct(final PeriodRecord pr, final BindingResult binding) {
+		PeriodRecord result;
+
+		if (pr.getId() == 0)
+			result = this.create();
+		else
+			result = this.periodRecordRepository.findOne(pr.getId());
+		result.setTitle(pr.getTitle());
+		result.setDescription(pr.getDescription());
+		result.setStartYear(pr.getStartYear());
+		result.setEndYear(pr.getEndYear());
+		result.setPhotos(pr.getPhotos());
+		this.validator.validate(result, binding);
+
+		//Assertion that the user modifying this configuration has the correct privilege.
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+
+		return result;
+
 	}
 }

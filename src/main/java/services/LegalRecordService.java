@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.LegalRecordRepository;
 import domain.Brotherhood;
@@ -25,6 +27,9 @@ public class LegalRecordService {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	//Simple CRUD Methods --------------------------------
@@ -66,5 +71,27 @@ public class LegalRecordService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == legalRecord.getBrotherhood().getId());
 
 		this.legalRecordRepository.delete(legalRecord);
+	}
+	//Reconstruct
+
+	public LegalRecord reconstruct(final LegalRecord lr, final BindingResult binding) {
+		LegalRecord result;
+
+		if (lr.getId() == 0)
+			result = this.create();
+		else
+			result = this.legalRecordRepository.findOne(lr.getId());
+		result.setTitle(lr.getTitle());
+		result.setDescription(lr.getDescription());
+		result.setLegalName(lr.getLegalName());
+		result.setVatNumber(lr.getVatNumber());
+		result.setApplicableLaws(lr.getApplicableLaws());
+		this.validator.validate(result, binding);
+
+		//Assertion that the user modifying this configuration has the correct privilege.
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+
+		return result;
+
 	}
 }

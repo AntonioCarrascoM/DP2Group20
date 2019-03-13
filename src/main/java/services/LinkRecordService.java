@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.LinkRecordRepository;
 import domain.Brotherhood;
@@ -25,6 +27,9 @@ public class LinkRecordService {
 
 	@Autowired
 	private ActorService			actorService;
+
+	@Autowired
+	private Validator				validator;
 
 
 	//Simple CRUD Methods --------------------------------
@@ -66,5 +71,26 @@ public class LinkRecordService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == linkRecord.getBrotherhood().getId());
 
 		this.linkRecordRepository.delete(linkRecord);
+	}
+
+	//Reconstruct
+
+	public LinkRecord reconstruct(final LinkRecord lir, final BindingResult binding) {
+		LinkRecord result;
+
+		if (lir.getId() == 0)
+			result = this.create();
+		else
+			result = this.linkRecordRepository.findOne(lir.getId());
+		result.setTitle(lir.getTitle());
+		result.setDescription(lir.getDescription());
+		result.setLink(lir.getLink());
+		this.validator.validate(result, binding);
+
+		//Assertion that the user modifying this configuration has the correct privilege.
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+
+		return result;
+
 	}
 }
