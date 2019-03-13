@@ -61,6 +61,7 @@ public class ParadeService {
 		final Brotherhood b = (Brotherhood) this.actorService.findByPrincipal();
 		p.setBrotherhood(b);
 		p.setFinalMode(false);
+		p.setRejectionReason("There is no reason yet");
 		p.setRequests(new ArrayList<Request>());
 		p.setFloats(new ArrayList<Float>());
 
