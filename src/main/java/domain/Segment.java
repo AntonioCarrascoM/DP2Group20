@@ -10,9 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -21,10 +22,10 @@ public class Segment extends DomainEntity {
 
 	//Attributes
 
-	private Double	originCoordX;
-	private Double	originCoordY;
-	private Double	destinationCoordX;
-	private Double	destinationCoordY;
+	private String	originCoordX;
+	private String	originCoordY;
+	private String	destinationCoordX;
+	private String	destinationCoordY;
 	private Date	originDate;
 	private Date	destinationDate;
 
@@ -35,37 +36,38 @@ public class Segment extends DomainEntity {
 	//Getters
 
 	//TODO Hacer que la origin coord de un segmento sea la destination coord del anterior segmento de esa parade
-	@NotNull
-	@Min(0)
-	public Double getOriginCoordX() {
+	@NotBlank
+	@Pattern(regexp = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$")
+	public String getOriginCoordX() {
 		return this.originCoordX;
 	}
 	@NotNull
-	@Min(0)
-	public Double getOriginCoordY() {
+	@Pattern(regexp = "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")
+	public String getOriginCoordY() {
 		return this.originCoordY;
 	}
-	@NotNull
-	@Min(0)
-	public Double getDestinationCoordX() {
+	@NotBlank
+	@Pattern(regexp = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$")
+	public String getDestinationCoordX() {
 		return this.destinationCoordX;
 	}
 	@NotNull
-	@Min(0)
-	public Double getDestinationCoordY() {
+	@Pattern(regexp = "^[-+]?(180(\\.0+)?|((1[0-7]\\d)|([1-9]?\\d))(\\.\\d+)?)$")
+	public String getDestinationCoordY() {
 		return this.destinationCoordY;
 	}
 	//TODO Hacer que la origin date de un segmento sea la destination date del anterior segmento de esa parade
+	//TODO Ver como podemos poner solo la hora, aunque como está actualmente se guarda en la bdd bien (solo la hora y los min)
 	@NotNull
 	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getOriginDate() {
 		return this.originDate;
 	}
 
 	@NotNull
 	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm")
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getDestinationDate() {
 		return this.destinationDate;
 	}
@@ -79,17 +81,17 @@ public class Segment extends DomainEntity {
 
 	//Setters
 
-	public void setOriginCoordX(final Double originCoordX) {
+	public void setOriginCoordX(final String originCoordX) {
 		this.originCoordX = originCoordX;
 	}
-	public void setOriginCoordY(final Double originCoordY) {
+	public void setOriginCoordY(final String originCoordY) {
 		this.originCoordY = originCoordY;
 	}
 
-	public void setDestinationCoordX(final Double destinationCoordX) {
+	public void setDestinationCoordX(final String destinationCoordX) {
 		this.destinationCoordX = destinationCoordX;
 	}
-	public void setDestinationCoordY(final Double destinationCoordY) {
+	public void setDestinationCoordY(final String destinationCoordY) {
 		this.destinationCoordY = destinationCoordY;
 	}
 	public void setOriginDate(final Date originDate) {
