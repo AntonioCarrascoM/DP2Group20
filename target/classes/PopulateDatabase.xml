@@ -1210,7 +1210,9 @@
 		<property name="maxColumn" value="7"/>
 		<property name="moment" value="25/04/2020 10:20" />
 		<property name="finalMode" value="true" />
-		<property name="brotherhood" ref="brotherhood1" />
+		<property name="paredeStatus" value="ACCEPTED" />
+		<property name="rejectionReasons" value="Not reason is required"></property>
+ 		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
 			<list>
 				<ref bean="float1" />
@@ -1234,6 +1236,8 @@
 		<property name="maxColumn" value="6"/>
 		<property name="moment" value="10/09/2020 12:20" />
 		<property name="finalMode" value="false" />
+		<property name="paredeStatus" value="ACCEPTED" />
+		<property name="rejectionReasons" value="Not reason is required"></property>
 		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
 			<list>
@@ -1256,6 +1260,8 @@
 		<property name="description" value="Move forward!" />
 		<property name="moment" value="15/09/2020 12:25" />
 		<property name="finalMode" value="false" />
+		<property name="paredeStatus" value="ACCEPTED" />
+		<property name="rejectionReasons" value="Not reason is required"></property>
 		<property name="brotherhood" ref="brotherhood2" />
 		<property name="floats">
 			<list>
