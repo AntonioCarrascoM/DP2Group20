@@ -25,6 +25,7 @@ public class Sponsorship extends DomainEntity {
 	//Relationships
 
 	private Sponsor		sponsor;
+	private Parade		parade;
 
 
 	//Getters
@@ -59,6 +60,13 @@ public class Sponsorship extends DomainEntity {
 		return this.isActive;
 	}
 
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Parade getParade() {
+		return this.parade;
+	}
+
 	//Setters
 
 	public void setBanner(final String banner) {
@@ -79,6 +87,10 @@ public class Sponsorship extends DomainEntity {
 
 	public void setIsActive(final Boolean isActive) {
 		this.isActive = isActive;
+	}
+
+	public void setParade(final Parade parade) {
+		this.parade = parade;
 	}
 
 }
