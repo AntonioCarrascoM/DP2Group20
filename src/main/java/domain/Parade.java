@@ -41,8 +41,7 @@ public class Parade extends DomainEntity {
 	private Integer				maxColumn;
 	private Date				moment;
 	private Boolean				finalMode;
-	//TODO Arreglar esto
-	//private ParadeStatus		paradeStatus;
+	private ParadeStatus		paradeStatus;
 	private String				rejectionReason;
 
 	//Relationships
@@ -95,10 +94,10 @@ public class Parade extends DomainEntity {
 		return this.finalMode;
 	}
 
-	//	@Valid
-	//	public ParadeStatus getStatus() {
-	//		return this.paradeStatus;
-	//	}
+	@Valid
+	public ParadeStatus getParadeStatus() {
+		return this.paradeStatus;
+	}
 
 	@NotBlank
 	public String getRejectionReason() {
@@ -164,9 +163,9 @@ public class Parade extends DomainEntity {
 		this.maxRow = maxRow;
 	}
 
-	//	public void setParadeStatus(final ParadeStatus paradeStatus) {
-	//		this.paradeStatus = paradeStatus;
-	//	}
+	public void setParadeStatus(final ParadeStatus paradeStatus) {
+		this.paradeStatus = paradeStatus;
+	}
 
 	public void setMaxColumn(final Integer maxColumn) {
 		this.maxColumn = maxColumn;
