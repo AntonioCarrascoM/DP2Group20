@@ -99,7 +99,6 @@ public class Parade extends DomainEntity {
 		return this.paradeStatus;
 	}
 
-	@NotBlank
 	public String getRejectionReason() {
 		return this.rejectionReason;
 	}

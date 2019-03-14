@@ -20,7 +20,7 @@ import domain.Parade;
 
 @Controller
 @RequestMapping("parade/brotherhood")
-public class ProcessionBrotherhoodController extends AbstractController {
+public class ParadeBrotherhoodController extends AbstractController {
 
 	//Services
 
