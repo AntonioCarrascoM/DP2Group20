@@ -40,6 +40,11 @@
 						<li><a href="member/edit.do"><spring:message
 									code="master.page.actor.edit" /></a></li>
 					</security:authorize>
+					
+					<security:authorize access="hasRole('SPONSOR')">
+						<li><a href="sponsor/edit.do"><spring:message
+									code="master.page.actor.edit" /></a></li>
+					</security:authorize>
 
 					<security:authorize access="hasRole('ADMIN')">
 						<li><a href="administrator/edit.do"><spring:message
@@ -93,6 +98,8 @@
 								code="master.page.register.member" /></a></li>
 					<li><a href="brotherhood/create.do"><spring:message
 								code="master.page.register.brotherhood" /></a></li>
+					<li><a href="sponsor/create.do"><spring:message
+								code="master.page.register.sponsor" /></a></li>
 				</ul>
 			<li><a class="fNiv" href="brotherhood/list.do"><spring:message
 					code="master.page.brotherhood.list" /></a> </li>

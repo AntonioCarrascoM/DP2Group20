@@ -50,13 +50,13 @@ public class SponsorService {
 		account.setAuthorities(Arrays.asList(a));
 		account.setBanned(false);
 
-		final Sponsor Sponsor = new Sponsor();
-		Sponsor.setSpammer(false);
-		Sponsor.setSocialProfiles(new ArrayList<SocialProfile>());
-		Sponsor.setUserAccount(account);
-		Sponsor.setBoxes(new ArrayList<Box>());
+		final Sponsor sponsor = new Sponsor();
+		sponsor.setSpammer(false);
+		sponsor.setSocialProfiles(new ArrayList<SocialProfile>());
+		sponsor.setUserAccount(account);
+		sponsor.setBoxes(new ArrayList<Box>());
 
-		return Sponsor;
+		return sponsor;
 	}
 
 	public Collection<Sponsor> findAll() {

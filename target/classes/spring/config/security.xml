@@ -41,8 +41,7 @@
 		<security:intercept-url pattern="/member/**" access="permitAll" />
 		<security:intercept-url pattern="/parade/**" access="permitAll" />
 		<security:intercept-url pattern="/float/**" access="permitAll" />
-
-
+		<security:intercept-url pattern="/sponsor/**" access="permitAll" />
 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
@@ -65,6 +64,8 @@
 		<security:intercept-url pattern="/enrolment/member/**" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/finder/member/**" access="hasRole('MEMBER')" />
 		<security:intercept-url pattern="/request/member/**" access="hasRole('MEMBER')" />
+		
+		<security:intercept-url pattern="/sponsor/sponsorship/**" access="hasRole('SPONSOR')" />
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

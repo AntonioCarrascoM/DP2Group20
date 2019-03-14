@@ -22,34 +22,34 @@
 
 <%-- Stored message variables --%>
 
-<spring:message code="member.create" var="create" />
-<spring:message code="member.userAccount.username" var="username" />
-<spring:message code="member.userAccount.password" var="password" />
-<spring:message code="member.name" var="name" />
-<spring:message code="member.middleName" var="middleName" />
-<spring:message code="member.surname" var="surname" />
-<spring:message code="member.photo" var="photo" />
-<spring:message code="member.email" var="email" />
-<spring:message code="member.phone" var="phone" />
-<spring:message code="member.confirm" var="confirm" />
-<spring:message code="member.delete" var="delete" />
-<spring:message code="member.delete.confirm" var="msgConf" />
+<spring:message code="sponsor.create" var="create" />
+<spring:message code="sponsor.userAccount.username" var="username" />
+<spring:message code="sponsor.userAccount.password" var="password" />
+<spring:message code="sponsor.name" var="name" />
+<spring:message code="sponsor.middleName" var="middleName" />
+<spring:message code="sponsor.surname" var="surname" />
+<spring:message code="sponsor.photo" var="photo" />
+<spring:message code="sponsor.email" var="email" />
+<spring:message code="sponsor.phone" var="phone" />
+<spring:message code="sponsor.confirm" var="confirm" />
+<spring:message code="sponsor.delete" var="delete" />
+<spring:message code="sponsor.delete.confirm" var="msgConf" />
 
-<spring:message code="member.address" var="address" />
-<spring:message code="member.save" var="save" />
-<spring:message code="member.cancel" var="cancel" />
-<spring:message code="member.phone.pattern1" var="phonePattern1" />
-<spring:message code="member.phone.pattern2" var="phonePattern2" />
-<spring:message code="member.phone.note" var="phoneNote" />
-<spring:message code="member.terms" var="terms" />
-<spring:message code="member.acceptedTerms" var="acceptedTerms" />
-<spring:message code="member.secondPassword" var="secondPassword" />
+<spring:message code="sponsor.address" var="address" />
+<spring:message code="sponsor.save" var="save" />
+<spring:message code="sponsor.cancel" var="cancel" />
+<spring:message code="sponsor.phone.pattern1" var="phonePattern1" />
+<spring:message code="sponsor.phone.pattern2" var="phonePattern2" />
+<spring:message code="sponsor.phone.note" var="phoneNote" />
+<spring:message code="sponsor.terms" var="terms" />
+<spring:message code="sponsor.acceptedTerms" var="acceptedTerms" />
+<spring:message code="sponsor.secondPassword" var="secondPassword" />
 
 
-<security:authorize access="isAnonymous() or hasRole('MEMBER')">
+<security:authorize access="isAnonymous() or hasRole('SPONSOR')">
 
 	<form:form id="form" action="${requestURI}"
-		modelAttribute="fom">
+		modelAttribute="fos">
 
 		<%-- Forms --%>
 
@@ -74,13 +74,13 @@
 		<form:errors cssClass="error" path="secondPassword" />
 		<br />
 
-	<acme:textbox code="member.name" path="name" />
-	<acme:textbox code="member.middleName" path="middleName" />
-	<acme:textbox code="member.surname" path="surname" />
-	<acme:textbox code="member.photo" path="photo" />
-	<acme:textbox code="member.email" path="email" placeholder="member.phMail" />
-	<acme:textbox code="member.phone" path="phone" placeholder="member.phPhone"/>
-	<acme:textbox code="member.address" path="address" />
+	<acme:textbox code="sponsor.name" path="name" />
+	<acme:textbox code="sponsor.middleName" path="middleName" />
+	<acme:textbox code="sponsor.surname" path="surname" />
+	<acme:textbox code="sponsor.photo" path="photo" />
+	<acme:textbox code="sponsor.email" path="email" placeholder="sponsor.phMail" />
+	<acme:textbox code="sponsor.phone" path="phone" placeholder="sponsor.phPhone"/>
+	<acme:textbox code="sponsor.address" path="address" />
 	<br />		
 		
 	<form:label path="acceptedTerms" >
@@ -101,7 +101,7 @@
 	<input type="submit" name="create" value="${save}"
 			onclick="return confirm('${confirm}')" />&nbsp;
 	
-	<acme:cancel url="welcome/index.do" code="member.cancel" />
+	<acme:cancel url="welcome/index.do" code="sponsor.cancel" />
 
 	</form:form>
 </security:authorize>
