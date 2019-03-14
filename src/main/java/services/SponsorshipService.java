@@ -125,6 +125,7 @@ public class SponsorshipService {
 		result.setTargetURL(ss.getTargetURL());
 		result.setCreditCard(ss.getCreditCard());
 		result.setIsActive(ss.getIsActive());
+		result.setParade(ss.getParade());
 
 		this.validator.validate(result, binding);
 
