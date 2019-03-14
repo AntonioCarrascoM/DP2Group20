@@ -35,4 +35,13 @@ public interface BrotherhoodRepository extends JpaRepository<Brotherhood, Intege
 	//Returns the brotherhoods given a member id
 	@Query("select e.brotherhood from Member m join m.enrolments e where m.id=?1")
 	Collection<Brotherhood> enrolmentMemberBrotherhoods(int memberId);
+
+	//The brotherhood with the largest history.
+	@Query("select b.title from Brotherhood b order by (select count(r) from Record r where r.brotherhood.id=b.id)*1. desc")
+	Collection<Brotherhood> largestBrotherhoodsByHistory();
+
+	//The brotherhoods whose history is larger than the average.
+	@Query("select b.title from Brotherhood b where ((select count(r1) from Record r1 where r1.brotherhood.id=b.id)*1.)>(select avg((select count(r2) from Record r2 where r2.brotherhood.id=b2.id)*1.0) from Brotherhood b2) order by (select count(r3) from Record r3 where r3.brotherhood.id=b.id)*1. desc")
+	Collection<Brotherhood> largestBrotherhoodsByHistoryThanAvg();
+
 }

@@ -25,4 +25,8 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
 	@Query("select min(a.brotherhoods.size), max(a.brotherhoods.size), avg(a.brotherhoods.size), stddev(a.brotherhoods.size) from Area a")
 	Double[] minMaxAvgAndStddevOfBrotherhoodsByArea();
 
+	//The ratio of areas that are not co-ordinated by any chapters
+	@Query("select count(a)*1./(select count(a1) from Area a1) from Area a where a not in (select c.area from Chapter c)")
+	Collection<Area> areasNotCoordinated();
+
 }
