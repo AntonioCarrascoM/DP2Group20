@@ -19,6 +19,7 @@ import repositories.ParadeRepository;
 import domain.Brotherhood;
 import domain.Float;
 import domain.Parade;
+import domain.ParadeStatus;
 import domain.Request;
 
 @Service
@@ -46,6 +47,9 @@ public class ParadeService {
 
 	@Autowired
 	private MessageService		messageService;
+
+	@Autowired
+	private ChapterService		chapterService;
 
 	@Autowired
 	private Validator			validator;
@@ -95,8 +99,10 @@ public class ParadeService {
 		//Assertion that the user modifying this task has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == p.getBrotherhood().getId());
 
-		if (b == true)
+		if (b == true) {
 			p.setFinalMode(true);
+			p.setParadeStatus(ParadeStatus.SUBMITTED);
+		}
 
 		final Parade saved = this.paradeRepository.save(p);
 
@@ -105,6 +111,14 @@ public class ParadeService {
 			this.messageService.paradePublished(saved);
 
 		return saved;
+	}
+
+	public Parade saveFromChapter(final Parade p) {
+
+		//Assertion that the user modifying this task has the correct privilege.
+		Assert.isTrue(this.chapterService.getChapterForArea(p.getBrotherhood().getArea().getId()).getId() == this.actorService.findByPrincipal().getId());
+
+		return this.paradeRepository.save(p);
 	}
 
 	public Parade saveAux(final Parade p) {
@@ -193,6 +207,20 @@ public class ParadeService {
 
 	}
 	//Other methods
+
+	public Parade copy(final Parade original) {
+		final Parade nueva = original;
+
+		//Assertion that the user modifying this task has the correct privilege.
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == original.getBrotherhood().getId());
+
+		nueva.setTicker(this.generateTicker());
+		nueva.setParadeStatus(null);
+		nueva.setRejectionReason(null);
+		nueva.setFinalMode(false);
+
+		return this.paradeRepository.save(nueva);
+	}
 
 	//Generates the first half of the unique tickers.
 	private String generateNumber() {
