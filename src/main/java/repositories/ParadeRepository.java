@@ -32,4 +32,11 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	@Query("select p from Member m join m.enrolments e join e.brotherhood b join b.parades p where p.finalMode=1 and e.dropOutMoment=null and m.id=?1 and p not in (select p from Member m join m.requests r join r.parade p where r.status!='2' and m.id=?1)")
 	Collection<Parade> paradesForRequestByMember(int varId);
 
+	//The ratio of parades in draft mode versus parades in final mode
+	@Query("select count(p0)*1./(select count(p1)*1. from Parade p1 where p1.finalMode='1') from Parade p0 where p0.finalMode='0'")
+	Double ratioParadesInDraftModeVsFinalMode();
+
+	//The ratio of parades in final mode grouped by status.
+	@Query("select count(p)*1./(select count(p1) from Parade p1 where p1.finalMode='1') from Parade p where p.finalMode='1' group by p.paradeStatus")
+	Double[] ratioParadesInFinalModeGroupByStatus();
 }
