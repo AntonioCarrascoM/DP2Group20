@@ -130,4 +130,9 @@ public class AreaService {
 		return this.areaRepository.minMaxAvgAndStddevOfBrotherhoodsByArea();
 	}
 
+	//The ratio of areas that are not co-ordinated by any chapters
+	public Double[] ratioAreasNotCoordinated() {
+		return this.areaRepository.ratioAreasNotCoordinated();
+	}
+
 }
