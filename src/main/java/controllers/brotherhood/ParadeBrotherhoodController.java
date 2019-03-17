@@ -4,6 +4,7 @@ package controllers.brotherhood;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ import controllers.AbstractController;
 import domain.Brotherhood;
 import domain.Parade;
 
+@Controller
+@RequestMapping("parade/brotherhood")
 public class ParadeBrotherhoodController extends AbstractController {
 
 	//Services
