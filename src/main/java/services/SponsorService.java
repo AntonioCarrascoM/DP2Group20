@@ -27,7 +27,7 @@ public class SponsorService {
 	//Managed repository ---------------------------------
 
 	@Autowired
-	private SponsorRepository	SponsorRepository;
+	private SponsorRepository	sponsorRepository;
 
 	//Supporting services --------------------------------
 
@@ -60,13 +60,13 @@ public class SponsorService {
 	}
 
 	public Collection<Sponsor> findAll() {
-		return this.SponsorRepository.findAll();
+		return this.sponsorRepository.findAll();
 	}
 
 	public Sponsor findOne(final int id) {
 		Assert.notNull(id);
 
-		return this.SponsorRepository.findOne(id);
+		return this.sponsorRepository.findOne(id);
 	}
 
 	public Sponsor save(final Sponsor Sponsor) {
@@ -88,12 +88,12 @@ public class SponsorService {
 
 		if (Sponsor.getId() != 0) {
 			Assert.isTrue(this.actorService.findByPrincipal().getId() == Sponsor.getId());
-			saved2 = this.SponsorRepository.save(Sponsor);
+			saved2 = this.sponsorRepository.save(Sponsor);
 		} else {
-			final Sponsor saved = this.SponsorRepository.save(Sponsor);
+			final Sponsor saved = this.sponsorRepository.save(Sponsor);
 			this.actorService.hashPassword(saved);
 			saved.setBoxes(this.boxService.generateDefaultFolders(saved));
-			saved2 = this.SponsorRepository.save(saved);
+			saved2 = this.sponsorRepository.save(saved);
 		}
 
 		return saved2;
@@ -105,7 +105,7 @@ public class SponsorService {
 		//Assertion that the user deleting this Sponsor has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == Sponsor.getId());
 
-		this.SponsorRepository.delete(Sponsor);
+		this.sponsorRepository.delete(Sponsor);
 	}
 
 	//Reconstruct
@@ -141,18 +141,18 @@ public class SponsorService {
 
 	}
 
-	public Sponsor reconstructPruned(final Sponsor Sponsor, final BindingResult binding) {
+	public Sponsor reconstructPruned(final Sponsor sponsor, final BindingResult binding) {
 		Sponsor result;
 
-		result = this.SponsorRepository.findOne(Sponsor.getId());
+		result = this.sponsorRepository.findOne(sponsor.getId());
 
-		result.setName(Sponsor.getName());
-		result.setMiddleName(Sponsor.getMiddleName());
-		result.setSurname(Sponsor.getSurname());
-		result.setPhoto(Sponsor.getPhoto());
-		result.setEmail(Sponsor.getEmail());
-		result.setPhone(Sponsor.getPhone());
-		result.setAddress(Sponsor.getAddress());
+		result.setName(sponsor.getName());
+		result.setMiddleName(sponsor.getMiddleName());
+		result.setSurname(sponsor.getSurname());
+		result.setPhoto(sponsor.getPhoto());
+		result.setEmail(sponsor.getEmail());
+		result.setPhone(sponsor.getPhone());
+		result.setAddress(sponsor.getAddress());
 
 		this.validator.validate(result, binding);
 
@@ -170,4 +170,15 @@ public class SponsorService {
 		return result;
 
 	}
+
+	//Other methods
+
+	public Double[] avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor() {
+		return this.sponsorRepository.avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor();
+	}
+
+	public Collection<Sponsor> top5SponsorsByActiveSponsorships() {
+		return this.sponsorRepository.top5SponsorsByActiveSponsorships();
+	}
+
 }

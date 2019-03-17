@@ -33,6 +33,7 @@
 		<value>/views/float/messages</value>
 		<value>/views/member/messages</value>
 		<value>/views/sponsor/messages</value>
+		<value>/views/sponsorship/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/position/messages</value>
 		<value>/views/parade/messages</value>

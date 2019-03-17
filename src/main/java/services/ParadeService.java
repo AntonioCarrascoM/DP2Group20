@@ -286,4 +286,9 @@ public class ParadeService {
 		else
 			return parades;
 	}
+
+	//Parades with status accepted
+	public Collection<Parade> paradesAccepted() {
+		return this.paradeRepository.paradesAccepted();
+	}
 }

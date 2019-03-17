@@ -1,8 +1,6 @@
 
 package controllers;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -29,19 +27,6 @@ public class SponsorController extends AbstractController {
 	private ActorService	actorService;
 
 
-	//Edition
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit() {
-		final ModelAndView result;
-		Sponsor sponsor;
-		sponsor = (Sponsor) this.actorService.findByPrincipal();
-		Assert.notNull(sponsor);
-		result = this.editModelAndView(sponsor);
-
-		return result;
-	}
-
 	//Creation
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -51,6 +36,19 @@ public class SponsorController extends AbstractController {
 
 		fos = new FormObjectSponsor();
 		result = this.createEditModelAndView(fos);
+
+		return result;
+	}
+
+	//Edition
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		final ModelAndView result;
+		Sponsor sponsor;
+		sponsor = (Sponsor) this.actorService.findByPrincipal();
+		Assert.notNull(sponsor);
+		result = this.editModelAndView(sponsor);
 
 		return result;
 	}
@@ -80,7 +78,7 @@ public class SponsorController extends AbstractController {
 	//Create POST
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(@Valid final FormObjectSponsor fos, final BindingResult binding) {
+	public ModelAndView save(final FormObjectSponsor fos, final BindingResult binding) {
 		ModelAndView result;
 		Sponsor sponsor;
 
