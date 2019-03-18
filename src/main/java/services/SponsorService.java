@@ -173,10 +173,12 @@ public class SponsorService {
 
 	//Other methods
 
+	//The average, the minimum, the maximum, and the standard deviation of active sponsorships per sponsor
 	public Double[] avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor() {
 		return this.sponsorRepository.avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor();
 	}
 
+	//The top-5 sponsors in terms of number of active sponsorships.
 	public Collection<Sponsor> top5SponsorsByActiveSponsorships() {
 		return this.sponsorRepository.top5SponsorsByActiveSponsorships();
 	}

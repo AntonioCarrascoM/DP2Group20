@@ -192,10 +192,12 @@ public class SponsorshipService {
 
 	//Other methods
 
+  //Ratio of active sponsorships
 	public Double ratioOfActiveSponsorships() {
 		return this.sponsorshipRepository.ratioOfActiveSponsorships();
 	}
-
+  
+  //Sponsorships for a certain sponsor
 	public Collection<Sponsorship> sponsorshipsFromSponsor(final int sponsorId) {
 		return this.sponsorshipRepository.sponsorshipsFromSponsor(sponsorId);
 	}

@@ -28,11 +28,15 @@ import services.ActorService;
 import services.AdministratorService;
 import services.AreaService;
 import services.BrotherhoodService;
+import services.ChapterService;
 import services.FinderService;
 import services.MemberService;
 import services.ParadeService;
 import services.PositionService;
+import services.RecordService;
 import services.RequestService;
+import services.SponsorService;
+import services.SponsorshipService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Administrator;
@@ -70,6 +74,18 @@ public class AdministratorController extends AbstractController {
 
 	@Autowired
 	private FinderService			finderService;
+
+	@Autowired
+	private RecordService			recordService;
+
+	@Autowired
+	private ChapterService			chapterService;
+
+	@Autowired
+	private SponsorshipService		sponsorshipService;
+
+	@Autowired
+	private SponsorService			sponsorService;
 
 
 	//Creation
@@ -176,6 +192,17 @@ public class AdministratorController extends AbstractController {
 		result.addObject("minMaxAvgAndStddevOfBrotherhoodsByArea", Arrays.toString(this.areaService.minMaxAvgAndStddevOfBrotherhoodsByArea()));
 		result.addObject("minMaxAvgStddevResultsFinders", Arrays.toString(this.finderService.minMaxAvgStddevResultsFinders()));
 		result.addObject("ratioEmptyVersusNonEmptyFinders", this.finderService.ratioEmptyVersusNonEmptyFinders());
+		result.addObject("avgMinMaxStddevOfRecordsPerHistory", Arrays.toString(this.recordService.avgMinMaxStddevRecordsForHistory()));
+		result.addObject("largestBrotherhoodsByHistory", this.brotherhoodService.largestBrotherhoodsByHistory());
+		result.addObject("largestBrotherhoodsByHistoryThanAvg", this.brotherhoodService.largestBrotherhoodsByHistoryThanAvg());
+		result.addObject("ratioAreasNotCoordinated", this.areaService.ratioAreasNotCoordinated());
+		result.addObject("avgMinMaxStddevParadesCoordinatedByChapter", Arrays.toString(this.chapterService.avgMinMaxStddevParadesCoordinatedByChapter()));
+		result.addObject("chaptersWith10PerCentParadesCoordinateThanAvg", this.chapterService.chaptersWith10PerCentParadesCoordinateThanAvg());
+		result.addObject("ratioParadesInDraftModeVsFinalMode", this.paradeService.ratioParadesInDraftModeVsFinalMode());
+		result.addObject("ratioParadesInFinalModeGroupByStatus", this.paradeService.ratioParadesInFinalModeGroupByStatus());
+		result.addObject("ratioOfActiveSponsorships", this.sponsorshipService.ratioOfActiveSponsorships());
+		result.addObject("avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor", Arrays.toString(this.sponsorService.avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor()));
+		result.addObject("top5SponsorsByActiveSponsorships", this.sponsorService.top5SponsorsByActiveSponsorships());
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 
