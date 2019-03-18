@@ -141,18 +141,18 @@ public class SponsorService {
 
 	}
 
-	public Sponsor reconstructPruned(final Sponsor Sponsor, final BindingResult binding) {
+	public Sponsor reconstructPruned(final Sponsor sponsor, final BindingResult binding) {
 		Sponsor result;
 
-		result = this.sponsorRepository.findOne(Sponsor.getId());
+		result = this.sponsorRepository.findOne(sponsor.getId());
 
-		result.setName(Sponsor.getName());
-		result.setMiddleName(Sponsor.getMiddleName());
-		result.setSurname(Sponsor.getSurname());
-		result.setPhoto(Sponsor.getPhoto());
-		result.setEmail(Sponsor.getEmail());
-		result.setPhone(Sponsor.getPhone());
-		result.setAddress(Sponsor.getAddress());
+		result.setName(sponsor.getName());
+		result.setMiddleName(sponsor.getMiddleName());
+		result.setSurname(sponsor.getSurname());
+		result.setPhoto(sponsor.getPhoto());
+		result.setEmail(sponsor.getEmail());
+		result.setPhone(sponsor.getPhone());
+		result.setAddress(sponsor.getAddress());
 
 		this.validator.validate(result, binding);
 

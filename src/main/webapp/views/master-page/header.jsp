@@ -158,7 +158,11 @@
 					</li>
 		</ul>
 		</security:authorize>
-
+		
+		<security:authorize access="hasRole('SPONSOR')">
+			<li><a href="sponsorship/sponsor/list.do"><spring:message
+					code="master.page.sponsorship.list" /></a></li>
+		</security:authorize>
 
 	</ul>
 </div>

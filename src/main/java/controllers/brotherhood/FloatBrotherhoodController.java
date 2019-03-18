@@ -54,8 +54,8 @@ public class FloatBrotherhoodController extends AbstractController {
 		return result;
 	}
 
-	@RequestMapping(value = "/listByProcession", method = RequestMethod.GET)
-	public ModelAndView listByProcession(@RequestParam final int varId) {
+	@RequestMapping(value = "/listByParade", method = RequestMethod.GET)
+	public ModelAndView listByParade(@RequestParam final int varId) {
 		final ModelAndView result;
 		Collection<Float> floats;
 
@@ -64,7 +64,7 @@ public class FloatBrotherhoodController extends AbstractController {
 
 		result = new ModelAndView("float/list");
 		result.addObject("floats", floats);
-		result.addObject("requestURI", "float/listByProcession.do");
+		result.addObject("requestURI", "float/listByParade.do");
 
 		return result;
 	}

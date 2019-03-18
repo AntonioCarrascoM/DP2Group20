@@ -1,32 +1,24 @@
 
-package domain;
+package forms;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-@Entity
-@Access(AccessType.PROPERTY)
-public class Sponsorship extends DomainEntity {
+import domain.CreditCard;
+import domain.Parade;
+import domain.Sponsor;
 
-	//Attributes
+public class FormObjectSponsorship {
 
 	private String		banner;
 	private String		targetURL;
 	private CreditCard	creditCard;
 	private Boolean		isActive;
-	private Double		charge;
-
-	//Relationships
-
 	private Sponsor		sponsor;
 	private Parade		parade;
+	private Double		charge;
 
 
 	//Getters
@@ -44,14 +36,6 @@ public class Sponsorship extends DomainEntity {
 	}
 
 	@NotNull
-	@Valid
-	@ManyToOne(optional = false)
-	public Sponsor getSponsor() {
-		return this.sponsor;
-	}
-
-	@NotNull
-	@Valid
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}
@@ -61,17 +45,21 @@ public class Sponsorship extends DomainEntity {
 		return this.isActive;
 	}
 
-	@Valid
 	@NotNull
-	@ManyToOne(optional = false)
 	public Parade getParade() {
 		return this.parade;
+	}
+
+	@NotNull
+	public Sponsor getSponsor() {
+		return this.sponsor;
 	}
 
 	@NotNull
 	public Double getCharge() {
 		return this.charge;
 	}
+
 	//Setters
 
 	public void setBanner(final String banner) {
@@ -101,5 +89,4 @@ public class Sponsorship extends DomainEntity {
 	public void setCharge(final Double charge) {
 		this.charge = charge;
 	}
-
 }
