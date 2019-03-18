@@ -255,4 +255,14 @@ public class BrotherhoodService {
 		} else
 			return brotherhoods;
 	}
+
+	//The brotherhood with the largest history.
+	public Collection<Brotherhood> largestBrotherhoodsByHistory() {
+		return this.brotherhoodRepository.largestBrotherhoodsByHistory();
+	}
+
+	//The brotherhoods whose history is larger than the average.
+	public Collection<Brotherhood> largestBrotherhoodsByHistoryThanAvg() {
+		return this.brotherhoodRepository.largestBrotherhoodsByHistoryThanAvg();
+	}
 }

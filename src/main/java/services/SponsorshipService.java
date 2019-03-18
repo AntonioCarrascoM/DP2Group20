@@ -145,4 +145,11 @@ public class SponsorshipService {
 
 		return ss;
 	}
+
+	//Other methods
+
+	//The ratio of active sponsorships.
+	public Double ratioOfActiveSponsorships() {
+		return this.ratioOfActiveSponsorships();
+	}
 }

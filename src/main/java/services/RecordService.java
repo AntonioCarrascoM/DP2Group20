@@ -57,4 +57,10 @@ public class RecordService {
 
 		this.recordRepository.delete(record);
 	}
+
+	//The average, the minimum, the maximum, and the standard deviation of the
+	//number of records per history
+	public Double[] avgMinMaxStddevRecordsForHistory() {
+		return this.recordRepository.avgMinMaxStddevRecordsForHistory();
+	}
 }

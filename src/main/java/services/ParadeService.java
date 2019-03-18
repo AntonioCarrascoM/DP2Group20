@@ -286,4 +286,14 @@ public class ParadeService {
 		else
 			return parades;
 	}
+
+	//The ratio of parades in draft mode versus parades in final mode
+	public Double ratioParadesInDraftModeVsFinalMode() {
+		return this.paradeRepository.ratioParadesInDraftModeVsFinalMode();
+	}
+
+	//The ratio of parades in final mode grouped by status.
+	public Double[] ratioParadesInFinalModeGroupByStatus() {
+		return this.paradeRepository.ratioParadesInFinalModeGroupByStatus();
+	}
 }
