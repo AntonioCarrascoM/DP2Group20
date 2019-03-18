@@ -1782,7 +1782,7 @@
 	
 		<bean id="creditCard1" class="domain.CreditCard">
 		<property name="holder" value="Juan Respe Rodriguez" />
-		<property name="make" value="MASTER" />
+		<property name="make" value="MCARD" />
 		<property name="number" value="5564157826282522" />
 		<property name="expMonth" value="10" />
 		<property name="expYear" value="2020" />
@@ -2176,6 +2176,7 @@
 		<property name="isActive" value="true" />
 		<property name="sponsor" ref="sponsor1" />
 		<property name="parade" ref="parade1" />
+		<property name="charge" value="25.3" />
 	</bean>
 
 	<bean id="sponsorship2" class="domain.Sponsorship">
@@ -2185,6 +2186,7 @@
 		<property name="isActive" value="true" />
 		<property name="sponsor" ref="sponsor1" />
 		<property name="parade" ref="parade2" />
+		<property name="charge" value="40.24" />
 	</bean>
 	<bean id="sponsorship3" class="domain.Sponsorship">
 		<property name="banner" value="https://upload.wikimedia.org/wikipedia/commons/7/71/DAZN_logo.svg" />
@@ -2193,6 +2195,7 @@
 		<property name="isActive" value="true" />
 		<property name="sponsor" ref="sponsor1" />
 		<property name="parade" ref="parade3" />
+		<property name="charge" value="1200.0" />
 	</bean>
 	<bean id="sponsorship4" class="domain.Sponsorship">
 		<property name="banner" value="https://cdn.worldvectorlogo.com/logos/instant-gaming-1.svg" />
@@ -2201,6 +2204,7 @@
 		<property name="isActive" value="true" />
 		<property name="sponsor" ref="sponsor2" />
 		<property name="parade" ref="parade1" />
+		<property name="charge" value="65.14" />
 	</bean>
 	<bean id="sponsorship5" class="domain.Sponsorship">
 		<property name="banner" value="https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" />
@@ -2209,6 +2213,7 @@
 		<property name="isActive" value="false" />
 		<property name="sponsor" ref="sponsor2" />
 		<property name="parade" ref="parade2" />
+		<property name="charge" value="285.0" />
 	</bean>
 
 	<bean id="sponsorship6" class="domain.Sponsorship">
@@ -2218,6 +2223,7 @@
 		<property name="isActive" value="false" />
 		<property name="sponsor" ref="sponsor2" />
 		<property name="parade" ref="parade3" />
+		<property name="charge" value="212.70" />
 	</bean>
 	
 	

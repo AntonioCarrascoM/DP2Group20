@@ -287,11 +287,10 @@ public class ParadeService {
 			return parades;
 	}
 
-
 	//Parades with status accepted
 	public Collection<Parade> paradesAccepted() {
 		return this.paradeRepository.paradesAccepted();
-    
+	}
 	//The ratio of parades in draft mode versus parades in final mode
 	public Double ratioParadesInDraftModeVsFinalMode() {
 		return this.paradeRepository.ratioParadesInDraftModeVsFinalMode();
