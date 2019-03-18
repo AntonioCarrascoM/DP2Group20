@@ -18,6 +18,7 @@ public class FormObjectSponsorship {
 	private Boolean		isActive;
 	private Sponsor		sponsor;
 	private Parade		parade;
+	private Double		charge;
 
 
 	//Getters
@@ -54,6 +55,11 @@ public class FormObjectSponsorship {
 		return this.sponsor;
 	}
 
+	@NotNull
+	public Double getCharge() {
+		return this.charge;
+	}
+
 	//Setters
 
 	public void setBanner(final String banner) {
@@ -78,5 +84,9 @@ public class FormObjectSponsorship {
 
 	public void setParade(final Parade parade) {
 		this.parade = parade;
+	}
+
+	public void setCharge(final Double charge) {
+		this.charge = charge;
 	}
 }

@@ -213,6 +213,32 @@ public class SponsorshipSponsorController {
 		return result;
 	}
 
+	//Pay
+	@RequestMapping(value = "/pay", method = RequestMethod.GET)
+	public ModelAndView pay(@RequestParam final int varId) {
+		ModelAndView result;
+		Collection<Sponsorship> sponsorships;
+		Sponsorship sponsorship;
+
+		result = new ModelAndView("sponsorship/list");
+
+		final Sponsor sponsor = (Sponsor) this.actorService.findByPrincipal();
+		sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
+
+		sponsorship = this.sponsorshipService.findOne(varId);
+		try {
+			this.sponsorshipService.pay(sponsorship);
+			sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
+
+			result.addObject("sponsorships", sponsorships);
+			result.addObject("requestURI", "sponsorship/sponsor/list.do");
+
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(sponsorship, "sponsorship.pay.error");
+		}
+
+		return result;
+	}
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final FormObjectSponsorship foss) {

@@ -37,9 +37,15 @@
 
 <spring:message code="sponsorship.remove" var="msgRemove" />
 <spring:message code="sponsorship.remove.error" var="msgRemoveError" />
+<spring:message code="sponsorship.remove.confirm" var="msgConfirmRemove" />
 <spring:message code="sponsorship.activate" var="msgActivate" />
 <spring:message code="sponsorship.activate.error" var="msgActivateError" />
-<spring:message code="sponsorship.remove.confirm" var="msgConfirm" />
+<spring:message code="sponsorship.activate.confirm" var="msgConfirmActivate" />
+<spring:message code="sponsorship.pay" var="msgPay" />
+<spring:message code="sponsorship.pay.error" var="msgPayError" />
+<spring:message code="sponsorship.pay.confirm" var="msgConfirmPay" />
+<spring:message code="sponsorship.charge" var="msgCharge" />
+
 
 
 
@@ -60,6 +66,8 @@
 	
 	<display:column property="isActive" title="${isActive}" sortable="true" />
 	
+	<display:column property="charge" title="${msgCharge}" sortable="true" />
+	
 	<%-- Edit --%>	
 		<spring:url var="editUrl" value="sponsorship/sponsor/edit.do">
 			<spring:param name="sponsorshipId" value="${row.id}" />
@@ -76,11 +84,11 @@
 
 	<display:column title="${msgActivate}">
 	<jstl:if test="${row.isActive == false}">
-		<a href="${activateURL}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${msgActivate}" /></a>
+		<a href="${activateURL}" onclick="return confirm('${msgConfirmActivate}')" ><jstl:out value="${msgActivate}" /></a>
 		</jstl:if>
 	</display:column>
 	
-		<!--  Remove sponsorship -->
+	<!--  Remove sponsorship -->
 
 	<spring:url var="removeURL" value="sponsorship/sponsor/remove.do">
 		<spring:param name="varId" value="${row.id}" />
@@ -88,10 +96,19 @@
 
 	<display:column title="${msgRemove}">
 	<jstl:if test="${row.isActive == true}">
-		<a href="${removeURL}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${msgRemove}" /></a>
+		<a href="${removeURL}" onclick="return confirm('${msgConfirmRemove}')" ><jstl:out value="${msgRemove}" /></a>
 		</jstl:if>
 	</display:column>
 
+	<!--  Pay sponsorship -->
+
+	<spring:url var="payURL" value="sponsorship/sponsor/pay.do">
+		<spring:param name="varId" value="${row.id}" />
+	</spring:url>
+
+	<display:column title="${msgPay}">
+		<a href="${payURL}" onclick="return confirm('${msgConfirmPay}')" ><jstl:out value="${msgPay}" /></a>
+	</display:column>
 </display:table>
 
 		<spring:url var="createUrl" value="sponsorship/sponsor/create.do"/>

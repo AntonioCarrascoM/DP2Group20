@@ -45,6 +45,7 @@ public class SponsorshipService {
 		ss.setCreditCard(new CreditCard());
 		ss.setParade(new Parade());
 		ss.setIsActive(false);
+		ss.setCharge(0.0);
 		return ss;
 	}
 
@@ -113,6 +114,16 @@ public class SponsorshipService {
 		Assert.isTrue(ss.getIsActive() == false);
 
 		ss.setIsActive(true);
+
+		this.sponsorshipRepository.save(ss);
+	}
+
+	public void pay(final Sponsorship ss) {
+		Assert.notNull(ss);
+		//Assertion that the user activating this sponsorship has the correct privilege.
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == ss.getSponsor().getId());
+
+		ss.setCharge(0.0);
 
 		this.sponsorshipRepository.save(ss);
 	}

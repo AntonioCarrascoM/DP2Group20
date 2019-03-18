@@ -21,6 +21,7 @@ public class Sponsorship extends DomainEntity {
 	private String		targetURL;
 	private CreditCard	creditCard;
 	private Boolean		isActive;
+	private Double		charge;
 
 	//Relationships
 
@@ -67,6 +68,10 @@ public class Sponsorship extends DomainEntity {
 		return this.parade;
 	}
 
+	@NotNull
+	public Double getCharge() {
+		return this.charge;
+	}
 	//Setters
 
 	public void setBanner(final String banner) {
@@ -91,6 +96,10 @@ public class Sponsorship extends DomainEntity {
 
 	public void setParade(final Parade parade) {
 		this.parade = parade;
+	}
+
+	public void setCharge(final Double charge) {
+		this.charge = charge;
 	}
 
 }
