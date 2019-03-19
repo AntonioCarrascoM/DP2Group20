@@ -61,9 +61,7 @@
 	
 	
 			
-	<jstl:out value="${spamWords}" />:
-	<jstl:out value="${configuration.spamWords}" />
-	<br />
+	
 	
 	<jstl:out value="${countryCode}" />:
 	<jstl:out value="${configuration.countryCode}" />
@@ -78,6 +76,10 @@
 	
 	<jstl:out value="${maxFinderResults}" />:
 	<jstl:out value="${configuration.maxFinderResults}" />
+	<br />
+	
+	<jstl:out value="${spamWords}" />:
+	<jstl:out value="${configuration.spamWords}" />
 	<br />
 	
 	<jstl:out value="${positiveWords}" />:

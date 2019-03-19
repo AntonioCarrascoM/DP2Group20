@@ -33,6 +33,8 @@
 <spring:message code="configuration.creditCardList" var="creditCardList" />
 <spring:message code="configuration.vat" var="vat" />
 <spring:message code="configuration.fare" var="fare" />
+<spring:message code="configuration.commasMessage" var="commasMessage" />
+<spring:message code="configuration.noteBelow" var="noteBelow" />
 
 <spring:message code="configuration.save" var="save" />
 <spring:message code="configuration.cancel" var="cancel" />
@@ -55,27 +57,31 @@
 		 <br />
 	<acme:textarea code="configuration.welcomeES" path="welcomeES"/>
 		 <br />
-	<acme:textarea code="configuration.spamWords" path="spamWords"/>
-		 <br />
+	
 	<acme:textbox code="configuration.countryCode" path="countryCode"/>
 		 <br />
 	<acme:textbox code="configuration.expireFinderMinutes" path="expireFinderMinutes"/>
 		 <br />
 	<acme:textbox code="configuration.maxFinderResults" path="maxFinderResults"/>
 		 <br />
-	<acme:textbox code="configuration.positiveWords" path="positiveWords"/>
+	<acme:textarea code="configuration.spamWords" path="spamWords" placeholder="configuration.noteBelow"/>
 		 <br />
-	<acme:textbox code="configuration.negativeWords" path="negativeWords"/>
+	<acme:textarea code="configuration.positiveWords" path="positiveWords" placeholder="configuration.noteBelow"/>
 		 <br />
-	<acme:textbox code="configuration.priorityList" path="priorityList"/>
+	<acme:textarea code="configuration.negativeWords" path="negativeWords" placeholder="configuration.noteBelow"/>
 		 <br />
-	<acme:textbox code="configuration.creditCardList" path="creditCardList"/>
+	<acme:textarea code="configuration.priorityList" path="priorityList" placeholder="configuration.noteBelow"/>
+		 <br />
+	<acme:textarea code="configuration.creditCardList" path="creditCardList" placeholder="configuration.noteBelow"/>
 		 <br />
 	<acme:textbox code="configuration.vat" path="vat"/>
 		 <br />
 	<acme:textbox code="configuration.fare" path="fare"/>
 		 <br />
 	<%-- Buttons --%>
+	
+	<jstl:out value="${commasMessage}" />
+		<br /><br/>
 	
 		<%--<input type="submit" name="save" value="${save}"> --%>
 
