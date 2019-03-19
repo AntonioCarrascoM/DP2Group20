@@ -33,6 +33,8 @@
 <spring:message code="parade.request" var="msgCreateRequest" />
 <spring:message code="parade.requestList" var="msgListRequest" />
 <spring:message code="parade.area.empty" var="msgAreaEmpty" />
+<spring:message code="parade.rejectionReason" var="rejectionReasonMsg" />
+<spring:message code="parade.paradeStatus" var="paradeStatusMsg" />
 
 
 
@@ -50,7 +52,9 @@
 	<display:column title="${moment}" sortable="true">
 		<fmt:formatDate value="${row.moment}" pattern="${formatDate}" />
 	</display:column>	
-	
+	<security:authorize access="hasRole('CHAPTER')">
+		<display:column property="paradeStatus" title="${paradeStatusMsg}" sortable="true" />
+	</security:authorize>
 		
 	<security:authorize access="hasRole('BROTHERHOOD')">
 	<%-- Requests --%>
@@ -106,7 +110,29 @@
 			<a href="${requestUrl}"><jstl:out value="${msgCreateRequest}" /></a>
 	</display:column>
 	</security:authorize>
-
+	
+	<security:authorize access="hasRole('CHAPTER')">
+	<spring:url var="editUrl" value="parade/chapter/edit.do">
+		<spring:param name="varId" value="${row.id}" />
+	</spring:url>
+	
+	
+	
+	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'SUBMITTED'}">
+		<display:column title="${edit}">
+		<a href="${editUrl}"><jstl:out value="${paradeStatusMsg}" /></a>
+		</display:column>
+	</jstl:if>
+	
+	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'REJECTED' and empty row.rejectionReason}">
+		<display:column title="${edit}">
+		<a href="${editUrl}"><jstl:out value="${rejectionReasonMsg}" /></a>
+		</display:column>
+	</jstl:if>
+		
+	
+	</security:authorize>
+	
 </display:table>
 
 <security:authorize access="hasRole('BROTHERHOOD')">
