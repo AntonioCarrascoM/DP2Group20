@@ -21,6 +21,7 @@ import domain.Float;
 import domain.Parade;
 import domain.ParadeStatus;
 import domain.Request;
+import domain.Segment;
 
 @Service
 @Transactional
@@ -50,6 +51,9 @@ public class ParadeService {
 
 	@Autowired
 	private ChapterService		chapterService;
+
+	@Autowired
+	private SegmentService		segmentService;
 
 	@Autowired
 	private Validator			validator;
@@ -148,6 +152,7 @@ public class ParadeService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == p.getBrotherhood().getId());
 
 		final Brotherhood b = p.getBrotherhood();
+		final Collection<Segment> segments = this.segmentService.getSegmentsForParade(p.getId());
 		final Collection<Parade> parades = b.getParades();
 		final Collection<Float> floats = p.getFloats();
 		final Collection<Request> requests = p.getRequests();
@@ -157,6 +162,7 @@ public class ParadeService {
 		b.setParades(parades);
 		this.brotherhoodService.save(b);
 
+		//Deleting floats
 		if (!(floats.isEmpty()))
 			for (final Float f : floats) {
 				final Collection<Parade> floatParades = f.getParades();
@@ -165,9 +171,16 @@ public class ParadeService {
 				this.floatService.save(f);
 			}
 
+		//Deleting requests
 		if (!(requests.isEmpty()))
 			for (final Request req : requests)
 				this.requestService.delete(req);
+
+		//Deleting segments
+		if (!(segments.isEmpty()))
+			for (final Segment s : segments)
+				this.segmentService.delete(s);
+
 		this.paradeRepository.delete(p);
 	}
 
