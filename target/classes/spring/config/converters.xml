@@ -66,6 +66,15 @@
 		
 		<bean class="converters.UserAccountToStringConverter" />
 		<bean class="converters.StringToUserAccountConverter" />
+		
+		<bean class="converters.SponsorToStringConverter" />
+		<bean class="converters.StringToSponsorConverter" />
+		
+		<bean class="converters.SponsorshipToStringConverter" />
+		<bean class="converters.StringToSponsorshipConverter" />
+		
+		<bean class="converters.ParadeToStringConverter" />
+		<bean class="converters.StringToParadeConverter" />
 		 
 	</util:list>
 	

@@ -33,12 +33,18 @@
 		<value>/views/float/messages</value>
 		<value>/views/member/messages</value>
 		<value>/views/sponsor/messages</value>
+		<value>/views/sponsorship/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/position/messages</value>
 		<value>/views/parade/messages</value>
 		<value>/views/request/messages</value>
 		<value>/views/socialProfile/messages</value>
 		<value>/views/legislation/messages</value>
+		<value>/views/inceptionRecord/messages</value>
+		<value>/views/legalRecord/messages</value>
+		<value>/views/periodRecord/messages</value>
+		<value>/views/linkRecord/messages</value>
+		<value>/views/miscellaneousRecord/messages</value>
 	</util:list>
 
 </beans>
