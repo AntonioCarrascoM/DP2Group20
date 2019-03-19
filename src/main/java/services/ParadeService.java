@@ -178,8 +178,7 @@ public class ParadeService {
 
 		//Deleting segments
 		if (!(segments.isEmpty()))
-			for (final Segment s : segments)
-				this.segmentService.delete(s);
+			this.segmentService.delete(p.getId());
 
 		this.paradeRepository.delete(p);
 	}
