@@ -32,7 +32,7 @@
 <spring:message code="box.confirm.delete" var="confirm" />
 
 <security:authorize
-	access="hasAnyRole('ADMIN', 'MEMBER', 'BROTHERHOOD')">
+	access="isAuthenticated()">
 
 	<%-- Listing grid --%>
 
