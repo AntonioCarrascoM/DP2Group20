@@ -11,7 +11,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.constraints.URL;
 
@@ -60,7 +59,6 @@ public class Configuration extends DomainEntity {
 		return this.welcomeES;
 	}
 
-	@NotEmpty
 	@ElementCollection
 	public Collection<String> getSpamWords() {
 		return this.spamWords;
@@ -82,25 +80,21 @@ public class Configuration extends DomainEntity {
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getPositiveWords() {
 		return this.positiveWords;
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getNegativeWords() {
 		return this.negativeWords;
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getPriorityList() {
 		return this.priorityList;
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getCreditCardList() {
 		return this.creditCardList;
 	}
