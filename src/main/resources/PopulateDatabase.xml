@@ -2067,7 +2067,7 @@
 		<property name="maxColumn" value="7"/>
 		<property name="moment" value="25/04/2020 10:20" />
 		<property name="finalMode" value="true" />
-		<property name="paradeStatus" value="ACCEPTED" /> 
+		<property name="paradeStatus" value="SUBMITTED" /> 
 		<property name="rejectionReason" value="Not reason is required"></property>
  		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
@@ -2116,7 +2116,7 @@
 		<property name="maxColumn" value="10"/>
 		<property name="description" value="Move forward!" />
 		<property name="moment" value="15/09/2020 12:25" />
-		<property name="finalMode" value="false" />
+		<property name="finalMode" value="true" />
 		<property name="paradeStatus" value="ACCEPTED" />	
 		<property name="rejectionReason" value="Not reason is required"></property>
 		<property name="brotherhood" ref="brotherhood2" />
@@ -2210,7 +2210,7 @@
 		<property name="parade" ref="parade1" />
 		<property name="charge" value="25.3" />
 	</bean>
-
+	
 	<bean id="sponsorship2" class="domain.Sponsorship">
 		<property name="banner" value="https://s03.s3c.es/imag/_v0/640x319/4/5/e/telegram.jpg" />
 		<property name="targetURL" value="http://telegram.com.es/" />
@@ -2264,7 +2264,7 @@
 		<property name="creditCard" ref="creditCard5" />
 		<property name="isActive" value="true" />
 		<property name="sponsor" ref="sponsor1" />
-		<property name="parade" ref="parade1" />
+		<property name="parade" ref="parade3" />
 		<property name="charge" value="500.70" />
 	</bean>
 	
@@ -2275,20 +2275,10 @@
 		<property name="creditCard" ref="creditCard5" />
 		<property name="isActive" value="true" />
 		<property name="sponsor" ref="sponsor1" />
-		<property name="parade" ref="parade2" />
+		<property name="parade" ref="parade3" />
 		<property name="charge" value="814.50" />
 	</bean>
-	
-	<bean id="sponsorship9" class="domain.Sponsorship">
-		<property name="banner" value="https://upload.wikimedia.org/wikipedia/commons/7/71/DAZN_logo.svg" />
-		<property name="targetURL" value="https://www.dazn.com" />
-		<property name="creditCard" ref="creditCard3" />
-		<property name="isActive" value="true" />
-		<property name="sponsor" ref="sponsor1" />
-		<property name="parade" ref="parade4" />
-		<property name="charge" value="1200.0" />
-	</bean>
-	
+
 	
 	
 	<!-- Social Profile beans -->
