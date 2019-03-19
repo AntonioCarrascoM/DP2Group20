@@ -61,7 +61,6 @@ public class Configuration extends DomainEntity {
 	}
 
 	@NotEmpty
-	@ElementCollection
 	public Collection<String> getSpamWords() {
 		return this.spamWords;
 	}
@@ -82,25 +81,21 @@ public class Configuration extends DomainEntity {
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getPositiveWords() {
 		return this.positiveWords;
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getNegativeWords() {
 		return this.negativeWords;
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getPriorityList() {
 		return this.priorityList;
 	}
 
 	@ElementCollection
-	@NotEmpty
 	public Collection<String> getCreditCardList() {
 		return this.creditCardList;
 	}

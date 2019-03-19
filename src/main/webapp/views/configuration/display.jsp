@@ -32,6 +32,9 @@
 <spring:message code="configuration.positiveWords" var="positiveWords" />
 <spring:message code="configuration.negativeWords" var="negativeWords" />
 <spring:message code="configuration.priorityList" var="priorityList" />
+<spring:message code="configuration.creditCardList" var="creditCardList" />
+<spring:message code="configuration.vat" var="vat" />
+<spring:message code="configuration.fare" var="fare" />
 
 <spring:message code="configuration.return" var="returnMsg" />
 <spring:message code="configuration.edit" var="edit" />
@@ -87,7 +90,20 @@
 	
 	<jstl:out value="${priorityList}" />:
 	<jstl:out value="${configuration.priorityList}" />
-	<br /><br />
+	<br />
+	
+	<jstl:out value="${creditCardList}" />:
+	<jstl:out value="${configuration.creditCardList}" />
+	<br />
+	
+	<jstl:out value="${vat}" />:
+	<jstl:out value="${configuration.vat}" />
+	<br />
+	
+	<jstl:out value="${fare}" />:
+	<jstl:out value="${configuration.fare}" />
+	<br />
+	<br />
 	
 	<spring:url var="editUrl"
 		value="configuration/administrator/edit.do">
