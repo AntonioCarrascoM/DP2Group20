@@ -2138,8 +2138,8 @@
 		<property name="description" value="I am useless!" />
 		<property name="moment" value="15/09/2020 12:25" />
 		<property name="finalMode" value="false" />
-		<property name="paradeStatus" value="REJECTED" />	
-		<property name="rejectionReason" value="This parade has been rejected because not is good"></property>
+		<property name="paradeStatus"><null/></property>
+		<property name="rejectionReason"><null/></property>
 		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
 			<list>
