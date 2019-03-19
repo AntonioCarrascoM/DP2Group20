@@ -37,6 +37,7 @@
 		<value>/views/message/messages</value>
 		<value>/views/position/messages</value>
 		<value>/views/parade/messages</value>
+		<value>/views/segment/messages</value> 
 		<value>/views/request/messages</value>
 		<value>/views/socialProfile/messages</value>
 		<value>/views/legislation/messages</value>

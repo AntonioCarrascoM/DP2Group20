@@ -69,6 +69,7 @@
 		<security:intercept-url pattern="/legalRecord/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/periodRecord/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/linkRecord/brotherhood/**" access="hasRole('BROTHERHOOD')" />
+		<security:intercept-url pattern="/segment/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 		<security:intercept-url pattern="/miscellaneousRecord/brotherhood/**" access="hasRole('BROTHERHOOD')" />
 
 		<security:intercept-url pattern="/enrolment/member/**" access="hasRole('MEMBER')" />
