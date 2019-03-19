@@ -98,4 +98,10 @@ public class SegmentService {
 
 		return result;
 	}
+
+	//Other methods
+
+	public Collection<Segment> getSegmentsForParade(final int paradeId) {
+		return this.segmentRepository.getSegmentsForParade(paradeId);
+	}
 }
