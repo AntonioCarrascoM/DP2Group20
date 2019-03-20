@@ -27,6 +27,7 @@
 <spring:message code="area.edit" var="edit" />
 <spring:message code="area.delete.confirm" var="msgConfirm" />
 <spring:message code="area.delete" var="delete" />
+<spring:message code="area.selfAssign" var="selfAssign" />
 <spring:message code="area.create" var="create" />
 <spring:message code="area.cancel" var="cancel" />
 
@@ -70,6 +71,20 @@
 		<display:column title="${delete}">
 			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${delete}" /></a>
 		</display:column>
+		
+		</security:authorize>
+		
+		<security:authorize access="hasRole('CHAPTER')">
+	
+		<spring:url var="selfAssignURL"
+			value="area/chapter/selfAssign.do">
+			<spring:param name="varId"
+				value="${row.id}"/>
+		</spring:url>
+	
+		<display:column title="${selfAssign}">
+			<a href="${selfAssignURL}"><jstl:out value="${selfAssign}" /></a>
+   		</display:column>
 	
 
 	

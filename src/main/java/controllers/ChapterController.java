@@ -42,10 +42,10 @@ public class ChapterController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		FormObjectChapter fob;
+		FormObjectChapter foc;
 
-		fob = new FormObjectChapter();
-		result = this.createEditModelAndView(fob);
+		foc = new FormObjectChapter();
+		result = this.createEditModelAndView(foc);
 
 		return result;
 	}
@@ -143,19 +143,19 @@ public class ChapterController extends AbstractController {
 
 	//Ancillary methods
 
-	protected ModelAndView createEditModelAndView(final FormObjectChapter fob) {
+	protected ModelAndView createEditModelAndView(final FormObjectChapter foc) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(fob, null);
+		result = this.createEditModelAndView(foc, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final FormObjectChapter fob, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final FormObjectChapter foc, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("chapter/create");
-		result.addObject("fob", fob);
+		result.addObject("foc", foc);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "chapter/create.do");
 

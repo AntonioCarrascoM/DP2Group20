@@ -255,6 +255,16 @@
 
 	</bean>
 	
+	<bean id="area3" class="domain.Area">
+		<property name="name" value="House of the los cojoncillos" />
+		<property name="pictures" value="https://i.imgur.com/QlKFUwW.png" />
+		<property name="brotherhoods">
+			<list>
+			</list>
+		</property> 
+
+	</bean>
+	
 	<!-- Box beans -->
 	
 	<bean id="inBox1" class="domain.Box">

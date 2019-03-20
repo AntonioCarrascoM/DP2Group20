@@ -46,29 +46,17 @@
 
 	<form:hidden path="id" />
 	
-
-
-	
-	
-	
 	<acme:textarea
 		 code="proclaim.description" 
 		 path="description"/>
 		 <br />
 		 
-	
 	<acme:textbox 
 	     placeholder="proclaim.ph"
 		 code = "proclaim.publicationMoment" 
 		 path="publicationMoment"/>
 		 <br/>
 		 
-		 
-	
-	
-
-	
-	
 			<%-- Buttons --%>
 		
 		<%-- <acme:submit code="proclaim.save" name="save"/> --%>

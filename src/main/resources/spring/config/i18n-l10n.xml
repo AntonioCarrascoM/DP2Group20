@@ -28,6 +28,7 @@
 		<value>/views/box/messages</value>
 		<value>/views/brotherhood/messages</value>
 		<value>/views/configuration/messages</value>
+		<value>/views/chapter/messages</value>
 		<value>/views/enrolment/messages</value>
 		<value>/views/finder/messages</value>
 		<value>/views/float/messages</value>

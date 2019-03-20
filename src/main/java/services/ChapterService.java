@@ -126,7 +126,7 @@ public class ChapterService {
 		result.setTitle(fob.getTitle());
 		result.getUserAccount().setUsername(fob.getUsername());
 		result.getUserAccount().setPassword(fob.getPassword());
-
+		//TODO cambiar el sitio del binding
 		this.validator.validate(result, binding);
 
 		//Assertion that the email is valid according to the checkAdminEmail method.
@@ -158,7 +158,7 @@ public class ChapterService {
 		if (result.getArea() == null)
 			result.setArea(chapter.getArea());
 		this.validator.validate(result, binding);
-
+		//TODO cambiar el sitio del binding
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getId());
 
 		//Assertion that the email is valid according to the checkAdminEmail method.

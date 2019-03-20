@@ -135,4 +135,8 @@ public class AreaService {
 		return this.areaRepository.ratioAreasNotCoordinated();
 	}
 
+	//Areas that have no chapter assigned
+	public Collection<Area> areasWithNoChapterAssigned() {
+		return this.areaRepository.areasWithNoChapterAssigned();
+	}
 }
