@@ -71,6 +71,12 @@
 		<security:intercept-url pattern="/request/member/**" access="hasRole('MEMBER')" />
 		
 		<security:intercept-url pattern="/sponsorship/**" access="hasRole('SPONSOR')" />
+		<security:intercept-url pattern="/proclaim/**" access="hasRole('CHAPTER')" />
+		<security:intercept-url pattern="/area/chapter/**" access="hasRole('CHAPTER')" />
+		<security:intercept-url pattern="/parade/chapter/**" access="hasRole('CHAPTER')" />
+		
+		
+		
 
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
