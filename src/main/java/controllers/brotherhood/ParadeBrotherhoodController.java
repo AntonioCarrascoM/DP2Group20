@@ -3,6 +3,8 @@ package controllers.brotherhood;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -87,24 +89,23 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 		try {
 			parade = this.paradeService.reconstruct(parade, binding);
+		} catch (final ValidationException oops) {
+			return result = this.createEditModelAndView(parade);
 		} catch (final Throwable oops) {
 			return result = this.createEditModelAndView(parade, "parade.commit.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(parade);
-		else
-			try {
+		try {
 
-				if (parade.getFinalMode() == true) {
-					parade.setFinalMode(false);
-					this.paradeService.save(parade, true);
-				} else
-					this.paradeService.save(parade, false);
+			if (parade.getFinalMode() == true) {
+				parade.setFinalMode(false);
+				this.paradeService.save(parade, true);
+			} else
+				this.paradeService.save(parade, false);
 
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(parade, "parade.commit.error");
-			}
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(parade, "parade.commit.error");
+		}
 		return result;
 	}
 

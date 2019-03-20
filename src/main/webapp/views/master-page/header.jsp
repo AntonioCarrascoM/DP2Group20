@@ -124,9 +124,13 @@
 								code="master.page.register.brotherhood" /></a></li>
 					<li><a href="sponsor/create.do"><spring:message
 								code="master.page.register.sponsor" /></a></li>
+					<li><a href="chapter/create.do"><spring:message
+								code="master.page.register.chapter" /></a></li>
 				</ul>
 			<li><a class="fNiv" href="brotherhood/list.do"><spring:message
 					code="master.page.brotherhood.list" /></a> </li>
+			<li><a class="fNiv" href="chapter/list.do"><spring:message
+					code="master.page.chapter.list" /></a> </li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('ADMIN')">
@@ -191,7 +195,7 @@
 		<security:authorize access="hasRole('CHAPTER')">
 			<li><a href="proclaim/chapter/list.do"><spring:message
 					code="master.page.proclaim.list" /></a></li>
-					
+	
 			<li><a href="area/chapter/listA.do"><spring:message
 					code="master.page.area.listA" /></a></li>
 			
