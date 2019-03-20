@@ -255,6 +255,16 @@
 
 	</bean>
 	
+	<bean id="area3" class="domain.Area">
+		<property name="name" value="House of the los cojoncillos" />
+		<property name="pictures" value="https://i.imgur.com/QlKFUwW.png" />
+		<property name="brotherhoods">
+			<list>
+			</list>
+		</property> 
+
+	</bean>
+	
 	<!-- Box beans -->
 	
 	<bean id="inBox1" class="domain.Box">
@@ -1195,6 +1205,7 @@
 			<list>
 				<ref bean="parade1" />
 				<ref bean="parade2" />
+				<ref bean="parade4" />
 			</list>
 		</property>
 		<property name="enrolments">
@@ -1506,7 +1517,7 @@
 	<!-- Sponsor beans -->
 	
 	<bean id="sponsor1" class="domain.Sponsor">
-		<property name="name" value="CocaCola" />
+		<property name="name" value="Coca" />
 		<property name="middleName" value="Cola" />
 		<property name="surname" value="Coke" />
 		<property name="photo"
@@ -1815,6 +1826,15 @@
 		<property name="expYear" value="2024" />
 		<property name="cvv" value="973" />
 	</bean>
+
+	<bean id="creditCard5" class="domain.CreditCard">
+		<property name="holder" value="Fran Fernandez" />
+		<property name="make" value="VISA" />
+		<property name="number" value="4006665123180313" />
+		<property name="expMonth" value="05" />
+		<property name="expYear" value="2017" />
+		<property name="cvv" value="554" />
+	</bean>
 	
 	<!-- Float beans -->
 	
@@ -2057,8 +2077,8 @@
 		<property name="maxColumn" value="7"/>
 		<property name="moment" value="25/04/2020 10:20" />
 		<property name="finalMode" value="true" />
-		<property name="paradeStatus" value="ACCEPTED" /> 
-		<property name="rejectionReason" value="Not reason is required"></property>
+		<property name="paradeStatus" value="SUBMITTED" /> 
+		<property name="rejectionReason"><null/></property>
  		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
 			<list>
@@ -2083,8 +2103,8 @@
 		<property name="maxColumn" value="6"/>
 		<property name="moment" value="10/09/2020 12:20" />
 		<property name="finalMode" value="false" />
-		<property name="paradeStatus" value="ACCEPTED" />	
-		<property name="rejectionReason" value="Not reason is required"></property>
+		<property name="paradeStatus"><null/></property>
+		<property name="rejectionReason"><null/></property>
 		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
 			<list>
@@ -2106,9 +2126,9 @@
 		<property name="maxColumn" value="10"/>
 		<property name="description" value="Move forward!" />
 		<property name="moment" value="15/09/2020 12:25" />
-		<property name="finalMode" value="false" />
+		<property name="finalMode" value="true" />
 		<property name="paradeStatus" value="ACCEPTED" />	
-		<property name="rejectionReason" value="Not reason is required"></property>
+		<property name="rejectionReason"><null/></property>
 		<property name="brotherhood" ref="brotherhood2" />
 		<property name="floats">
 			<list>
@@ -2119,6 +2139,28 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="parade4" class="domain.Parade">
+		<property name="ticker" value="147987-NHGDE" />
+		<property name="title" value="This parade is very bad" />
+		<property name="maxRow" value="10"/>
+		<property name="maxColumn" value="10"/>
+		<property name="description" value="I am useless!" />
+		<property name="moment" value="15/09/2020 12:25" />
+		<property name="finalMode" value="false" />
+		<property name="paradeStatus"><null/></property>
+		<property name="rejectionReason"><null/></property>
+		<property name="brotherhood" ref="brotherhood1" />
+		<property name="floats">
+			<list>
+			</list>
+		</property>
+		<property name="requests">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
 	
 	<!-- Request beans -->
 	
@@ -2178,7 +2220,7 @@
 		<property name="parade" ref="parade1" />
 		<property name="charge" value="25.3" />
 	</bean>
-
+	
 	<bean id="sponsorship2" class="domain.Sponsorship">
 		<property name="banner" value="https://s03.s3c.es/imag/_v0/640x319/4/5/e/telegram.jpg" />
 		<property name="targetURL" value="http://telegram.com.es/" />
@@ -2226,8 +2268,27 @@
 		<property name="charge" value="212.70" />
 	</bean>
 	
+	<bean id="sponsorship7" class="domain.Sponsorship">
+		<property name="banner" value="https://static2.ideal.es/www/multimedia/201803/10/media/cortadas/carrefour-2-kitH-U501229286409no-624x385@Ideal.jpg" />
+		<property name="targetURL" value="https://www.carrefour.es/"/>
+		<property name="creditCard" ref="creditCard5" />
+		<property name="isActive" value="true" />
+		<property name="sponsor" ref="sponsor1" />
+		<property name="parade" ref="parade3" />
+		<property name="charge" value="500.70" />
+	</bean>
 	
 	
+	<bean id="sponsorship8" class="domain.Sponsorship">
+		<property name="banner" value="https://static2.ideal.es/www/multimedia/201803/10/media/cortadas/carrefour-2-kitH-U501229286409no-624x385@Ideal.jpg" />
+		<property name="targetURL" value="https://www.carrefour.es/"/>
+		<property name="creditCard" ref="creditCard5" />
+		<property name="isActive" value="true" />
+		<property name="sponsor" ref="sponsor1" />
+		<property name="parade" ref="parade3" />
+		<property name="charge" value="814.50" />
+	</bean>
+
 	
 	
 	<!-- Social Profile beans -->
