@@ -32,7 +32,8 @@ public class AreaChapterController extends AbstractController {
 	public ModelAndView list() {
 		final ModelAndView result;
 		Collection<Area> areas;
-
+		
+		//TODO query que coja las areas no asignadas
 		areas = this.areaService.findAll();
 
 		result = new ModelAndView("area/list");
@@ -40,75 +41,5 @@ public class AreaChapterController extends AbstractController {
 		result.addObject("requestURI", "area/chapter/list.do");
 
 		return result;
-	}
-
-	//Creation
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		final ModelAndView result;
-		Area area;
-
-		area = this.areaService.create();
-		result = this.createEditModelAndView(area);
-
-		return result;
-	}
-
-	//Edition
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int varId) {
-		final ModelAndView result;
-		Area area;
-
-		area = this.areaService.findOne(varId);
-		Assert.notNull(area);
-		result = this.createEditModelAndView(area);
-
-		return result;
-	}
-
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(Area area, final BindingResult binding) {
-		ModelAndView result;
-
-		try {
-			area = this.areaService.reconstruct(area, binding);
-		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(area, "area.commit.error");
-		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(area);
-		else
-			try {
-				this.areaService.save(area);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(area, "area.commit.error");
-			}
-		return result;
-	}
-
-	//Ancillary methods
-
-	protected ModelAndView createEditModelAndView(final Area area) {
-		ModelAndView result;
-
-		result = this.createEditModelAndView(area, null);
-
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(final Area area, final String messageCode) {
-		ModelAndView result;
-
-		result = new ModelAndView("area/edit");
-		result.addObject("area", area);
-		result.addObject("message", messageCode);
-		result.addObject("requestURI", "area/chapter/edit.do");
-
-		return result;
-
 	}
 }
