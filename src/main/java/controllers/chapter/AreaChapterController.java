@@ -24,13 +24,13 @@ public class AreaChapterController extends AbstractController {
 	//Services
 
 	@Autowired
+	private AreaService		areaService;
+
+	@Autowired
 	private ActorService	actorService;
 
 	@Autowired
 	private ChapterService	chapterService;
-
-	@Autowired
-	private AreaService		areaService;
 
 
 	//Listing
