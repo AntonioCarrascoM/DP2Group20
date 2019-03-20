@@ -39,6 +39,7 @@
 <spring:message code="sponsorship.save" var="save" />
 <spring:message code="sponsorship.cancel" var="cancel" />
 
+
 <security:authorize access="hasRole('SPONSOR')">
 
 <form:form action="${requestURI}" modelAttribute="sponsorship">
@@ -75,24 +76,12 @@
 	<acme:textbox code="sponsorship.creditCard.cvv" path="creditCard.cvv" />
 	<br />
 
-	<form:label path="parade">
-			<jstl:out value="${parade}" />:
-	</form:label>
-
-		<form:select path="parade">
-			<form:option label="----" value="0" />
-			<form:options items="${parades}" itemLabel="title"/>
-		</form:select>
-
-		<form:errors cssClass="error" path="parade" />
+		<acme:select code="sponsorship.parade" path="parade"
+			items="${parades}" itemLabel="title" id="parades" />
 		<br />
 	<%-- Buttons --%>
 	<input type="submit" name="save" value="${save}"/>&nbsp; 
 	
-	<jstl:if test="${sponsorship.id!=0}">
-			<input type="submit" name="delete" value="${delete}"
-				onclick="return confirm('${confirm}')" />&nbsp;
-	</jstl:if>
 	
 		<input type="button" name="cancel" value="${cancel}"
 			onclick="javascript: relativeRedir('sponsorship/sponsor/list.do');" />
