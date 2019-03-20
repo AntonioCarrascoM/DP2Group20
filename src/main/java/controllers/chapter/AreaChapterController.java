@@ -66,8 +66,7 @@ public class AreaChapterController extends AbstractController {
 		final ModelAndView result;
 
 		final Area area = this.areaService.findOne(varId);
-		//TODO Checkear
-		final Chapter chap = this.chapterService.getChapterForArea(varId);
+
 		if (this.chapterService.getChapterForArea(varId) != null && this.chapterService.getChapterForArea(varId).getArea() != null)
 			return new ModelAndView("redirect:/welcome/index.do");
 		else {

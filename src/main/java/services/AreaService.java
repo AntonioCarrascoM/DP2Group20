@@ -4,6 +4,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,6 +109,9 @@ public class AreaService {
 			Assert.isTrue(this.brotherhoodService.checkPictures(result.getPictures()));
 
 		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		return result;
 

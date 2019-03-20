@@ -3,6 +3,8 @@ package controllers.administrator;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -75,18 +77,17 @@ public class AreaAdministratorController extends AbstractController {
 
 		try {
 			area = this.areaService.reconstruct(area, binding);
+		} catch (final ValidationException oops) {
+			return result = this.createEditModelAndView(area);
 		} catch (final Throwable oops) {
 			return result = this.createEditModelAndView(area, "area.commit.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(area);
-		else
-			try {
-				this.areaService.save(area);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(area, "area.commit.error");
-			}
+		try {
+			this.areaService.save(area);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(area, "area.commit.error");
+		}
 		return result;
 	}
 
