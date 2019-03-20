@@ -28,6 +28,7 @@
 		<value>/views/box/tiles.xml</value>
 		<value>/views/brotherhood/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
+		<value>/views/chapter/tiles.xml</value>
 		<value>/views/enrolment/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>
 		<value>/views/float/tiles.xml</value>

@@ -25,6 +25,7 @@
 <spring:message code="proclaim.publicationMoment" var="moment" />
 <spring:message code="proclaim.formatDate" var="formatDate" />
 <spring:message code="proclaim.create" var="msgCreate" />
+<spring:message code="proclaim.display" var="msgDisplay" />
 
 
 <%-- Proclaim list view --%>
@@ -40,8 +41,16 @@
 	<display:column title="${publicationMoment}" sortable="true">
 		<fmt:formatDate value="${row.publicationMoment}" pattern="${formatDate}" />
 	</display:column>	
+	
+	
+	<%-- Requests --%>
+	<spring:url var="displayUrl" value="proclaim/display.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+		<display:column title="${msgDisplay}">
+			<a href="${displayUrl}"><jstl:out value="${msgDisplay}" /></a>
+		</display:column>
 		
-
 </display:table>
 
 
