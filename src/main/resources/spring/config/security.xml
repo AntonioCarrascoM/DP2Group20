@@ -42,6 +42,11 @@
 		<security:intercept-url pattern="/parade/**" access="permitAll" />
 		<security:intercept-url pattern="/float/**" access="permitAll" />
 		<security:intercept-url pattern="/sponsor/**" access="permitAll" />
+		<security:intercept-url pattern="/inceptionRecord/**" access="permitAll" />
+		<security:intercept-url pattern="/legalRecord/**" access="permitAll" />
+		<security:intercept-url pattern="/periodRecord/**" access="permitAll" />
+		<security:intercept-url pattern="/linkRecord/**" access="permitAll" />
+		<security:intercept-url pattern="/miscellaneousRecord/**" access="permitAll" />
 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />

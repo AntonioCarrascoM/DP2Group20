@@ -23,7 +23,6 @@
 <spring:message code="inceptionRecord.description" var="description" />
 <spring:message code="inceptionRecord.photos" var="photos" />
 <spring:message code="inceptionRecord.edit" var="edit" />
-<spring:message code="inceptionRecord.return" var="return" />
 
 
 	
@@ -45,9 +44,8 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<spring:url var="editUrl"
 		value="inceptionRecord/brotherhood/edit.do">
-		<spring:param name="inceptionRecordId"
+		<spring:param name="varId"
 			value="${inceptionRecord.id}"/>
 	</spring:url>
 	<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 </security:authorize>
-<a href="#"><jstl:out value="${return}" /></a>

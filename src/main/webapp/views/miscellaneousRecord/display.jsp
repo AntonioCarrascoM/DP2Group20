@@ -22,8 +22,6 @@
 <spring:message code="miscellaneousRecord.title"  var="title"/>
 <spring:message code="miscellaneousRecord.description" var="description" />
 <spring:message code="miscellaneousRecord.edit" var="edit" />
-<spring:message code="miscellaneousRecord.return" var="return" />
-
 
 	<%-- For the curriculum in the list received as model, display the following information: --%>
 	<jstl:out value="${msgTitle}" />:
@@ -39,9 +37,8 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<spring:url var="editUrl"
 		value="miscellaneousRecord/brotherhood/edit.do">
-		<spring:param name="miscellaneousRecordId"
+		<spring:param name="varId"
 			value="${miscellaneousRecord.id}"/>
 	</spring:url>
 	<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 </security:authorize>
-<a href="#"><jstl:out value="${return}" /></a>

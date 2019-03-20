@@ -35,8 +35,6 @@
 <spring:message code="legalRecord.cancel" var="cancel" />
 
 
-<jstl:set var="Administrator" value="admin" />
-<%-- HandyWorker list view --%>
 
 <security:authorize access="hasRole('BROTHERHOOD')"> 
 
