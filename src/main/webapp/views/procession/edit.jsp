@@ -142,7 +142,6 @@
 <!-- A brotherhood cannot organise any parades until they selected an area -->
 	<jstl:if test="${not empty parade.brotherhood.area}">
 		<%-- <input type="submit" name="save" value="${msgSave}"> --%>
-					onclick="return confirm('${msgConf}')">
 				<acme:submit code="parade.save" name="save"/>
 		
 
