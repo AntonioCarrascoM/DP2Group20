@@ -79,7 +79,6 @@
 		<security:intercept-url pattern="/sponsorship/**" access="hasRole('SPONSOR')" />
 		<security:intercept-url pattern="/proclaim/**" access="hasRole('CHAPTER')" />
 		<security:intercept-url pattern="/area/chapter/**" access="hasRole('CHAPTER')" />
-		<security:intercept-url pattern="/parade/chapter/**" access="hasRole('CHAPTER')" />
 		
 		
 		
