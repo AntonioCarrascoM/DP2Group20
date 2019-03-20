@@ -3,6 +3,8 @@ package controllers.chapter;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -67,8 +69,10 @@ public class ProclaimChapterController extends AbstractController {
 
 		try {
 			proclaim = this.proclaimService.reconstruct(proclaim, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(proclaim);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(proclaim, "proclaim.commit.error");
+			return this.createEditModelAndView(proclaim, "proclaim.commit.error");
 		}
 
 		if (binding.hasErrors())

@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +98,10 @@ public class ProclaimService {
 		this.proclaimRepository.delete(p);
 	}
 
+	public void flush() {
+		this.proclaimRepository.flush();
+	}
+
 	//Reconstruct
 
 	public Proclaim reconstruct(final Proclaim p, final BindingResult binding) {
@@ -109,6 +115,8 @@ public class ProclaimService {
 		result.setDescription(p.getDescription());
 
 		this.validator.validate(result, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		final Date date = result.getPublicationMoment();
 		final DateFormat fecha = new SimpleDateFormat("yyyy/MM/dd");

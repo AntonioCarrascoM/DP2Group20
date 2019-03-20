@@ -50,6 +50,11 @@
 						<li><a href="administrator/edit.do"><spring:message
 									code="master.page.actor.edit" /></a></li>
 					</security:authorize>
+					
+					<security:authorize access="hasRole('CHAPTER')">
+						<li><a href="chapter/edit.do"><spring:message
+									code="master.page.actor.edit" /></a></li>
+					</security:authorize>
 
 					<li><a href="box/list.do"><spring:message
 								code="master.page.box.list" /> </a></li>
@@ -59,6 +64,22 @@
 					<li><a href="j_spring_security_logout"><spring:message
 								code="master.page.logout" /> </a></li>
 				</ul></li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('CHAPTER')">
+			<li><a class="fNiv"> <spring:message
+						code="master.page.chapter" />
+			</a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="parade/chapter/list.do"><spring:message
+								code="master.page.parade.list" /></a></li>
+								
+					<li><a href="proclaim/chapter/list.do"><spring:message
+								code="master.page.proclaim.list" /></a></li>
+								
+				</ul>
+			</li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('ADMIN')">
@@ -74,6 +95,9 @@
 
 					<li><a href="administrator/computeScore.do"><spring:message
 								code="master.page.administrator.computeScore" /></a></li>
+					
+					<li><a href="administrator/checkCreditCard.do"><spring:message
+								code="master.page.administrator.checkCreditCard" /></a></li>
 
 					<li><a href="position/administrator/list.do"><spring:message
 								code="master.page.position" /></a></li>
@@ -162,6 +186,20 @@
 		<security:authorize access="hasRole('SPONSOR')">
 			<li><a href="sponsorship/sponsor/list.do"><spring:message
 					code="master.page.sponsorship.list" /></a></li>
+		</security:authorize>
+		
+		<security:authorize access="hasRole('CHAPTER')">
+			<li><a href="proclaim/chapter/list.do"><spring:message
+					code="master.page.proclaim.list" /></a></li>
+					
+			<li><a href="area/chapter/listA.do"><spring:message
+					code="master.page.area.listA" /></a></li>
+			
+			<li><a href="parade/chapter/list.do"><spring:message
+					code="master.page.parade.list" /></a></li>		
+					
+					
+					
 		</security:authorize>
 
 	</ul>

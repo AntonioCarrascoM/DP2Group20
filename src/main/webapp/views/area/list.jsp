@@ -33,8 +33,7 @@
 
 <jstl:set var="Administrator" value="admin" />
 <%-- HandyWorker list view --%>
-
-<security:authorize access="hasRole('ADMIN')"> 
+ 
 
 <display:table pagesize="5" class="displaytag" name="areas"
 	requestURI="${requestURI}" id="row">
@@ -48,8 +47,8 @@
 	<display:column property="pictures" title="${pictures}" sortable="true" />
 	
 	
-	
 
+<security:authorize access="hasRole('ADMIN')">
 	<%-- Edition & Delete button --%>
 	
 	<spring:url var="editUrl"
@@ -72,16 +71,18 @@
 			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${delete}" /></a>
 		</display:column>
 	
+
 	
 	
-	
+</security:authorize>
 </display:table>
 
+<security:authorize access="hasRole('ADMIN')">
 
 	<spring:url var="createUrl" value="area/administrator/create.do"/>
 	<a href="${createUrl}"><jstl:out value="${create}"/></a>
 
-
 </security:authorize>
+
 
 

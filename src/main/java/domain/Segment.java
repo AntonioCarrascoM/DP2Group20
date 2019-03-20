@@ -59,14 +59,14 @@ public class Segment extends DomainEntity {
 	//TODO Hacer que la origin date de un segmento sea la destination date del anterior segmento de esa parade
 	//TODO Ver como podemos poner solo la hora, aunque como está actualmente se guarda en la bdd bien (solo la hora y los min)
 	@NotNull
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getOriginDate() {
 		return this.originDate;
 	}
 
 	@NotNull
-	@Temporal(TemporalType.TIME)
+	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getDestinationDate() {
 		return this.destinationDate;

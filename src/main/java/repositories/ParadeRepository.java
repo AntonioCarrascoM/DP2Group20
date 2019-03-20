@@ -43,4 +43,8 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	//Parades with status accpeted
 	@Query("select p from Parade p where p.paradeStatus = 1")
 	Collection<Parade> paradesAccepted();
+
+	//Parades with final mode for an area
+	@Query("select p from Parade p join p.brotherhood b join b.area a where p.finalMode='1' and a.id=?1")
+	Collection<Parade> finalParadesByArea(int id);
 }

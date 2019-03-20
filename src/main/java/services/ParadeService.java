@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,11 +18,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ParadeRepository;
+import security.Authority;
 import domain.Brotherhood;
 import domain.Float;
 import domain.Parade;
 import domain.ParadeStatus;
 import domain.Request;
+import domain.Segment;
 
 @Service
 @Transactional
@@ -50,6 +54,9 @@ public class ParadeService {
 
 	@Autowired
 	private ChapterService		chapterService;
+
+	@Autowired
+	private SegmentService		segmentService;
 
 	@Autowired
 	private Validator			validator;
@@ -148,6 +155,7 @@ public class ParadeService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == p.getBrotherhood().getId());
 
 		final Brotherhood b = p.getBrotherhood();
+		final Collection<Segment> segments = this.segmentService.getSegmentsForParade(p.getId());
 		final Collection<Parade> parades = b.getParades();
 		final Collection<Float> floats = p.getFloats();
 		final Collection<Request> requests = p.getRequests();
@@ -157,6 +165,7 @@ public class ParadeService {
 		b.setParades(parades);
 		this.brotherhoodService.save(b);
 
+		//Deleting floats
 		if (!(floats.isEmpty()))
 			for (final Float f : floats) {
 				final Collection<Parade> floatParades = f.getParades();
@@ -165,29 +174,53 @@ public class ParadeService {
 				this.floatService.save(f);
 			}
 
+		//Deleting requests
 		if (!(requests.isEmpty()))
 			for (final Request req : requests)
 				this.requestService.delete(req);
+
+		//Deleting segments
+		if (!(segments.isEmpty()))
+			this.segmentService.delete(p.getId());
+
 		this.paradeRepository.delete(p);
 	}
 
 	//Reconstruct
 
 	public Parade reconstruct(final Parade p, final BindingResult binding) {
-		Parade result;
+		Parade result = new Parade();
+		final Authority authBroth = new Authority();
+		authBroth.setAuthority(Authority.BROTHERHOOD);
 
-		if (p.getId() == 0)
-			result = this.create();
-		else
+		final Authority authChapter = new Authority();
+		authChapter.setAuthority(Authority.CHAPTER);
+
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authBroth)) {
+			if (p.getId() == 0)
+				result = this.create();
+			else
+				result = this.paradeRepository.findOne(p.getId());
+			result.setTitle(p.getTitle());
+			result.setDescription(p.getDescription());
+			result.setMaxColumn(p.getMaxColumn());
+			result.setMaxRow(p.getMaxRow());
+			result.setMoment(p.getMoment());
+			result.setFinalMode(p.getFinalMode());
+		} else if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authChapter)) {
 			result = this.paradeRepository.findOne(p.getId());
-		result.setTitle(p.getTitle());
-		result.setDescription(p.getDescription());
-		result.setMaxColumn(p.getMaxColumn());
-		result.setMaxRow(p.getMaxRow());
-		result.setMoment(p.getMoment());
-		result.setFinalMode(p.getFinalMode());
+
+			if (result.getParadeStatus().equals(ParadeStatus.SUBMITTED))
+				result.setParadeStatus(p.getParadeStatus());
+			if (result.getParadeStatus().equals(ParadeStatus.REJECTED))
+				result.setRejectionReason(p.getRejectionReason());
+
+		}
 
 		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		final Date date = result.getMoment();
 		final DateFormat fecha = new SimpleDateFormat("yyyy/MM/dd");
@@ -201,7 +234,7 @@ public class ParadeService {
 		Assert.notNull(result.getBrotherhood().getArea());
 
 		//Assertion that the user modifying this task has the correct privilege.
-		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId() || this.actorService.findByPrincipal().getId() == this.chapterService.getChapterForArea(result.getBrotherhood().getArea().getId()).getId());
 
 		return result;
 
@@ -299,6 +332,10 @@ public class ParadeService {
 	//The ratio of parades in final mode grouped by status.
 	public Double[] ratioParadesInFinalModeGroupByStatus() {
 		return this.paradeRepository.ratioParadesInFinalModeGroupByStatus();
+	}
 
+	//Parades with final mode for an area
+	public Collection<Parade> finalParadesByArea(final int id) {
+		return this.paradeRepository.finalParadesByArea(id);
 	}
 }
