@@ -95,6 +95,9 @@
 
 					<li><a href="administrator/computeScore.do"><spring:message
 								code="master.page.administrator.computeScore" /></a></li>
+					
+					<li><a href="administrator/checkCreditCard.do"><spring:message
+								code="master.page.administrator.checkCreditCard" /></a></li>
 
 					<li><a href="position/administrator/list.do"><spring:message
 								code="master.page.position" /></a></li>

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -113,6 +114,8 @@ public class SponsorshipService {
 		//Assertion that the sponsorship is deactive
 		Assert.isTrue(ss.getIsActive() == false);
 
+		Assert.isTrue(!this.sponsorshipsWithExpiredCreditCards().contains(ss));
+
 		ss.setIsActive(true);
 
 		this.sponsorshipRepository.save(ss);
@@ -126,6 +129,14 @@ public class SponsorshipService {
 		ss.setCharge(0.0);
 
 		this.sponsorshipRepository.save(ss);
+	}
+
+	//disableSponsorshipsWithExpiredCreditCards
+	public void disableSponsorshipsWithExpiredCreditCards() {
+		Collection<Sponsorship> ss = new ArrayList<>();
+		ss = this.sponsorshipsWithExpiredCreditCards();
+		for (final Sponsorship s : ss)
+			s.setIsActive(false);
 	}
 
 	public Sponsorship reconstruct(final FormObjectSponsorship foss, final BindingResult binding) {
@@ -192,14 +203,21 @@ public class SponsorshipService {
 
 	//Other methods
 
-  //Ratio of active sponsorships
+	//Ratio of active sponsorships
 	public Double ratioOfActiveSponsorships() {
 		return this.sponsorshipRepository.ratioOfActiveSponsorships();
 	}
-  
-  //Sponsorships for a certain sponsor
+
+	//Sponsorships for a certain sponsor
 	public Collection<Sponsorship> sponsorshipsFromSponsor(final int sponsorId) {
 		return this.sponsorshipRepository.sponsorshipsFromSponsor(sponsorId);
+	}
+
+	//Sponsorships with expire credit cards
+	public Collection<Sponsorship> sponsorshipsWithExpiredCreditCards() {
+		final int year = Calendar.getInstance().get(Calendar.YEAR);
+		final int month = Calendar.getInstance().get(Calendar.MONTH);
+		return this.sponsorshipRepository.sponsorshipsWithExpiredCreditCards(year, month);
 	}
 
 }
