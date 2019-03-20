@@ -32,6 +32,8 @@
 <spring:message code="parade.moment" var="msgMoment" />
 <spring:message code="parade.maxColumn" var="maxColumn" />
 <spring:message code="parade.maxRow" var="maxRow" />
+<spring:message code="parade.rejectionReason" var="rejectionReason" />
+<spring:message code="parade.paradeStatus" var="paradeStatus" />
 
 <spring:message code="parade.finalMode" var="finalMode" />
 
@@ -43,50 +45,14 @@
 
 
 
-<security:authorize access="hasRole('BROTHERHOOD')">
+
 
 <form:form action="${requestURI}" modelAttribute="parade">
-
+<security:authorize access="hasRole('BROTHERHOOD')">
 	<%-- Form fields --%>
 
 	<form:hidden path="id" />
 	
-<%-- 	<form:label path="title">
-		<jstl:out value="${title}" />:
-	</form:label>
-		<form:input path="title" />
-		<form:errors cssClass="error" path="title" />
-	<br />
-	
-	
-	<form:label path="description">
-		<jstl:out value="${description}" />:
-	</form:label>
-		<form:textarea path="description" />
-		<form:errors cssClass="error" path="description" />
-	<br />
-	
-	<form:label path="maxRow">
-		<jstl:out value="${maxRow}" />:
-	</form:label>
-		<form:input path="maxRow" />
-		<form:errors cssClass="error" path="maxRow" />
-	<br />
-	
-	<form:label path="maxColumn">
-		<jstl:out value="${maxColumn}" />:
-	</form:label>
-		<form:input path="maxColumn" />
-		<form:errors cssClass="error" path="maxColumn" />
-	<br />
-	
-	<form:label path="moment">
-			<jstl:out value="${msgMoment}" />:
-	</form:label>
-		<form:input path="moment" placeholder="dd/MM/yyyy HH:mm" />
-		<form:errors cssClass="error" path="moment" />
-		<br />
-		<br /> --%>
 	
 	<form:label path="finalMode">
 		<jstl:out value="${finalMode}" />:
@@ -126,37 +92,49 @@
 		 code = "parade.moment" 
 		 path="moment"/>
 		 <br/>
-		 
-		 
+
+	</security:authorize>
+	<security:authorize access="hasRole('CHAPTER')">
 	
+	<form:hidden path="id" />
 	
+	<jstl:if test="${parade.paradeStatus.name == 'SUBMITTED'}">
+	<form:label path="paradeStatus">
+					<jstl:out value="${paradeStatus}" />:
+		</form:label>
+		
+				<form:select path="paradeStatus">
+					<form:option label="ACCEPTED" value="ACCEPTED" />
+					<form:option label="REJECTED" value="REJECTED" />
+				</form:select>
+				<form:errors cssClass="error" path="paradeStatus" />
+				<br />
+				<br />
+		</jstl:if>
+		<jstl:if test="${empty parade.rejectionReason and parade.paradeStatus.name == 'REJECTED'}">	
+			<acme:textarea
+		 		code = "parade.rejectionReason" 
+		 		path="rejectionReason"/>
+		 		<br/>
+		</jstl:if>	
+		
 	
-	
-	
-	
-	
-	
-	
+	</security:authorize>
 	
 			<%-- Buttons --%>
 <!-- A brotherhood cannot organise any parades until they selected an area -->
-	<jstl:if test="${not empty parade.brotherhood.area}">
-		<%-- <input type="submit" name="save" value="${msgSave}"> --%>
 		
-				<acme:submit code="parade.save" name="save"/>
+		<acme:submit code="parade.save" name="save"/>
 		
-
-		<jstl:if test="${parade.id != 0}">
+		
+		<jstl:if test="${parade.id != 0 and parade.finalMode eq false}">
 			<input type="submit" name="delete" value="${msgDel}"
 				onclick="return confirm('${msgConf}')">
 		</jstl:if>
 
-		<%-- <input type="button" name="cancel" value="${msgCancel}"
-			onclick="javascript: relativeRedir('parade/brotherhood/list.do');" /> --%>
-			
+		<security:authorize access="hasRole('BROTHERHOOD')">
 		<acme:cancel code="parade.cancel" url ="/parade/brotherhood/list.do" />
+		</security:authorize>
 			
-	</jstl:if>
 </form:form>
 
-</security:authorize>
