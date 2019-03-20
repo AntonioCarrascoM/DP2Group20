@@ -184,6 +184,20 @@
 			<li><a href="sponsorship/sponsor/list.do"><spring:message
 					code="master.page.sponsorship.list" /></a></li>
 		</security:authorize>
+		
+		<security:authorize access="hasRole('CHAPTER')">
+			<li><a href="proclaim/chapter/list.do"><spring:message
+					code="master.page.proclaim.list" /></a></li>
+					
+			<li><a href="area/chapter/listA.do"><spring:message
+					code="master.page.area.listA" /></a></li>
+			
+			<li><a href="parade/chapter/list.do"><spring:message
+					code="master.page.parade.list" /></a></li>		
+					
+					
+					
+		</security:authorize>
 
 	</ul>
 </div>
