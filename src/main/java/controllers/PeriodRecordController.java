@@ -26,11 +26,11 @@ public class PeriodRecordController extends AbstractController {
 	//Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int periodRecordId) {
+	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;
 		PeriodRecord periodRecord;
 
-		periodRecord = this.periodRecordService.findOne(periodRecordId);
+		periodRecord = this.periodRecordService.findOne(varId);
 
 		result = new ModelAndView("periodRecord/display");
 		result.addObject("periodRecord", periodRecord);
@@ -41,11 +41,11 @@ public class PeriodRecordController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final int varId) {
 		final ModelAndView result;
 		Collection<PeriodRecord> periodRecords;
 
-		periodRecords = this.periodRecordService.findAll();
+		periodRecords = this.periodRecordService.periodRecordsfromBrotherhood(varId);
 
 		result = new ModelAndView("periodRecord/list");
 		result.addObject("periodRecords", periodRecords);

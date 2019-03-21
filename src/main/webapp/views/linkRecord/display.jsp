@@ -23,7 +23,6 @@
 <spring:message code="linkRecord.description" var="description" />
 <spring:message code="linkRecord.link" var="link" />
 <spring:message code="linkRecord.edit" var="edit" />
-<spring:message code="linkRecord.return" var="return" />
 
 
 	
@@ -45,9 +44,8 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<spring:url var="editUrl"
 		value="linkRecord/brotherhood/edit.do">
-		<spring:param name="linkRecordId"
+		<spring:param name="varId"
 			value="${linkRecord.id}"/>
 	</spring:url>
 	<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 </security:authorize>
-<a href="#"><jstl:out value="${return}" /></a>

@@ -42,7 +42,7 @@ public class PeriodRecordBrotherhoodController extends AbstractController {
 		periodRecords = this.periodRecordService.periodRecordsfromBrotherhood(this.actorService.findByPrincipal().getId());
 
 		result = new ModelAndView("periodRecord/list");
-		result.addObject("periodRecord", periodRecords);
+		result.addObject("periodRecords", periodRecords);
 		result.addObject("requestURI", "periodRecord/brotherhood/list.do");
 
 		return result;
@@ -70,6 +70,10 @@ public class PeriodRecordBrotherhoodController extends AbstractController {
 
 		periodRecord = this.periodRecordService.findOne(varId);
 		Assert.notNull(periodRecord);
+
+		if (periodRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(periodRecord);
 
 		return result;
@@ -96,13 +100,16 @@ public class PeriodRecordBrotherhoodController extends AbstractController {
 	//Delete
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int periodRecordId) {
+	public ModelAndView delete(@RequestParam final int varId) {
 		ModelAndView result;
-		final PeriodRecord periodRecord = this.periodRecordService.findOne(periodRecordId);
+		final PeriodRecord periodRecord = this.periodRecordService.findOne(varId);
+
+		if (periodRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
 
 		try {
 			this.periodRecordService.delete(periodRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
+			result = new ModelAndView("redirect:/periodRecord/brotherhood/list.do");
 
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(periodRecord, "periodRecord.commit.error");
@@ -114,17 +121,17 @@ public class PeriodRecordBrotherhoodController extends AbstractController {
 	public ModelAndView delete(PeriodRecord periodRecord, final BindingResult binding) {
 		ModelAndView result;
 
-		try {
-			periodRecord = this.periodRecordService.reconstruct(periodRecord, binding);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(periodRecord, "periodRecord.commit.error");
-		}
-		try {
-			this.periodRecordService.delete(periodRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(periodRecord, "periodRecord.commit.error");
-		}
+		periodRecord = this.periodRecordService.findOne(periodRecord.getId());
+
+		if (periodRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			result = this.createEditModelAndView(periodRecord, "periodRecord.delete.error");
+		else
+			try {
+				this.periodRecordService.delete(periodRecord);
+				result = new ModelAndView("redirect:/periodRecord/brotherhood/list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(periodRecord, "periodRecord.commit.error");
+			}
 
 		return result;
 	}

@@ -68,6 +68,10 @@ public class SponsorshipSponsorController {
 
 		sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 		Assert.notNull(sponsorship);
+
+		if (sponsorship.getSponsor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(sponsorship);
 
 		return result;
@@ -152,6 +156,10 @@ public class SponsorshipSponsorController {
 		sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
 
 		sponsorship = this.sponsorshipService.findOne(varId);
+
+		if (sponsorship.getSponsor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.sponsorshipService.remove(sponsorship);
 			sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
@@ -179,6 +187,10 @@ public class SponsorshipSponsorController {
 		sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
 
 		sponsorship = this.sponsorshipService.findOne(varId);
+
+		if (sponsorship.getSponsor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.sponsorshipService.activate(sponsorship);
 			sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
@@ -206,6 +218,10 @@ public class SponsorshipSponsorController {
 		sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());
 
 		sponsorship = this.sponsorshipService.findOne(varId);
+
+		if (sponsorship.getSponsor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.sponsorshipService.pay(sponsorship);
 			sponsorships = this.sponsorshipService.sponsorshipsFromSponsor(sponsor.getId());

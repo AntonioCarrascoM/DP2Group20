@@ -26,11 +26,11 @@ public class LegalRecordController extends AbstractController {
 	//Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int legalRecordId) {
+	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;
 		LegalRecord legalRecord;
 
-		legalRecord = this.legalRecordService.findOne(legalRecordId);
+		legalRecord = this.legalRecordService.findOne(varId);
 
 		result = new ModelAndView("legalRecord/display");
 		result.addObject("legalRecord", legalRecord);
@@ -41,11 +41,11 @@ public class LegalRecordController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final int varId) {
 		final ModelAndView result;
 		Collection<LegalRecord> legalRecords;
 
-		legalRecords = this.legalRecordService.findAll();
+		legalRecords = this.legalRecordService.legalRecordsfromBrotherhood(varId);
 
 		result = new ModelAndView("legalRecord/list");
 		result.addObject("legalRecords", legalRecords);

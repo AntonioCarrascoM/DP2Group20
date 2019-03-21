@@ -35,62 +35,61 @@
 
 
 
-<security:authorize access="hasRole('BROTHERHOOD')"> 
+
 
 <display:table pagesize="5" class="displaytag" name="linkRecords"
 	requestURI="${requestURI}" id="row">
 
 	<%-- Attributes --%>
-	
-	
-	
+
+
+
 	<display:column property="title" title="${name}" sortable="true" />
-	
-	<display:column property="description" title="${description}" sortable="true" />
-	
-	
-	
+
+	<display:column property="description" title="${description}"
+		sortable="true" />
+
+
+
 
 	<%-- Edition, Delete & Display button --%>
-	
-	<spring:url var="displayUrl"
-		value="linkRecord/brotherhood/display.do">
-		<spring:param name="varId"
-			value="${row.id}"/>
+
+	<spring:url var="displayUrl" value="linkRecord/display.do">
+		<spring:param name="varId" value="${row.id}" />
 	</spring:url>
-	
+
 	<display:column title="${display}">
-			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
-   </display:column>
-   
-	<spring:url var="editUrl"
-		value="linkRecord/brotherhood/edit.do">
-		<spring:param name="varId"
-			value="${row.id}"/>
-	</spring:url>
-	
-	<display:column title="${edit}">
+		<a href="${displayUrl}"><jstl:out value="${display}" /></a>
+	</display:column>
+
+	<security:authorize access="hasRole('BROTHERHOOD')">
+
+		<spring:url var="editUrl" value="linkRecord/brotherhood/edit.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+
+		<display:column title="${edit}">
 			<a href="${editUrl}"><jstl:out value="${edit}" /></a>
-   </display:column>
-   
-	<spring:url var="deleteUrl"
-		value="linkRecord/brotherhood/delete.do">
-		<spring:param name="varId"
-			value="${row.id}"/>
-	</spring:url>
-	
-		<display:column title="${delete}">
-			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${delete}" /></a>
 		</display:column>
-	
-	
-	
-	
+
+		<spring:url var="deleteUrl" value="linkRecord/brotherhood/delete.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+
+		<display:column title="${delete}">
+			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out
+					value="${delete}" /></a>
+		</display:column>
+
+
+
+	</security:authorize>
+
 </display:table>
 
-
-	<spring:url var="createUrl" value="linkRecord/brotherhood/create.do"/>
-	<a href="${createUrl}"><jstl:out value="${create}"/></a>
+<security:authorize access="hasRole('BROTHERHOOD')">
+	<spring:url var="createUrl" value="linkRecord/brotherhood/create.do" />
+	<a href="${createUrl}"><jstl:out value="${create}" /></a>
 
 
 </security:authorize>

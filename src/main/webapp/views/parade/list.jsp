@@ -159,6 +159,10 @@
 		<a href="${editUrl}"><jstl:out value="${rejectionReasonMsg}" /></a>
 		</display:column>
 	</jstl:if>
+	
+	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'REJECTED' and not empty row.rejectionReason}">
+		<display:column property="rejectionReason" title="${rejectionReasonMsg}" sortable="true" />
+	</jstl:if>
 		
 	
 	</security:authorize>

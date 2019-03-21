@@ -36,7 +36,7 @@
 
 
 
-<security:authorize access="hasRole('BROTHERHOOD')"> 
+
 
 <display:table pagesize="5" class="displaytag" name="legalRecords"
 	requestURI="${requestURI}" id="row">
@@ -55,7 +55,7 @@
 	<%-- Edition, Delete & Display button --%>
 	
 	<spring:url var="displayUrl"
-		value="legalRecord/brotherhood/display.do">
+		value="legalRecord/display.do">
 		<spring:param name="varId"
 			value="${row.id}"/>
 	</spring:url>
@@ -63,7 +63,8 @@
 	<display:column title="${display}">
 			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
    </display:column>
-	
+   
+	<security:authorize access="hasRole('BROTHERHOOD')"> 
 	
 	<spring:url var="editUrl"
 		value="legalRecord/brotherhood/edit.do">
@@ -85,12 +86,12 @@
 			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${delete}" /></a>
 		</display:column>
 	
-	
+	</security:authorize>
 	
 	
 </display:table>
 
-
+<security:authorize access="hasRole('BROTHERHOOD')"> 
 	<spring:url var="createUrl" value="legalRecord/brotherhood/create.do"/>
 	<a href="${createUrl}"><jstl:out value="${create}"/></a>
 

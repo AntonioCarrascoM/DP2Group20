@@ -44,7 +44,7 @@
 	<jstl:out value="${legalRecord.vatNumber}" />
 	<br />
 	
-	<jstl:out value="${vatNumber}" />:
+	<jstl:out value="${applicableLaws}" />:
 	<jstl:out value="${legalRecord.applicableLaws}" />
 	<br />
 	

@@ -34,7 +34,7 @@
 
 
 
-<security:authorize access="hasRole('BROTHERHOOD')"> 
+
 
 <display:table pagesize="5" class="displaytag" name="inceptionRecords"
 	requestURI="${requestURI}" id="row">
@@ -53,7 +53,7 @@
 	<%-- Edition, Delete & Display button --%>
 	
 	<spring:url var="displayUrl"
-		value="inceptionRecord/brotherhood/display.do">
+		value="inceptionRecord/display.do">
 		<spring:param name="varId"
 			value="${row.id}"/>
 	</spring:url>
@@ -61,6 +61,8 @@
 	<display:column title="${display}">
 			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
    </display:column>
+   
+   <security:authorize access="hasRole('BROTHERHOOD')"> 
 	
 	<spring:url var="editUrl"
 		value="inceptionRecord/brotherhood/edit.do">
@@ -82,12 +84,12 @@
 			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${delete}" /></a>
 		</display:column>
 	
-	
+	</security:authorize>
 	
 	
 </display:table>
 
-
+<security:authorize access="hasRole('BROTHERHOOD')"> 
 	<spring:url var="createUrl" value="inceptionRecord/brotherhood/create.do"/>
 	<a href="${createUrl}"><jstl:out value="${create}"/></a>
 

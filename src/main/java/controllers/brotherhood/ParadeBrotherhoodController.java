@@ -144,17 +144,16 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 		parade = this.paradeService.findOne(varId);
 
-		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId() || parade.getFinalMode() == true) {
-			result = new ModelAndView("redirect:/welcome/index.do");
-			return result;
-		} else
-			try {
-				this.paradeService.delete(parade);
-				result.addObject("parades", parades);
-				result.addObject("requestURI", "parade/list.do");
-			} catch (final Throwable oops) {
-				result = new ModelAndView("redirect:list.do");
-			}
+		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId() || parade.getFinalMode() == true)
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		try {
+			this.paradeService.delete(parade);
+			result.addObject("parades", parades);
+			result.addObject("requestURI", "parade/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
 	}

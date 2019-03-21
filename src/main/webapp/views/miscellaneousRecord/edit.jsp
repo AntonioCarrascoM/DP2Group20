@@ -26,6 +26,8 @@
 <spring:message code="miscellaneousRecord.description" var="description" />
 <spring:message code="miscellaneousRecord.save" var="save" />
 <spring:message code="miscellaneousRecord.cancel" var="cancel" />
+<spring:message code="miscellaneousRecord.delete" var="msgDel" />
+<spring:message code="miscellaneousRecord.delete.confirm" var="msgConf" />
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
@@ -34,7 +36,6 @@
 		<%-- Hidden attributes --%>
 
 		<form:hidden path="id" />
-		<form:hidden path="brotherhood" />
 
 		<%-- Edition forms --%>
 
@@ -51,6 +52,11 @@
 		<%-- Buttons --%>
 
 		<acme:submit name="save" code="miscellaneousRecord.save" />
+		
+		<jstl:if test="${miscellaneousRecord.id != 0}">
+			<input type="submit" name="delete" value="${msgDel}"
+				onclick="return confirm('${msgConf}')">
+		</jstl:if>
 
 		<acme:cancel url="welcome/index.do" code="miscellaneousRecord.cancel" />
 

@@ -68,11 +68,14 @@ public class SocialProfileController extends AbstractController {
 
 		socialProfile = this.socialProfileService.findOne(socialProfileId);
 		Assert.notNull(socialProfile);
+
+		if (socialProfile.getActor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(socialProfile);
 
 		return result;
 	}
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(SocialProfile socialProfile, final BindingResult binding) {
 		ModelAndView result;

@@ -26,72 +26,77 @@
 <spring:message code="miscellaneousRecord.description" var="description" />
 <spring:message code="miscellaneousRecord.edit" var="edit" />
 <spring:message code="miscellaneousRecord.display" var="display" />
-<spring:message code="miscellaneousRecord.delete.confirm" var="msgConfirm" />
+<spring:message code="miscellaneousRecord.delete.confirm"
+	var="msgConfirm" />
 <spring:message code="miscellaneousRecord.delete" var="delete" />
 <spring:message code="miscellaneousRecord.create" var="create" />
 <spring:message code="miscellaneousRecord.cancel" var="cancel" />
 
 
 
-<security:authorize access="hasRole('BROTHERHOOD')"> 
 
-<display:table pagesize="5" class="displaytag" name="miscellaneousRecords"
-	requestURI="${requestURI}" id="row">
+<display:table pagesize="5" class="displaytag"
+	name="miscellaneousRecords" requestURI="${requestURI}" id="row">
 
 	<%-- Attributes --%>
-	
-	
-	
+
+
+
 	<display:column property="title" title="${name}" sortable="true" />
-	
-	<display:column property="description" title="${description}" sortable="true" />
-	
-	
-	
+
+	<display:column property="description" title="${description}"
+		sortable="true" />
+
+
+
 
 
 	<%-- Edition, Delete & Display button --%>
-	
+
 	<spring:url var="displayUrl"
-		value="miscellaneousRecord/brotherhood/display.do">
-		<spring:param name="varId"
-			value="${row.id}"/>
+		value="miscellaneousRecord/display.do">
+		<spring:param name="varId" value="${row.id}" />
 	</spring:url>
-	
+
 	<display:column title="${display}">
-			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
-   </display:column>
-	
-	<spring:url var="editUrl"
-		value="miscellaneousRecord/brotherhood/edit.do">
-		<spring:param name="varId"
-			value="${row.id}"/>
-	</spring:url>
-	
-	<display:column title="${edit}">
+		<a href="${displayUrl}"><jstl:out value="${display}" /></a>
+	</display:column>
+
+	<security:authorize access="hasRole('BROTHERHOOD')">
+
+
+		<spring:url var="editUrl"
+			value="miscellaneousRecord/brotherhood/edit.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+
+		<display:column title="${edit}">
 			<a href="${editUrl}"><jstl:out value="${edit}" /></a>
-   </display:column>
-   
-	<spring:url var="deleteUrl"
-		value="miscellaneousRecord/brotherhood/delete.do">
-		<spring:param name="varId"
-			value="${row.id}"/>
-	</spring:url>
-	
-		<display:column title="${delete}">
-			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')" ><jstl:out value="${delete}" /></a>
 		</display:column>
-	
-	
-	
-	
+
+		<spring:url var="deleteUrl"
+			value="miscellaneousRecord/brotherhood/delete.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+
+		<display:column title="${delete}">
+			<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out
+					value="${delete}" /></a>
+		</display:column>
+
+	</security:authorize>
+
 </display:table>
 
+<security:authorize access="hasRole('BROTHERHOOD')">
 
-	<spring:url var="createUrl" value="miscellaneousRecord/brotherhood/create.do"/>
-	<a href="${createUrl}"><jstl:out value="${create}"/></a>
 
+	<spring:url var="createUrl"
+		value="miscellaneousRecord/brotherhood/create.do" />
+	<a href="${createUrl}"><jstl:out value="${create}" /></a>
 
 </security:authorize>
+
+
 
 

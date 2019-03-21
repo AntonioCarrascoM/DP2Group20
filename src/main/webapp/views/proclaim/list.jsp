@@ -24,6 +24,7 @@
 
 <spring:message code="proclaim.publicationMoment" var="moment" />
 <spring:message code="proclaim.formatDate" var="formatDate" />
+<spring:message code="proclaim.description" var="description" />
 <spring:message code="proclaim.create" var="msgCreate" />
 <spring:message code="proclaim.display" var="msgDisplay" />
 
@@ -38,7 +39,7 @@
 	<display:column property="description" title="${description}" sortable="true" />
 	
 	
-	<display:column title="${publicationMoment}" sortable="true">
+	<display:column title="${moment}" sortable="true">
 		<fmt:formatDate value="${row.publicationMoment}" pattern="${formatDate}" />
 	</display:column>	
 	

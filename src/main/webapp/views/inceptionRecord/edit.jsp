@@ -28,6 +28,8 @@
 <spring:message code="inceptionRecord.photos" var="photos" />
 <spring:message code="inceptionRecord.save" var="save" />
 <spring:message code="inceptionRecord.cancel" var="cancel" />
+<spring:message code="inceptionRecord.delete" var="msgDel" />
+<spring:message code="inceptionRecord.delete.confirm" var="msgConf" />
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
@@ -36,7 +38,6 @@
 		<%-- Hidden attributes --%>
 
 		<form:hidden path="id" />
-		<form:hidden path="brotherhood" />
 
 		<%-- Edition forms --%>
 
@@ -53,6 +54,11 @@
 		<%-- Buttons --%>
 
 		<acme:submit name="save" code="inceptionRecord.save" />
+		
+		<jstl:if test="${inceptionRecord.id != 0}">
+			<input type="submit" name="delete" value="${msgDel}"
+				onclick="return confirm('${msgConf}')">
+		</jstl:if>
 
 		<acme:cancel url="welcome/index.do" code="inceptionRecord.cancel" />
 

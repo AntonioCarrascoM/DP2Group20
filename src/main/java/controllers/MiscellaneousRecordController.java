@@ -26,11 +26,11 @@ public class MiscellaneousRecordController extends AbstractController {
 	//Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int miscellaneousRecordId) {
+	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;
 		MiscellaneousRecord miscellaneousRecord;
 
-		miscellaneousRecord = this.miscellaneousRecordService.findOne(miscellaneousRecordId);
+		miscellaneousRecord = this.miscellaneousRecordService.findOne(varId);
 
 		result = new ModelAndView("miscellaneousRecord/display");
 		result.addObject("miscellaneousRecord", miscellaneousRecord);
@@ -41,11 +41,11 @@ public class MiscellaneousRecordController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final int varId) {
 		final ModelAndView result;
 		Collection<MiscellaneousRecord> miscellaneousRecords;
 
-		miscellaneousRecords = this.miscellaneousRecordService.findAll();
+		miscellaneousRecords = this.miscellaneousRecordService.miscellaneousRecordsfromBrotherhood(varId);
 
 		result = new ModelAndView("miscellaneousRecord/list");
 		result.addObject("miscellaneousRecords", miscellaneousRecords);

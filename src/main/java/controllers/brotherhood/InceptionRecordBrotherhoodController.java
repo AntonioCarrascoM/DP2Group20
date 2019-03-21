@@ -1,6 +1,8 @@
 
 package controllers.brotherhood;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.InceptionRecordService;
 import controllers.AbstractController;
+import domain.Brotherhood;
 import domain.InceptionRecord;
 
 @Controller
@@ -29,6 +32,17 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 
 
 	//Ancillary attributes
+
+	//Options
+	@RequestMapping(value = "/createOrDisplay", method = RequestMethod.GET)
+	public ModelAndView createOrDisplay() {
+
+		final Brotherhood b = ((Brotherhood) this.actorService.findByPrincipal());
+		if (this.inceptionRecordService.inceptionRecordfromBrotherhood(b.getId()) == null)
+			return this.create();
+		else
+			return this.display();
+	}
 
 	//Display
 
@@ -68,6 +82,10 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 
 		inceptionRecord = this.inceptionRecordService.findOne(varId);
 		Assert.notNull(inceptionRecord);
+
+		if (inceptionRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(inceptionRecord);
 
 		return result;
@@ -79,6 +97,8 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 
 		try {
 			inceptionRecord = this.inceptionRecordService.reconstruct(inceptionRecord, binding);
+		} catch (final ValidationException oops) {
+			return result = this.createEditModelAndView(inceptionRecord);
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(inceptionRecord, "inceptionRecord.commit.error");
 		}
@@ -94,13 +114,16 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 	//Delete
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int inceptionRecordId) {
+	public ModelAndView delete(@RequestParam final int varId) {
 		ModelAndView result;
-		final InceptionRecord inceptionRecord = this.inceptionRecordService.findOne(inceptionRecordId);
+		final InceptionRecord inceptionRecord = this.inceptionRecordService.findOne(varId);
+
+		if (inceptionRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
 
 		try {
 			this.inceptionRecordService.delete(inceptionRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
+			result = new ModelAndView("redirect:/welcome/index.do");
 
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(inceptionRecord, "inceptionRecord.commit.error");
@@ -112,17 +135,17 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 	public ModelAndView delete(InceptionRecord inceptionRecord, final BindingResult binding) {
 		ModelAndView result;
 
-		try {
-			inceptionRecord = this.inceptionRecordService.reconstruct(inceptionRecord, binding);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(inceptionRecord, "inceptionRecord.commit.error");
-		}
-		try {
-			this.inceptionRecordService.delete(inceptionRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(inceptionRecord, "inceptionRecord.commit.error");
-		}
+		inceptionRecord = this.inceptionRecordService.findOne(inceptionRecord.getId());
+
+		if (inceptionRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			result = this.createEditModelAndView(inceptionRecord, "inceptionRecord.delete.error");
+		else
+			try {
+				this.inceptionRecordService.delete(inceptionRecord);
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(inceptionRecord, "inceptionRecord.commit.error");
+			}
 
 		return result;
 	}

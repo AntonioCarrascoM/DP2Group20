@@ -102,6 +102,10 @@ public class EnrolmentMemberController extends AbstractController {
 		enrolments = m.getEnrolments();
 
 		enrolment = this.enrolmentService.findOne(varId);
+
+		if (enrolment.getMember().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.enrolmentService.delete(enrolment);
 			enrolments = m.getEnrolments();
