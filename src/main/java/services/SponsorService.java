@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,6 +130,9 @@ public class SponsorService {
 
 		this.validator.validate(result, binding);
 
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		//Assertion that the email is valid according to the checkAdminEmail method.
 		Assert.isTrue(this.actorService.checkUserEmail(result.getEmail()));
 
@@ -156,6 +161,9 @@ public class SponsorService {
 
 		this.validator.validate(result, binding);
 
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getId());
 
 		//Assertion that the email is valid according to the checkAdminEmail method.
@@ -181,6 +189,10 @@ public class SponsorService {
 	//The top-5 sponsors in terms of number of active sponsorships.
 	public Collection<Sponsor> top5SponsorsByActiveSponsorships() {
 		return this.sponsorRepository.top5SponsorsByActiveSponsorships();
+	}
+
+	public void flush() {
+		this.sponsorRepository.flush();
 	}
 
 }

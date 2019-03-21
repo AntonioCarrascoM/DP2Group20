@@ -33,6 +33,11 @@
 <spring:message code="parade.request" var="msgCreateRequest" />
 <spring:message code="parade.requestList" var="msgListRequest" />
 <spring:message code="parade.area.empty" var="msgAreaEmpty" />
+<spring:message code="parade.delete.path" var="msgDeletePath" />
+<spring:message code="parade.create.segment" var="msgCreateSegment" />
+<spring:message code="parade.path" var="msgPath" />
+<spring:message code="parade.rejectionReason" var="rejectionReasonMsg" />
+<spring:message code="parade.paradeStatus" var="paradeStatusMsg" />
 
 
 
@@ -50,9 +55,12 @@
 	<display:column title="${moment}" sortable="true">
 		<fmt:formatDate value="${row.moment}" pattern="${formatDate}" />
 	</display:column>	
-	
+	<security:authorize access="hasRole('CHAPTER')">
+		<display:column property="paradeStatus" title="${paradeStatusMsg}" sortable="true" />
+	</security:authorize>
 		
 	<security:authorize access="hasRole('BROTHERHOOD')">
+	
 	<%-- Requests --%>
 	<spring:url var="requestsUrl" value="request/brotherhood/list.do">
 			<spring:param name="varId" value="${row.id}" />
@@ -60,6 +68,23 @@
 		<display:column title="${msgListRequest}">
 			<a href="${requestsUrl}"><jstl:out value="${msgListRequest}" /></a>
 		</display:column>
+		
+	<%-- Segments --%>
+	<spring:url var="segmentsUrl" value="segment/brotherhood/list.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+		<display:column title="${msgPath}">
+			<a href="${segmentsUrl}"><jstl:out value="${msgPath}" /></a>
+		</display:column>
+	<spring:url var="createSegmentUrl" value="segment/brotherhood/create.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+		<display:column title="${msgCreateSegment}">
+		<jstl:if test="${row.finalMode eq false}">
+			<a href="${createSegmentUrl}"><jstl:out value="${msgCreateSegment}" /></a>
+			</jstl:if>
+		</display:column>
+		
 	<%-- Display --%>
 		<spring:url var="displayUrl" value="parade/display.do">
 			<spring:param name="varId" value="${row.id}" />
@@ -83,8 +108,6 @@
 	
 	<%-- Delete --%>
 	
-	
-	
 		<spring:url var="deleteUrl" value="parade/brotherhood/delete.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
@@ -92,6 +115,17 @@
 		<jstl:if test="${row.finalMode eq false}">
 				<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out
 						value="${msgDelete}" /></a>
+		</jstl:if>
+		</display:column>
+		
+	<%-- Delete path--%>
+	
+		<spring:url var="deletePathUrl" value="segment/brotherhood/delete.do">
+			<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+		<display:column title="${msgDeletePath}">
+		<jstl:if test="${row.finalMode eq false}">
+		<a href="${deletePathUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out	value="${msgDeletePath}" /></a>
 		</jstl:if>
 		</display:column>
 	
@@ -106,7 +140,29 @@
 			<a href="${requestUrl}"><jstl:out value="${msgCreateRequest}" /></a>
 	</display:column>
 	</security:authorize>
-
+	
+	<security:authorize access="hasRole('CHAPTER')">
+	<spring:url var="editUrl" value="parade/chapter/edit.do">
+		<spring:param name="varId" value="${row.id}" />
+	</spring:url>
+	
+	
+	
+	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'SUBMITTED'}">
+		<display:column title="${edit}">
+		<a href="${editUrl}"><jstl:out value="${paradeStatusMsg}" /></a>
+		</display:column>
+	</jstl:if>
+	
+	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'REJECTED' and empty row.rejectionReason}">
+		<display:column title="${edit}">
+		<a href="${editUrl}"><jstl:out value="${rejectionReasonMsg}" /></a>
+		</display:column>
+	</jstl:if>
+		
+	
+	</security:authorize>
+	
 </display:table>
 
 <security:authorize access="hasRole('BROTHERHOOD')">

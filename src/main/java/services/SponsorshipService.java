@@ -1,8 +1,11 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +20,6 @@ import domain.Parade;
 import domain.ParadeStatus;
 import domain.Sponsor;
 import domain.Sponsorship;
-import forms.FormObjectSponsorship;
 
 @Service
 @Transactional
@@ -34,6 +36,9 @@ public class SponsorshipService {
 
 	@Autowired
 	private Validator				validator;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	// Simple CRUD methods
@@ -76,6 +81,10 @@ public class SponsorshipService {
 				Assert.isTrue(ss.getCreditCard().getExpMonth() >= month);
 		}
 
+		//Assertion is a valid make
+		final Collection<String> makes = this.configurationService.findAll().iterator().next().getCreditCardList();
+		Assert.isTrue(makes.contains(ss.getCreditCard().getMake()));
+
 		//Assertion that the parade is accepted
 		Assert.isTrue(ss.getParade().getParadeStatus().equals(ParadeStatus.ACCEPTED));
 
@@ -113,6 +122,8 @@ public class SponsorshipService {
 		//Assertion that the sponsorship is deactive
 		Assert.isTrue(ss.getIsActive() == false);
 
+		Assert.isTrue(!this.sponsorshipsWithExpiredCreditCards().contains(ss));
+
 		ss.setIsActive(true);
 
 		this.sponsorshipRepository.save(ss);
@@ -128,43 +139,23 @@ public class SponsorshipService {
 		this.sponsorshipRepository.save(ss);
 	}
 
-	public Sponsorship reconstruct(final FormObjectSponsorship foss, final BindingResult binding) {
-		final Sponsorship result = this.create();
-
-		final int year = Calendar.getInstance().get(Calendar.YEAR);
-		final int month = Calendar.getInstance().get(Calendar.MONTH);
-
-		result.setBanner(foss.getBanner());
-		result.setTargetURL(foss.getTargetURL());
-		result.setCreditCard(foss.getCreditCard());
-		result.setParade(foss.getParade());
-
-		this.validator.validate(result, binding);
-
-		//Assertion that the user modifying this sponsorship has the correct privilege.
-		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getSponsor().getId());
-
-		//Assertion to make sure that the credit card has a valid expiration date.
-		if (result.getCreditCard() != null) {
-			Assert.isTrue(result.getCreditCard().getExpYear() >= year);
-
-			if (result.getCreditCard().getExpYear() == year)
-				Assert.isTrue(result.getCreditCard().getExpMonth() >= month);
-		}
-
-		//Assertion that the parade is accepted
-		Assert.isTrue(result.getParade().getParadeStatus().equals(ParadeStatus.ACCEPTED));
-
-		return result;
+	//disableSponsorshipsWithExpiredCreditCards
+	public void disableSponsorshipsWithExpiredCreditCards() {
+		Collection<Sponsorship> ss = new ArrayList<>();
+		ss = this.sponsorshipsWithExpiredCreditCards();
+		for (final Sponsorship s : ss)
+			s.setIsActive(false);
 	}
 
-	public Sponsorship reconstructPruned(final Sponsorship sponsorship, final BindingResult binding) {
+	public Sponsorship reconstruct(final Sponsorship sponsorship, final BindingResult binding) {
 
 		Sponsorship result;
 		final int year = Calendar.getInstance().get(Calendar.YEAR);
 		final int month = Calendar.getInstance().get(Calendar.MONTH);
-		result = this.sponsorshipRepository.findOne(sponsorship.getId());
-
+		if (sponsorship.getId() == 0)
+			result = this.create();
+		else
+			result = this.sponsorshipRepository.findOne(sponsorship.getId());
 		result.setBanner(sponsorship.getBanner());
 		result.setTargetURL(sponsorship.getTargetURL());
 		result.setCreditCard(sponsorship.getCreditCard());
@@ -172,6 +163,9 @@ public class SponsorshipService {
 
 		this.validator.validate(result, binding);
 
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		//Assertion that the user modifying this sponsorship has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getSponsor().getId());
 
@@ -182,6 +176,10 @@ public class SponsorshipService {
 			if (result.getCreditCard().getExpYear() == year)
 				Assert.isTrue(result.getCreditCard().getExpMonth() >= month);
 		}
+
+		//Assertion is a valid make
+		final Collection<String> makes = this.configurationService.findAll().iterator().next().getCreditCardList();
+		Assert.isTrue(makes.contains(result.getCreditCard().getMake()));
 
 		//Assertion that the parade is accepted
 		Assert.isTrue(result.getParade().getParadeStatus().equals(ParadeStatus.ACCEPTED));
@@ -192,14 +190,21 @@ public class SponsorshipService {
 
 	//Other methods
 
-  //Ratio of active sponsorships
+	//Ratio of active sponsorships
 	public Double ratioOfActiveSponsorships() {
 		return this.sponsorshipRepository.ratioOfActiveSponsorships();
 	}
-  
-  //Sponsorships for a certain sponsor
+
+	//Sponsorships for a certain sponsor
 	public Collection<Sponsorship> sponsorshipsFromSponsor(final int sponsorId) {
 		return this.sponsorshipRepository.sponsorshipsFromSponsor(sponsorId);
+	}
+
+	//Sponsorships with expire credit cards
+	public Collection<Sponsorship> sponsorshipsWithExpiredCreditCards() {
+		final int year = Calendar.getInstance().get(Calendar.YEAR);
+		final int month = Calendar.getInstance().get(Calendar.MONTH);
+		return this.sponsorshipRepository.sponsorshipsWithExpiredCreditCards(year, month);
 	}
 
 }

@@ -114,6 +114,18 @@ public class AdministratorController extends AbstractController {
 		return result;
 	}
 
+	//Disable sponsorships with expired credit cards
+
+	@RequestMapping(value = "/checkCreditCard", method = RequestMethod.GET)
+	public ModelAndView disableSponsorshipsWithExpiredCreditCards() {
+		final ModelAndView result;
+		this.sponsorshipService.disableSponsorshipsWithExpiredCreditCards();
+
+		result = new ModelAndView("redirect:/welcome/index.do");
+
+		return result;
+	}
+
 	//Edition
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)

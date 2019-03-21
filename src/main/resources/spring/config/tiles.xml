@@ -28,6 +28,7 @@
 		<value>/views/box/tiles.xml</value>
 		<value>/views/brotherhood/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
+		<value>/views/chapter/tiles.xml</value>
 		<value>/views/enrolment/tiles.xml</value>
 		<value>/views/finder/tiles.xml</value>
 		<value>/views/float/tiles.xml</value>
@@ -36,7 +37,10 @@
 		<value>/views/sponsorship/tiles.xml</value>
 		<value>/views/message/tiles.xml</value>
 		<value>/views/position/tiles.xml</value>
-<!-- 		<value>/views/parade/tiles.xml</value> -->
+		<value>/views/parade/tiles.xml</value> 
+		<value>/views/proclaim/tiles.xml</value>
+		<value>/views/segment/tiles.xml</value> 
+
 		<value>/views/request/tiles.xml</value>
 		<value>/views/socialProfile/tiles.xml</value>
 		<value>/views/legislation/tiles.xml</value>

@@ -4,6 +4,8 @@ package controllers.sponsor;
 import java.util.Calendar;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -21,7 +23,6 @@ import services.SponsorshipService;
 import domain.Parade;
 import domain.Sponsor;
 import domain.Sponsorship;
-import forms.FormObjectSponsorship;
 
 @Controller
 @RequestMapping("sponsorship/sponsor")
@@ -50,10 +51,10 @@ public class SponsorshipSponsorController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		final FormObjectSponsorship foss;
+		final Sponsorship sponsorship;
 
-		foss = new FormObjectSponsorship();
-		result = this.createEditModelAndView(foss);
+		sponsorship = this.sponsorshipService.create();
+		result = this.createEditModelAndView(sponsorship);
 
 		return result;
 	}
@@ -67,7 +68,7 @@ public class SponsorshipSponsorController {
 
 		sponsorship = this.sponsorshipService.findOne(sponsorshipId);
 		Assert.notNull(sponsorship);
-		result = this.editModelAndView(sponsorship);
+		result = this.createEditModelAndView(sponsorship);
 
 		return result;
 	}
@@ -99,7 +100,7 @@ public class SponsorshipSponsorController {
 			this.sponsorshipService.delete(sponsorship);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
-			result = this.editModelAndView(sponsorship, "sponsorship.commit.error");
+			result = this.createEditModelAndView(sponsorship, "sponsorship.commit.error");
 		}
 		return result;
 	}
@@ -111,54 +112,33 @@ public class SponsorshipSponsorController {
 		ModelAndView result;
 
 		try {
-			sponsorship = this.sponsorshipService.reconstructPruned(sponsorship, binding);
+			sponsorship = this.sponsorshipService.reconstruct(sponsorship, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(sponsorship);
 		} catch (final Throwable oops) {
-			return result = this.editModelAndView(sponsorship, "sponsorship.commit.error");
+			return result = this.createEditModelAndView(sponsorship, "sponsorship.commit.error");
 		}
 
 		final int year = Calendar.getInstance().get(Calendar.YEAR);
 		final int month = Calendar.getInstance().get(Calendar.MONTH);
+		final Collection<String> makes = this.configurationService.findAll().iterator().next().getCreditCardList();
 
-		if (binding.hasErrors())
-			result = this.editModelAndView(sponsorship);
-		else if (sponsorship.getCreditCard().getExpYear() < year)
-			result = this.editModelAndView(sponsorship, "sponsorship.creditCard.error");
+		if (sponsorship.getCreditCard().getExpYear() < year)
+			result = this.createEditModelAndView(sponsorship, "sponsorship.creditCard.error");
 		else if (sponsorship.getCreditCard().getExpYear() == year && sponsorship.getCreditCard().getExpMonth() < month + 1)
-			result = this.editModelAndView(sponsorship, "sponsorship.creditCard.error");
+			result = this.createEditModelAndView(sponsorship, "sponsorship.creditCard.error");
+		else if (makes.contains(sponsorship.getCreditCard().getMake()) == false)
+			result = this.createEditModelAndView(sponsorship, "sponsorship.creditCard.error");
 		else
 			try {
 				this.sponsorshipService.save(sponsorship);
 				result = new ModelAndView("redirect:/sponsorship/sponsor/list.do");
 			} catch (final Throwable oops) {
-				result = this.editModelAndView(sponsorship, "sponsorship.commit.error");
+				result = this.createEditModelAndView(sponsorship, "sponsorship.commit.error");
 			}
 		return result;
 	}
 
-	//Create POST
-
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(final FormObjectSponsorship foss, final BindingResult binding) {
-		ModelAndView result;
-		Sponsorship sponsorship;
-
-		try {
-			sponsorship = this.sponsorshipService.reconstruct(foss, binding);
-		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(foss, "sponsorship.reconstruct.error");
-		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(foss);
-
-		else
-			try {
-				this.sponsorshipService.save(sponsorship);
-				result = new ModelAndView("redirect:/sponsorship/sponsor/list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(foss, "sponsorship.commit.error");
-			}
-		return result;
-	}
 	//Remove
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	public ModelAndView remove(@RequestParam final int varId) {
@@ -180,7 +160,7 @@ public class SponsorshipSponsorController {
 			result.addObject("requestURI", "sponsorship/sponsor/list.do");
 
 		} catch (final Throwable oops) {
-			result = this.editModelAndView(sponsorship, "sponsorship.remove.error");
+			result = this.createEditModelAndView(sponsorship, "sponsorship.remove.error");
 		}
 
 		return result;
@@ -207,7 +187,7 @@ public class SponsorshipSponsorController {
 			result.addObject("requestURI", "sponsorship/sponsor/list.do");
 
 		} catch (final Throwable oops) {
-			result = this.editModelAndView(sponsorship, "sponsorship.activate.error");
+			result = this.createEditModelAndView(sponsorship, "sponsorship.activate.error");
 		}
 
 		return result;
@@ -234,47 +214,22 @@ public class SponsorshipSponsorController {
 			result.addObject("requestURI", "sponsorship/sponsor/list.do");
 
 		} catch (final Throwable oops) {
-			result = this.editModelAndView(sponsorship, "sponsorship.pay.error");
+			result = this.createEditModelAndView(sponsorship, "sponsorship.pay.error");
 		}
 
 		return result;
 	}
 	//Ancillary methods
 
-	protected ModelAndView createEditModelAndView(final FormObjectSponsorship foss) {
+	protected ModelAndView createEditModelAndView(final Sponsorship sponsorship) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(foss, null);
+		result = this.createEditModelAndView(sponsorship, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final FormObjectSponsorship foss, final String messageCode) {
-		ModelAndView result;
-
-		final Collection<String> makes = this.configurationService.findAll().iterator().next().getCreditCardList();
-		final Collection<Parade> parades = this.paradeService.paradesAccepted();
-
-		result = new ModelAndView("sponsorship/create");
-		result.addObject("foss", foss);
-		result.addObject("makes", makes);
-		result.addObject("parades", parades);
-		result.addObject("message", messageCode);
-		result.addObject("requestURI", "sponsorship/sponsor/create.do");
-
-		return result;
-
-	}
-
-	protected ModelAndView editModelAndView(final Sponsorship sponsorship) {
-		ModelAndView result;
-
-		result = this.editModelAndView(sponsorship, null);
-
-		return result;
-	}
-
-	protected ModelAndView editModelAndView(final Sponsorship sponsorship, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Sponsorship sponsorship, final String messageCode) {
 		ModelAndView result;
 
 		final Collection<String> makes = this.configurationService.findAll().iterator().next().getCreditCardList();
@@ -288,5 +243,7 @@ public class SponsorshipSponsorController {
 		result.addObject("requestURI", "sponsorship/sponsor/edit.do");
 
 		return result;
+
 	}
+
 }

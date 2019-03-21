@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.AreaService;
 import services.BrotherhoodService;
+import services.ChapterService;
 import domain.Area;
 import domain.Brotherhood;
+import domain.Chapter;
 import forms.FormObjectBrotherhood;
 
 @Controller
@@ -35,6 +37,9 @@ public class BrotherhoodController extends AbstractController {
 
 	@Autowired
 	private AreaService			areaService;
+
+	@Autowired
+	private ChapterService		chapterService;
 
 
 	//Creation
@@ -122,6 +127,23 @@ public class BrotherhoodController extends AbstractController {
 		result = new ModelAndView("brotherhood/list");
 		result.addObject("brotherhoods", brotherhoods);
 		result.addObject("requestURI", "brotherhood/list.do");
+
+		return result;
+	}
+
+	//List by chapter
+	@RequestMapping(value = "/listByChapter", method = RequestMethod.GET)
+	public ModelAndView listByChapter(@RequestParam final int varId) {
+		final ModelAndView result;
+		final Collection<Brotherhood> brotherhoods;
+
+		final Chapter chap = this.chapterService.findOne(varId);
+
+		brotherhoods = chap.getArea().getBrotherhoods();
+
+		result = new ModelAndView("brotherhood/list");
+		result.addObject("brotherhoods", brotherhoods);
+		result.addObject("requestURI", "brotherhood/listByChapter.do");
 
 		return result;
 	}

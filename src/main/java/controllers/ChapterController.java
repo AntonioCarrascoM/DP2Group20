@@ -4,6 +4,7 @@ package controllers;
 import java.util.Collection;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,10 +43,10 @@ public class ChapterController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		final ModelAndView result;
-		FormObjectChapter fob;
+		FormObjectChapter foc;
 
-		fob = new FormObjectChapter();
-		result = this.createEditModelAndView(fob);
+		foc = new FormObjectChapter();
+		result = this.createEditModelAndView(foc);
 
 		return result;
 	}
@@ -65,25 +66,23 @@ public class ChapterController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(@Valid final FormObjectChapter fob, final BindingResult binding) {
+	public ModelAndView save(@Valid final FormObjectChapter foc, final BindingResult binding) {
 		ModelAndView result;
 		Chapter chapter;
 
 		try {
-			chapter = this.chapterService.reconstruct(fob, binding);
+			chapter = this.chapterService.reconstruct(foc, binding);
+		} catch (final ValidationException oops) {
+			return result = this.createEditModelAndView(foc);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(fob, "chapter.reconstruct.error");
+			return result = this.createEditModelAndView(foc, "chapter.commit.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(fob);
-
-		else
-			try {
-				this.chapterService.save(chapter);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(fob, "chapter.commit.error");
-			}
+		try {
+			this.chapterService.save(chapter);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(foc, "chapter.commit.error");
+		}
 		return result;
 	}
 
@@ -93,20 +92,17 @@ public class ChapterController extends AbstractController {
 
 		try {
 			chapter = this.chapterService.reconstructPruned(chapter, binding);
+		} catch (final ValidationException oops) {
+			return result = this.editModelAndView(chapter);
 		} catch (final Throwable oops) {
 			return result = this.editModelAndView(chapter, "chapter.commit.error");
 		}
-
-		if (binding.hasErrors())
-			result = this.editModelAndView(chapter);
-
-		else
-			try {
-				this.chapterService.save(chapter);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.editModelAndView(chapter, "chapter.commit.error");
-			}
+		try {
+			this.chapterService.save(chapter);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(chapter, "chapter.commit.error");
+		}
 		return result;
 	}
 
@@ -143,19 +139,19 @@ public class ChapterController extends AbstractController {
 
 	//Ancillary methods
 
-	protected ModelAndView createEditModelAndView(final FormObjectChapter fob) {
+	protected ModelAndView createEditModelAndView(final FormObjectChapter foc) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(fob, null);
+		result = this.createEditModelAndView(foc, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final FormObjectChapter fob, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final FormObjectChapter foc, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("chapter/create");
-		result.addObject("fob", fob);
+		result.addObject("foc", foc);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "chapter/create.do");
 

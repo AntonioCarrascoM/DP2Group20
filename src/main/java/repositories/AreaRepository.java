@@ -29,4 +29,8 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
 	@Query("select count(a)*1./(select count(a1) from Area a1) from Area a where a not in (select c.area from Chapter c)")
 	Double[] ratioAreasNotCoordinated();
 
+	//Areas that have no chapter assigned
+	@Query("select a from Area a where a not in (select c.area from Chapter c)")
+	Collection<Area> areasWithNoChapterAssigned();
+
 }

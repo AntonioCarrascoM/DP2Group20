@@ -64,9 +64,11 @@
 	
 	<display:column property="parade.title" title="${parade}" sortable="true" />
 	
+	<display:column property="charge" title="${msgCharge}" sortable="true" />
+	
 	<display:column property="isActive" title="${isActive}" sortable="true" />
 	
-	<display:column property="charge" title="${msgCharge}" sortable="true" />
+	<display:column property="sponsor.name" title="${sponsor}" sortable="true" />
 	
 	<%-- Edit --%>	
 		<spring:url var="editUrl" value="sponsorship/sponsor/edit.do">
