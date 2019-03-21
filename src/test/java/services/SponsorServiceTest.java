@@ -34,7 +34,8 @@ public class SponsorServiceTest extends AbstractTest {
 			{
 				"sponsor1", null, "sponsor1", "edit", null
 			}
-		//Positive test: A sponsor edit his data
+		//Positive test: A sponsor edit his data. 
+		//Exception expected: None. A sponsor can edit his data.
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -53,11 +54,14 @@ public class SponsorServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				"sponsor1", null, "sponsor2", "edit2", IllegalArgumentException.class
-			},//Negative test: Another sponsor tries to edit others data
+			},
+			//Negative test: Another sponsor1 tries to edit personal data of sponsor2. 
+			//Exception expected: IllegalArgumentException A sponsor cannot edit others personal data.
 			{
 				null, " ", null, "create", ConstraintViolationException.class
 			}
-		//Negative test: Registering a sponsor without password invalid email
+		//Negative test: Registering a sponsor with invalid username. 
+		//Exception expected: ConstraintViolationException. Username cannot be blank.
 		};
 
 		for (int i = 0; i < testingData.length; i++)

@@ -21,7 +21,7 @@ import domain.Sponsorship;
 @Transactional
 public class SponsorshipServiceTest extends AbstractTest {
 
-	// System under test: Sponsor ------------------------------------------------------
+	// System under test: Sponsorship ------------------------------------------------------
 
 	// Tests ------------------------------------------------------------------
 
@@ -39,11 +39,13 @@ public class SponsorshipServiceTest extends AbstractTest {
 			{
 				"sponsor1", null, "sponsorship3", "edit", null
 			}
-			//Positive: A sponsor edits his sponsorship
+			//Positive: A sponsor edits his sponsorship.
+			//Exception expected: None. A Sponsor can edit his sponsorships
 			, {
 				"sponsor1", null, "parade3", "create", null
 			}
 		//Positive: A sponsor tries to create a sponsorship
+		//Exception expected: None. A Sponsor can create sponsorships.
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -62,11 +64,14 @@ public class SponsorshipServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			{
 				"sponsor1", null, "sponsorship4", "edit2", IllegalArgumentException.class
-			},//Negative: A sponsor tries to edit a sponsorship that not owns
+			},
+			//Negative: A sponsor tries to edit a sponsorship that not owns
+			//Exception expected: IllegalArgumentException. A Sponsor can not edit sponsorships from another sponsor.
 			{
-				"sponsor1", null, "parade3", "create2", ConstraintViolationException.class
+				"sponsor1", "test", "parade3", "create2", ConstraintViolationException.class
 			}
 		//Negative: A sponsor tries to create an invalid sponsorship
+		//Exception expected: IllegalArgumentException. The Sponsorship Banner must be a valid url.
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -120,7 +125,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 				c.setExpYear(2020);
 				c.setCvv(123);
 
-				s.setBanner("test");
+				s.setBanner(st);
 				s.setTargetURL("http://www.test.com");
 				s.setCreditCard(c);
 				s.setParade(this.paradeService.findOne(this.getEntityId(id)));
