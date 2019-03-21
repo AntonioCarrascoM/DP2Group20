@@ -1,6 +1,8 @@
 
 package controllers;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -59,19 +61,17 @@ public class SponsorController extends AbstractController {
 
 		try {
 			sponsor = this.sponsorService.reconstructPruned(sponsor, binding);
+		} catch (final ValidationException oops) {
+			return this.editModelAndView(sponsor);
 		} catch (final Throwable oops) {
-			return result = this.editModelAndView(sponsor, "sponsor.commit.error");
+			return this.editModelAndView(sponsor, "sponsor.commit.error");
 		}
-		if (binding.hasErrors())
-			result = this.editModelAndView(sponsor);
-
-		else
-			try {
-				this.sponsorService.save(sponsor);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.editModelAndView(sponsor, "sponsor.commit.error");
-			}
+		try {
+			this.sponsorService.save(sponsor);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(sponsor, "sponsor.commit.error");
+		}
 		return result;
 	}
 
@@ -84,19 +84,18 @@ public class SponsorController extends AbstractController {
 
 		try {
 			sponsor = this.sponsorService.reconstruct(fos, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(fos);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(fos, "sponsor.reconstruct.error");
+			return this.createEditModelAndView(fos, "sponsor.reconstruct.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(fos);
 
-		else
-			try {
-				this.sponsorService.save(sponsor);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(fos, "sponsor.commit.error");
-			}
+		try {
+			this.sponsorService.save(sponsor);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(fos, "sponsor.commit.error");
+		}
 		return result;
 	}
 
