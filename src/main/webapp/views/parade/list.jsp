@@ -34,6 +34,7 @@
 <spring:message code="parade.requestList" var="msgListRequest" />
 <spring:message code="parade.area.empty" var="msgAreaEmpty" />
 <spring:message code="parade.delete.path" var="msgDeletePath" />
+<spring:message code="parade.copy" var="msgCopy" />
 <spring:message code="parade.create.segment" var="msgCreateSegment" />
 <spring:message code="parade.path" var="msgPath" />
 <spring:message code="parade.rejectionReason" var="rejectionReasonMsg" />
@@ -127,6 +128,15 @@
 		<jstl:if test="${row.finalMode eq false}">
 		<a href="${deletePathUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out	value="${msgDeletePath}" /></a>
 		</jstl:if>
+		</display:column>
+		
+	<%-- Copy--%>
+	
+		<spring:url var="copyUrl" value="parade/brotherhood/copy.do">
+		<spring:param name="varId" value="${row.id}" />
+		</spring:url>
+		<display:column title="${msgCopy}">
+		<a href="${copyUrl}" onclick="return confirm('${msgConfirm}')"> <jstl:out value="${msgCopy}" /></a>
 		</display:column>
 	
 	</security:authorize>
