@@ -37,6 +37,16 @@
 
 <%-- For the selected parade, display the following information: --%>
 
+<jstl:if test="${sponsorship != null}">
+		<hr>
+			<br />
+			<a href="${sponsorship.targetURL}">
+				<img src="${sponsorship.banner}" width="468" height="450">
+			</a>
+			<br/>
+		<hr>
+	</jstl:if>
+
 	<jstl:out value="${ticker}" />:
 	<jstl:out value="${parade.ticker}" />
 	<br />

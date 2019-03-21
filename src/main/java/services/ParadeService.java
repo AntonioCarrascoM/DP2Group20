@@ -25,6 +25,7 @@ import domain.Parade;
 import domain.ParadeStatus;
 import domain.Request;
 import domain.Segment;
+import domain.Sponsorship;
 
 @Service
 @Transactional
@@ -51,6 +52,9 @@ public class ParadeService {
 
 	@Autowired
 	private MessageService		messageService;
+
+	@Autowired
+	private SponsorshipService	sponsorshipService;
 
 	@Autowired
 	private ChapterService		chapterService;
@@ -255,6 +259,18 @@ public class ParadeService {
 		return this.paradeRepository.save(nueva);
 	}
 
+	//Selects a random sponsorship
+	public Sponsorship selectRandomSponsorship(final int id) {
+		final Collection<Sponsorship> sponsorships = this.sponsorshipService.getSponsorshipsByParade(id);
+		if (sponsorships.isEmpty())
+			return null;
+		else {
+			final Random rnd = new Random();
+			final int i = rnd.nextInt(sponsorships.size());
+			return (Sponsorship) sponsorships.toArray()[i];
+		}
+	}
+
 	//Generates the first half of the unique tickers.
 	private String generateNumber() {
 		final Date date = new Date();
@@ -338,4 +354,5 @@ public class ParadeService {
 	public Collection<Parade> finalParadesByArea(final int id) {
 		return this.paradeRepository.finalParadesByArea(id);
 	}
+
 }
