@@ -66,7 +66,8 @@ public class InceptionRecordBrotherhoodController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView result;
 		InceptionRecord inceptionRecord;
-
+		if (this.inceptionRecordService.inceptionRecordfromBrotherhood(this.actorService.findByPrincipal().getId()) != null)
+			return new ModelAndView("redirect:/welcome/index.do");
 		inceptionRecord = this.inceptionRecordService.create();
 		result = this.createEditModelAndView(inceptionRecord);
 
