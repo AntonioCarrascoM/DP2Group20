@@ -27,10 +27,6 @@ import domain.Area;
 import domain.Brotherhood;
 import domain.Chapter;
 import domain.InceptionRecord;
-import domain.LegalRecord;
-import domain.LinkRecord;
-import domain.MiscellaneousRecord;
-import domain.PeriodRecord;
 import forms.FormObjectBrotherhood;
 
 @Controller
@@ -182,17 +178,17 @@ public class BrotherhoodController extends AbstractController {
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(varId);
 
 		final InceptionRecord inceptionRecord = this.inceptionRecordService.inceptionRecordfromBrotherhood(varId);
-		final Collection<PeriodRecord> periodRecords = this.periodRecordService.periodRecordsfromBrotherhood(varId);
-		final Collection<LinkRecord> linkRecords = this.linkRecordService.linkRecordsfromBrotherhood(varId);
-		final Collection<MiscellaneousRecord> miscellaneousRecords = this.miscellaneousRecordService.miscellaneousRecordsfromBrotherhood(varId);
-		final Collection<LegalRecord> legalRecords = this.legalRecordService.legalRecordsfromBrotherhood(varId);
+		final Boolean emptyPeriodRecords = this.periodRecordService.periodRecordsfromBrotherhood(varId).isEmpty();
+		final Boolean emptyLinkRecords = this.linkRecordService.linkRecordsfromBrotherhood(varId).isEmpty();
+		final Boolean emptyMiscellaneousRecords = this.miscellaneousRecordService.miscellaneousRecordsfromBrotherhood(varId).isEmpty();
+		final Boolean emptyLegalRecords = this.legalRecordService.legalRecordsfromBrotherhood(varId).isEmpty();
 
 		result = new ModelAndView("brotherhood/display");
 		result.addObject("inceptionRecord", inceptionRecord);
-		result.addObject("periodRecords", periodRecords);
-		result.addObject("linkRecords", linkRecords);
-		result.addObject("miscellaneousRecords", miscellaneousRecords);
-		result.addObject("legalRecords", legalRecords);
+		result.addObject("emptyPeriodRecords", emptyPeriodRecords);
+		result.addObject("emptyLinkRecords", emptyLinkRecords);
+		result.addObject("emptyMiscellaneousRecords", emptyMiscellaneousRecords);
+		result.addObject("emptyLegalRecords", emptyLegalRecords);
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("requestURI", "brotherhood/display.do");
 

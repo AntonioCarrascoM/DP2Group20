@@ -39,6 +39,7 @@
 <spring:message code="brotherhood.periodRecords" var="periodRecords" />
 <spring:message code="brotherhood.miscellaneousRecords" var="miscellaneousRecords" />
 <spring:message code="brotherhood.linkRecords" var="linkRecords" />
+<spring:message code="brotherhood.brotherhoodHistory" var="brotherhoodHistory" />
 <spring:message code="brotherhood.return" var="msgReturn" />
 
 
@@ -121,6 +122,10 @@
 		<a href="${floatsUrl}"><jstl:out value="${msgFloats}" /></a>
 	<br />
 	
+	<jstl:if test="${not empty inceptionRecord or emptyPeriodRecords eq false or emptyLinkRecords eq false or emptyMiscellaneousRecords eq false or emptyLegalRecords eq false}">
+	<h3><jstl:out value="${brotherhoodHistory}"></jstl:out></h3>
+	</jstl:if>
+	
 	<jstl:if test="${not empty inceptionRecord}">
 		<spring:url var="inceptionRecordUrl" value="inceptionRecord/display.do">
 			<spring:param name="varId" value="${inceptionRecord.id}"/>
@@ -129,15 +134,15 @@
 	<br />
 	</jstl:if>
 	
-	<jstl:if test="${not empty periodRecords}">
-		<spring:url var="periodRecordUrl" value="periodRecord/list.do">
+	
+    <jstl:if test="${emptyPeriodRecords eq false}">
+        <spring:url var="periodRecordUrl" value="periodRecord/list.do">
 			<spring:param name="varId" value="${brotherhood.id}"/>
 		</spring:url>
 		<a href="${periodRecordUrl}"><jstl:out value="${periodRecords}" /></a>
 	<br />
-	</jstl:if>
-	
-	<jstl:if test="${not empty linkRecords}">
+    </jstl:if>
+	<jstl:if test="${emptyLinkRecords eq false}">
 		<spring:url var="linkRecordUrl" value="linkRecord/list.do">
 			<spring:param name="varId" value="${brotherhood.id}"/>
 		</spring:url>
@@ -145,7 +150,7 @@
 	<br />
 	</jstl:if>
 	
-	<jstl:if test="${not empty miscellaneousRecords}">
+	<jstl:if test="${emptyMiscellaneousRecords eq false}">
 		<spring:url var="miscellaneousRecordUrl" value="miscellaneousRecord/list.do">
 			<spring:param name="varId" value="${brotherhood.id}"/>
 		</spring:url>
@@ -153,7 +158,7 @@
 	<br />
 	</jstl:if>
 	
-	<jstl:if test="${not empty legalRecords}">
+	<jstl:if test="${emptyLegalRecords eq false}">
 		<spring:url var="legalRecordUrl" value="legalRecord/list.do">
 			<spring:param name="varId" value="${brotherhood.id}"/>
 		</spring:url>
