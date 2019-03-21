@@ -17,7 +17,7 @@ public interface SponsorRepository extends JpaRepository<Sponsor, Integer> {
 	Double[] avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor();
 
 	//The top-5 sponsors in terms of number of active sponsorships.
-	@Query("select x1 from Sponsor x1 order by (select count(s) from Sponsorship s where s.isActive='1' and s.sponsor.id=x1.id)*1. desc")
-	Collection<Sponsor> top5SponsorsByActiveSponsorships();
+	@Query("select x1.name from Sponsor x1 order by (select count(s) from Sponsorship s where s.isActive='1' and s.sponsor.id=x1.id)*1. desc")
+	Collection<String> top5SponsorsByActiveSponsorships();
 
 }

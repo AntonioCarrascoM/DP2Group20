@@ -3,6 +3,8 @@ package controllers.brotherhood;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -74,26 +76,24 @@ public class EnrolmentBrotherhoodController extends AbstractController {
 
 		try {
 			enrolment = this.enrolmentService.reconstruct(enrolment, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(enrolment);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(enrolment, "enrolment.commit.error");
+			return this.createEditModelAndView(enrolment, "enrolment.commit.error");
 		}
 
 		final Brotherhood bro = (Brotherhood) this.actorService.findByPrincipal();
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(enrolment);
-
-		else
-			try {
-				if (this.brotherhoodService.nonEnrolmentableMembers(bro.getId()).contains(enrolment.getMember()))
-					result = this.createEditModelAndView(enrolment, "enrolment.member.error");
-				else {
-					this.enrolmentService.saveFromBrotherhood(enrolment);
-					result = new ModelAndView("redirect:/enrolment/brotherhood/list.do");
-				}
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(enrolment, "enrolment.brotherhood.area.error");
+		try {
+			if (this.brotherhoodService.nonEnrolmentableMembers(bro.getId()).contains(enrolment.getMember()))
+				result = this.createEditModelAndView(enrolment, "enrolment.member.error");
+			else {
+				this.enrolmentService.saveFromBrotherhood(enrolment);
+				result = new ModelAndView("redirect:/enrolment/brotherhood/list.do");
 			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(enrolment, "enrolment.brotherhood.area.error");
+		}
 		return result;
 	}
 

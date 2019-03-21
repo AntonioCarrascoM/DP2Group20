@@ -18,8 +18,8 @@ public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
 	Double[] avgMinMaxStddevParadesCoordinatedByChapter();
 
 	//The chapters that co-ordinate at least 10% more parades than the average
-	@Query("select c1 from Chapter c1 join c1.area a1 join a1.brotherhoods b1 where (b1.parades.size)*1.>(select avg(b.parades.size) from Chapter c join c.area a join a.brotherhoods b)*1.1")
-	Collection<Chapter> chaptersWith10PerCentParadesCoordinateThanAvg();
+	@Query("select c1.name from Chapter c1 join c1.area a1 join a1.brotherhoods b1 where (b1.parades.size)*1.>(select avg(b.parades.size) from Chapter c join c.area a join a.brotherhoods b)*1.1")
+	Collection<String> chaptersWith10PerCentParadesCoordinateThanAvg();
 
 	//Retrieves the chapter associated with a certain area.
 	@Query("select c from Chapter c where c.area.id=?1")

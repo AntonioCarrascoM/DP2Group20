@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.SponsorshipRepository;
+import domain.Configuration;
 import domain.CreditCard;
 import domain.Parade;
 import domain.ParadeStatus;
@@ -129,6 +130,23 @@ public class SponsorshipService {
 		this.sponsorshipRepository.save(ss);
 	}
 
+	//Save the acumulated charge calculated when a sponsorship is displayed in a parade
+	public Sponsorship saveFromParade(final Sponsorship s) {
+		Assert.notNull(s);
+		final Configuration config = this.configurationService.findAll().iterator().next();
+		final Double vat = config.getVat();
+		final Double fare = config.getFare();
+
+		final Double charge = s.getCharge();
+		final Double plusCharge = vat * fare;
+
+		final Double total = charge + (plusCharge);
+		s.setCharge(total);
+
+		final Sponsorship saved = this.sponsorshipRepository.save(s);
+		return saved;
+	}
+
 	public void pay(final Sponsorship ss) {
 		Assert.notNull(ss);
 		//Assertion that the user activating this sponsorship has the correct privilege.
@@ -189,6 +207,11 @@ public class SponsorshipService {
 	}
 
 	//Other methods
+
+	//Returns the sponsorships of a certain parade
+	public Collection<Sponsorship> getSponsorshipsByParade(final int id) {
+		return this.sponsorshipRepository.getActiveSponsorshipsByParade(id);
+	}
 
 	//Ratio of active sponsorships
 	public Double ratioOfActiveSponsorships() {

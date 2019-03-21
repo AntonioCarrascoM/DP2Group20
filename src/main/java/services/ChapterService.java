@@ -190,7 +190,7 @@ public class ChapterService {
 	}
 
 	//The chapters that co-ordinate at least 10% more parades than the average
-	public Collection<Chapter> chaptersWith10PerCentParadesCoordinateThanAvg() {
+	public Collection<String> chaptersWith10PerCentParadesCoordinateThanAvg() {
 		return this.chapterRepository.chaptersWith10PerCentParadesCoordinateThanAvg();
 	}
 

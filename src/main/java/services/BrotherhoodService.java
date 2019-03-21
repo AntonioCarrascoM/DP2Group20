@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -143,6 +145,9 @@ public class BrotherhoodService {
 
 		this.validator.validate(result, binding);
 
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		//Assertion that the email is valid according to the checkAdminEmail method.
 		Assert.isTrue(this.actorService.checkUserEmail(result.getEmail()));
 
@@ -173,7 +178,10 @@ public class BrotherhoodService {
 		result.setPictures(brotherhood.getPictures());
 		if (result.getArea() == null)
 			result.setArea(brotherhood.getArea());
+
 		this.validator.validate(result, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getId());
 

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.ConfigurationService;
 import services.SponsorService;
+import domain.Configuration;
 import domain.Sponsor;
 import forms.FormObjectSponsor;
 
@@ -23,10 +25,13 @@ public class SponsorController extends AbstractController {
 	//Services
 
 	@Autowired
-	private SponsorService	sponsorService;
+	private SponsorService			sponsorService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	//Creation
@@ -35,8 +40,10 @@ public class SponsorController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView result;
 		final FormObjectSponsor fos;
+		final Configuration config = this.configurationService.findAll().iterator().next();
 
 		fos = new FormObjectSponsor();
+		fos.setPhone(config.getCountryCode());
 		result = this.createEditModelAndView(fos);
 
 		return result;

@@ -4,6 +4,8 @@ package services;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -185,6 +187,9 @@ public class EnrolmentService {
 		result.setPosition(enrolment.getPosition());
 
 		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		//Assertion the correction has the correct privilege
 		Assert.isTrue(result.getBrotherhood().getId() == this.actorService.findByPrincipal().getId());

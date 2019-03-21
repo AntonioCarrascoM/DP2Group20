@@ -3,6 +3,8 @@ package controllers.actor;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -82,19 +84,17 @@ public class SocialProfileController extends AbstractController {
 
 		try {
 			socialProfile = this.socialProfileService.reconstruct(socialProfile, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(socialProfile);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(socialProfile, "socialProfile.commit.error");
+			return this.createEditModelAndView(socialProfile, "socialProfile.commit.error");
 		}
-
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(socialProfile);
-		else
-			try {
-				this.socialProfileService.save(socialProfile);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(socialProfile, "socialProfile.commit.error");
-			}
+		try {
+			this.socialProfileService.save(socialProfile);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(socialProfile, "socialProfile.commit.error");
+		}
 		return result;
 	}
 
