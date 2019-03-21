@@ -25,7 +25,6 @@
 <spring:message code="periodRecord.endYear" var="endYear" />
 <spring:message code="periodRecord.photos" var="photos" />
 <spring:message code="periodRecord.edit" var="edit" />
-<spring:message code="periodRecord.return" var="return" />
 
 
 	<%-- For the curriculum in the list received as model, display the following information: --%>
@@ -54,9 +53,8 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<spring:url var="editUrl"
 		value="periodRecord/brotherhood/edit.do">
-		<spring:param name="periodRecordId"
+		<spring:param name="varId"
 			value="${periodRecord.id}"/>
 	</spring:url>
 	<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 </security:authorize>
-<a href="#"><jstl:out value="${return}" /></a>

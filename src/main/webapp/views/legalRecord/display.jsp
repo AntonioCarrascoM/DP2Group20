@@ -25,7 +25,6 @@
 <spring:message code="legalRecord.vatNumber" var="vatNumber" />
 <spring:message code="legalRecord.applicableLaws" var="applicableLaws" />
 <spring:message code="legalRecord.edit" var="edit" />
-<spring:message code="legalRecord.return" var="return" />
 
 
 	
@@ -55,9 +54,8 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<spring:url var="editUrl"
 		value="legalRecord/brotherhood/edit.do">
-		<spring:param name="legalRecordId"
+		<spring:param name="varId"
 			value="${legalRecord.id}"/>
 	</spring:url>
 	<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 </security:authorize>
-<a href="#"><jstl:out value="${return}" /></a>

@@ -157,6 +157,26 @@
 								code="master.page.enrolment.brotherhood.list" /></a>
 					</li>
 		</ul>
+		<li><a class="fNiv"><spring:message code="master.page.brotherhood.records" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a  href="inceptionRecord/brotherhood/display.do"><spring:message
+								code="master.page.brotherhood.inceptionRecord.list" /></a> </li>
+								
+					<li><a href="miscellaneousRecord/brotherhood/list.do"><spring:message
+								code="master.page.brotherhood.miscellaneousRecord.list" /></a></li>
+					
+					<li><a  href="legalRecord/brotherhood/list.do"><spring:message
+								code="master.page.brotherhood.legalRecord.list" /></a> </li>
+					
+					<li><a  href="periodRecord/brotherhood/list.do"><spring:message
+								code="master.page.brotherhood.periodRecord.list" /></a> </li>
+								
+					<li><a  href="linkRecord/brotherhood/list.do"><spring:message
+								code="master.page.brotherhood.linkRecord.list" /></a> </li>
+				</ul>
+			<li>
+		
 		</security:authorize>
 		
 		<security:authorize access="hasRole('SPONSOR')">

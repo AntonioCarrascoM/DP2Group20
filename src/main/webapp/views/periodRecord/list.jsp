@@ -32,8 +32,7 @@
 <spring:message code="periodRecord.cancel" var="cancel" />
 
 
-<jstl:set var="Administrator" value="admin" />
-<%-- HandyWorker list view --%>
+
 
 <security:authorize access="hasRole('BROTHERHOOD')"> 
 

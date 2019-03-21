@@ -3,6 +3,8 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,10 +91,17 @@ public class PeriodRecordService {
 		result.setPhotos(pr.getPhotos());
 		this.validator.validate(result, binding);
 
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		//Assertion that the user modifying this configuration has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
 
 		return result;
 
+	}
+	//The period records from a  brotherhood
+	public Collection<PeriodRecord> periodRecordsfromBrotherhood(final int brotherhoodId) {
+		return this.periodRecordRepository.periodRecordsfromBrotherhood(brotherhoodId);
 	}
 }
