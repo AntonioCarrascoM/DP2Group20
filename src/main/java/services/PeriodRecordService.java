@@ -31,6 +31,9 @@ public class PeriodRecordService {
 	private ActorService			actorService;
 
 	@Autowired
+	private BrotherhoodService		brotherhoodService;
+
+	@Autowired
 	private Validator				validator;
 
 
@@ -60,6 +63,13 @@ public class PeriodRecordService {
 
 		//Assertion that the user deleting this administrator has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == periodRecord.getBrotherhood().getId());
+
+		//Assertion to make sure that the inception record pictures are URLs
+		if (periodRecord.getPhotos() != null && !periodRecord.getPhotos().isEmpty())
+			Assert.isTrue(this.brotherhoodService.checkPictures(periodRecord.getPhotos()));
+
+		//Assertion to make sure that the end year is after the start year.
+		Assert.isTrue(periodRecord.getEndYear() >= periodRecord.getStartYear());
 
 		final PeriodRecord saved = this.periodRecordRepository.save(periodRecord);
 
@@ -96,6 +106,13 @@ public class PeriodRecordService {
 
 		//Assertion that the user modifying this configuration has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+
+		//Assertion to make sure that the inception record pictures are URLs
+		if (result.getPhotos() != null && !result.getPhotos().isEmpty())
+			Assert.isTrue(this.brotherhoodService.checkPictures(result.getPhotos()));
+
+		//Assertion to make sure that the end year is after the start year.
+		Assert.isTrue(result.getEndYear() >= result.getStartYear());
 
 		return result;
 

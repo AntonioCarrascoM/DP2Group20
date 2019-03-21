@@ -157,21 +157,20 @@ public class FloatBrotherhoodController extends AbstractController {
 
 		f = this.floatService.findOne(varId);
 
-		if (f.getBrotherhood().getId() != this.actorService.findByPrincipal().getId()) {
-			result = new ModelAndView("redirect:/welcome/index.do");
-			return result;
-		} else
-			try {
-				this.floatService.delete(f);
-				result.addObject("floats", floats);
-				result.addObject("requestURI", "float/list.do");
-			} catch (final Throwable oops) {
-				result = new ModelAndView("redirect:list.do");
-			}
+		if (f.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		try {
+			this.floatService.delete(f);
+			result.addObject("floats", floats);
+			result.addObject("requestURI", "float/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:list.do");
+		}
 
 		return result;
-	}
 
+	}
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final Float f) {

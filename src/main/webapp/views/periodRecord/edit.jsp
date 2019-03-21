@@ -29,6 +29,8 @@
 <spring:message code="periodRecord.photos" var="photos" />
 <spring:message code="periodRecord.save" var="save" />
 <spring:message code="periodRecord.cancel" var="cancel" />
+<spring:message code="periodRecord.delete" var="msgDel" />
+<spring:message code="periodRecord.delete.confirm" var="msgConf" />
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
@@ -37,7 +39,6 @@
 		<%-- Hidden attributes --%>
 
 		<form:hidden path="id" />
-		<form:hidden path="brotherhood" />
 
 		<%-- Edition forms --%>
 
@@ -59,6 +60,11 @@
 		<%-- Buttons --%>
 
 		<acme:submit name="save" code="periodRecord.save" />
+
+		<jstl:if test="${periodRecord.id != 0}">
+			<input type="submit" name="delete" value="${msgDel}"
+				onclick="return confirm('${msgConf}')">
+		</jstl:if>
 
 		<acme:cancel url="welcome/index.do" code="periodRecord.cancel" />
 

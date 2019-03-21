@@ -18,9 +18,19 @@ import services.ActorService;
 import services.AreaService;
 import services.BrotherhoodService;
 import services.ChapterService;
+import services.InceptionRecordService;
+import services.LegalRecordService;
+import services.LinkRecordService;
+import services.MiscellaneousRecordService;
+import services.PeriodRecordService;
 import domain.Area;
 import domain.Brotherhood;
 import domain.Chapter;
+import domain.InceptionRecord;
+import domain.LegalRecord;
+import domain.LinkRecord;
+import domain.MiscellaneousRecord;
+import domain.PeriodRecord;
 import forms.FormObjectBrotherhood;
 
 @Controller
@@ -30,16 +40,31 @@ public class BrotherhoodController extends AbstractController {
 	//Services
 
 	@Autowired
-	private BrotherhoodService	brotherhoodService;
+	private BrotherhoodService			brotherhoodService;
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService				actorService;
 
 	@Autowired
-	private AreaService			areaService;
+	private AreaService					areaService;
 
 	@Autowired
-	private ChapterService		chapterService;
+	private ChapterService				chapterService;
+
+	@Autowired
+	private InceptionRecordService		inceptionRecordService;
+
+	@Autowired
+	private LegalRecordService			legalRecordService;
+
+	@Autowired
+	private PeriodRecordService			periodRecordService;
+
+	@Autowired
+	private MiscellaneousRecordService	miscellaneousRecordService;
+
+	@Autowired
+	private LinkRecordService			linkRecordService;
 
 
 	//Creation
@@ -156,7 +181,18 @@ public class BrotherhoodController extends AbstractController {
 
 		final Brotherhood brotherhood = this.brotherhoodService.findOne(varId);
 
+		final InceptionRecord inceptionRecord = this.inceptionRecordService.inceptionRecordfromBrotherhood(varId);
+		final Collection<PeriodRecord> periodRecords = this.periodRecordService.periodRecordsfromBrotherhood(varId);
+		final Collection<LinkRecord> linkRecords = this.linkRecordService.linkRecordsfromBrotherhood(varId);
+		final Collection<MiscellaneousRecord> miscellaneousRecords = this.miscellaneousRecordService.miscellaneousRecordsfromBrotherhood(varId);
+		final Collection<LegalRecord> legalRecords = this.legalRecordService.legalRecordsfromBrotherhood(varId);
+
 		result = new ModelAndView("brotherhood/display");
+		result.addObject("inceptionRecord", inceptionRecord);
+		result.addObject("periodRecords", periodRecords);
+		result.addObject("linkRecords", linkRecords);
+		result.addObject("miscellaneousRecords", miscellaneousRecords);
+		result.addObject("legalRecords", legalRecords);
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("requestURI", "brotherhood/display.do");
 

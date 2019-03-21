@@ -119,6 +119,9 @@ public class SegmentBrotherhoodController extends AbstractController {
 		result = new ModelAndView("segment/list");
 		final Collection<Segment> segments = this.segmentService.getSegmentsForParade(varId);
 
+		if (this.paradeService.findOne(varId).getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.segmentService.delete(varId);
 			result = new ModelAndView("redirect:/parade/brotherhood/list.do");

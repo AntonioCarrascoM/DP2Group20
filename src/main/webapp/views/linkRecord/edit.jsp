@@ -27,6 +27,8 @@
 <spring:message code="linkRecord.link" var="link" />
 <spring:message code="linkRecord.save" var="save" />
 <spring:message code="linkRecord.cancel" var="cancel" />
+<spring:message code="linkRecord.delete" var="msgDel" />
+<spring:message code="linkRecord.delete.confirm" var="msgConf" />
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
@@ -35,7 +37,6 @@
 		<%-- Hidden attributes --%>
 
 		<form:hidden path="id" />
-		<form:hidden path="brotherhood" />
 
 		<%-- Edition forms --%>
 
@@ -52,6 +53,11 @@
 		<%-- Buttons --%>
 
 		<acme:submit name="save" code="linkRecord.save" />
+		
+		<jstl:if test="${linkRecord.id != 0}">
+			<input type="submit" name="delete" value="${msgDel}"
+				onclick="return confirm('${msgConf}')">
+		</jstl:if>
 
 		<acme:cancel url="welcome/index.do" code="linkRecord.cancel" />
 

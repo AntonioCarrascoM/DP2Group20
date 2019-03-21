@@ -188,7 +188,7 @@
 		<li><a class="fNiv"><spring:message code="master.page.brotherhood.records" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a  href="inceptionRecord/brotherhood/display.do"><spring:message
+					<li><a  href="inceptionRecord/brotherhood/createOrDisplay.do"><spring:message
 								code="master.page.brotherhood.inceptionRecord.list" /></a> </li>
 								
 					<li><a href="miscellaneousRecord/brotherhood/list.do"><spring:message
@@ -213,14 +213,10 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CHAPTER')">
-			<li><a href="proclaim/chapter/list.do"><spring:message
-					code="master.page.proclaim.list" /></a></li>
 	
 			<li><a href="area/chapter/listA.do"><spring:message
 					code="master.page.area.listA" /></a></li>
-			
-			<li><a href="parade/chapter/list.do"><spring:message
-					code="master.page.parade.list" /></a></li>		
+				
 					
 					
 					

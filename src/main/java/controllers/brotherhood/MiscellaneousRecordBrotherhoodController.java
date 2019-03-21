@@ -3,6 +3,8 @@ package controllers.brotherhood;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -42,7 +44,7 @@ public class MiscellaneousRecordBrotherhoodController extends AbstractController
 		miscellaneousRecords = this.miscellaneousRecordService.miscellaneousRecordsfromBrotherhood(this.actorService.findByPrincipal().getId());
 
 		result = new ModelAndView("miscellaneousRecord/list");
-		result.addObject("miscellaneousRecord", miscellaneousRecords);
+		result.addObject("miscellaneousRecords", miscellaneousRecords);
 		result.addObject("requestURI", "miscellaneousRecord/brotherhood/list.do");
 
 		return result;
@@ -70,6 +72,10 @@ public class MiscellaneousRecordBrotherhoodController extends AbstractController
 
 		miscellaneousRecord = this.miscellaneousRecordService.findOne(varId);
 		Assert.notNull(miscellaneousRecord);
+
+		if (miscellaneousRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(miscellaneousRecord);
 
 		return result;
@@ -81,6 +87,8 @@ public class MiscellaneousRecordBrotherhoodController extends AbstractController
 
 		try {
 			miscellaneousRecord = this.miscellaneousRecordService.reconstruct(miscellaneousRecord, binding);
+		} catch (final ValidationException oops) {
+			return result = this.createEditModelAndView(miscellaneousRecord);
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(miscellaneousRecord, "miscellaneousRecord.commit.error");
 		}
@@ -97,13 +105,16 @@ public class MiscellaneousRecordBrotherhoodController extends AbstractController
 	//Delete
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int miscellaneousRecordId) {
+	public ModelAndView delete(@RequestParam final int varId) {
 		ModelAndView result;
-		final MiscellaneousRecord miscellaneousRecord = this.miscellaneousRecordService.findOne(miscellaneousRecordId);
+		final MiscellaneousRecord miscellaneousRecord = this.miscellaneousRecordService.findOne(varId);
+
+		if (miscellaneousRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
 
 		try {
 			this.miscellaneousRecordService.delete(miscellaneousRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
+			result = new ModelAndView("redirect:/miscellaneousRecord/brotherhood/list.do");
 
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(miscellaneousRecord, "miscellaneousRecord.commit.error");
@@ -115,17 +126,17 @@ public class MiscellaneousRecordBrotherhoodController extends AbstractController
 	public ModelAndView delete(MiscellaneousRecord miscellaneousRecord, final BindingResult binding) {
 		ModelAndView result;
 
-		try {
-			miscellaneousRecord = this.miscellaneousRecordService.reconstruct(miscellaneousRecord, binding);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(miscellaneousRecord, "miscellaneousRecord.commit.error");
-		}
-		try {
-			this.miscellaneousRecordService.delete(miscellaneousRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(miscellaneousRecord, "miscellaneousRecord.commit.error");
-		}
+		miscellaneousRecord = this.miscellaneousRecordService.findOne(miscellaneousRecord.getId());
+
+		if (miscellaneousRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			result = this.createEditModelAndView(miscellaneousRecord, "miscellaneousRecord.delete.error");
+		else
+			try {
+				this.miscellaneousRecordService.delete(miscellaneousRecord);
+				result = new ModelAndView("redirect:/miscellaneousRecord/brotherhood/list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(miscellaneousRecord, "miscellaneousRecord.commit.error");
+			}
 
 		return result;
 	}

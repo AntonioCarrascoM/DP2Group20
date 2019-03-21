@@ -42,7 +42,7 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 		linkRecords = this.linkRecordService.linkRecordsfromBrotherhood(this.actorService.findByPrincipal().getId());
 
 		result = new ModelAndView("linkRecord/list");
-		result.addObject("linkRecord", linkRecords);
+		result.addObject("linkRecords", linkRecords);
 		result.addObject("requestURI", "linkRecord/brotherhood/list.do");
 
 		return result;
@@ -70,6 +70,10 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 
 		linkRecord = this.linkRecordService.findOne(varId);
 		Assert.notNull(linkRecord);
+
+		if (linkRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(linkRecord);
 
 		return result;
@@ -96,13 +100,16 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 	//Delete
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int linkRecordId) {
+	public ModelAndView delete(@RequestParam final int varId) {
 		ModelAndView result;
-		final LinkRecord linkRecord = this.linkRecordService.findOne(linkRecordId);
+		final LinkRecord linkRecord = this.linkRecordService.findOne(varId);
+
+		if (linkRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
 
 		try {
 			this.linkRecordService.delete(linkRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
+			result = new ModelAndView("redirect:/linkRecord/brotherhood/list.do");
 
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(linkRecord, "linkRecord.commit.error");
@@ -114,17 +121,17 @@ public class LinkRecordBrotherhoodController extends AbstractController {
 	public ModelAndView delete(LinkRecord linkRecord, final BindingResult binding) {
 		ModelAndView result;
 
-		try {
-			linkRecord = this.linkRecordService.reconstruct(linkRecord, binding);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(linkRecord, "linkRecord.commit.error");
-		}
-		try {
-			this.linkRecordService.delete(linkRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(linkRecord, "linkRecord.commit.error");
-		}
+		linkRecord = this.linkRecordService.findOne(linkRecord.getId());
+
+		if (linkRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			result = this.createEditModelAndView(linkRecord, "linkRecord.delete.error");
+		else
+			try {
+				this.linkRecordService.delete(linkRecord);
+				result = new ModelAndView("redirect:/linkRecord/brotherhood/list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(linkRecord, "linkRecord.commit.error");
+			}
 
 		return result;
 	}

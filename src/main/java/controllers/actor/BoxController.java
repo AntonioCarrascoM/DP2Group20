@@ -87,6 +87,10 @@ public class BoxController extends AbstractController {
 
 		box = this.boxService.findOne(varId);
 		Assert.notNull(box);
+
+		if (box.getActor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(box);
 
 		return result;
@@ -140,6 +144,9 @@ public class BoxController extends AbstractController {
 		boxes = this.actorService.findByPrincipal().getBoxes();
 
 		box = this.boxService.findOne(varId);
+
+		if (box.getActor().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
 
 		if (!box.getMessages().isEmpty())
 			result.addObject("message", "box.delete.error");

@@ -34,6 +34,11 @@
 <spring:message code="brotherhood.parades" var="msgParades" />
 <spring:message code="brotherhood.members" var="msgMembers" />
 <spring:message code="brotherhood.floats" var="msgFloats" />
+<spring:message code="brotherhood.inceptionRecords" var="inceptionRecords" />
+<spring:message code="brotherhood.legalRecords" var="legalRecords" />
+<spring:message code="brotherhood.periodRecords" var="periodRecords" />
+<spring:message code="brotherhood.miscellaneousRecords" var="miscellaneousRecords" />
+<spring:message code="brotherhood.linkRecords" var="linkRecords" />
 <spring:message code="brotherhood.return" var="msgReturn" />
 
 
@@ -116,4 +121,43 @@
 		<a href="${floatsUrl}"><jstl:out value="${msgFloats}" /></a>
 	<br />
 	
+	<jstl:if test="${not empty inceptionRecord}">
+		<spring:url var="inceptionRecordUrl" value="inceptionRecord/display.do">
+			<spring:param name="varId" value="${inceptionRecord.id}"/>
+		</spring:url>
+		<a href="${inceptionRecordUrl}"><jstl:out value="${inceptionRecords}" /></a>
+	<br />
+	</jstl:if>
+	
+	<jstl:if test="${not empty periodRecords}">
+		<spring:url var="periodRecordUrl" value="periodRecord/list.do">
+			<spring:param name="varId" value="${brotherhood.id}"/>
+		</spring:url>
+		<a href="${periodRecordUrl}"><jstl:out value="${periodRecords}" /></a>
+	<br />
+	</jstl:if>
+	
+	<jstl:if test="${not empty linkRecords}">
+		<spring:url var="linkRecordUrl" value="linkRecord/list.do">
+			<spring:param name="varId" value="${brotherhood.id}"/>
+		</spring:url>
+		<a href="${linkRecordUrl}"><jstl:out value="${linkRecords}" /></a>
+	<br />
+	</jstl:if>
+	
+	<jstl:if test="${not empty miscellaneousRecords}">
+		<spring:url var="miscellaneousRecordUrl" value="miscellaneousRecord/list.do">
+			<spring:param name="varId" value="${brotherhood.id}"/>
+		</spring:url>
+		<a href="${miscellaneousRecordUrl}"><jstl:out value="${miscellaneousRecords}" /></a>
+	<br />
+	</jstl:if>
+	
+	<jstl:if test="${not empty legalRecords}">
+		<spring:url var="legalRecordUrl" value="legalRecord/list.do">
+			<spring:param name="varId" value="${brotherhood.id}"/>
+		</spring:url>
+		<a href="${legalRecordUrl}"><jstl:out value="${legalRecords}" /></a>
+	<br />
+	</jstl:if>
 	<br />

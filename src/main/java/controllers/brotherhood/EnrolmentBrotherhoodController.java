@@ -146,6 +146,10 @@ public class EnrolmentBrotherhoodController extends AbstractController {
 		enrolments = b.getEnrolments();
 
 		enrolment = this.enrolmentService.findOne(varId);
+
+		if (enrolment.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.enrolmentService.delete(enrolment);
 			enrolments = b.getEnrolments();
@@ -173,6 +177,10 @@ public class EnrolmentBrotherhoodController extends AbstractController {
 		enrolments = b.getEnrolments();
 
 		enrolment = this.enrolmentService.findOne(varId);
+
+		if (enrolment.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		try {
 			this.enrolmentService.drop(enrolment);
 			enrolments = b.getEnrolments();

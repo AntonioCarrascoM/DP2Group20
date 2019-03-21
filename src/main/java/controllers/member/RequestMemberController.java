@@ -130,6 +130,10 @@ public class RequestMemberController extends AbstractController {
 		requests = m.getRequests();
 
 		request = this.requestService.findOne(varId);
+
+		if (request.getMember().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		if (request.getStatus() != Status.PENDING)
 			return new ModelAndView("redirect:/welcome/index.do");
 

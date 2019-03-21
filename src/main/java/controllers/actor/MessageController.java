@@ -134,6 +134,7 @@ public class MessageController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int varId) {
 		final ModelAndView result;
 		final Message message = this.messageService.findOne(varId);
+
 		this.setCurrentMsg(message);
 
 		result = this.createEditModelAndView(message);

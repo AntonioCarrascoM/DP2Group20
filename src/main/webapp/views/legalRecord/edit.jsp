@@ -29,6 +29,8 @@
 <spring:message code="legalRecord.applicableLaws" var="applicableLaws" />
 <spring:message code="legalRecord.save" var="save" />
 <spring:message code="legalRecord.cancel" var="cancel" />
+<spring:message code="legalRecord.delete" var="msgDel" />
+<spring:message code="legalRecord.delete.confirm" var="msgConf" />
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 
@@ -37,7 +39,6 @@
 		<%-- Hidden attributes --%>
 
 		<form:hidden path="id" />
-		<form:hidden path="brotherhood" />
 
 		<%-- Edition forms --%>
 
@@ -48,6 +49,8 @@
 		<acme:textarea code="legalRecord.description" path="description" />
 		
 		<acme:textbox code="legalRecord.legalName" path="legalName" />	
+		
+		<acme:textbox code="legalRecord.vatNumber" path="vatNumber" />	
 			
 		<acme:textarea code="legalRecord.applicableLaws" path="applicableLaws" />
 
@@ -55,6 +58,11 @@
 		<%-- Buttons --%>
 
 		<acme:submit name="save" code="legalRecord.save" />
+		
+		<jstl:if test="${legalRecord.id != 0}">
+			<input type="submit" name="delete" value="${msgDel}"
+				onclick="return confirm('${msgConf}')">
+		</jstl:if>
 
 		<acme:cancel url="welcome/index.do" code="legalRecord.cancel" />
 

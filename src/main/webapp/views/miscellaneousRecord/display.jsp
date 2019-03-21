@@ -24,11 +24,11 @@
 <spring:message code="miscellaneousRecord.edit" var="edit" />
 
 	<%-- For the curriculum in the list received as model, display the following information: --%>
-	<jstl:out value="${msgTitle}" />:
+	<jstl:out value="${title}" />:
 	<jstl:out value="${miscellaneousRecord.title}" />
 	<br />
 	
-	<jstl:out value="${msgLink}" />:
+	<jstl:out value="${description}" />:
 	<jstl:out value="${miscellaneousRecord.description}" />
 	<br />
 	

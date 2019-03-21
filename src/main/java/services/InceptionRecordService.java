@@ -31,6 +31,9 @@ public class InceptionRecordService {
 	private ActorService				actorService;
 
 	@Autowired
+	private BrotherhoodService			brotherhoodService;
+
+	@Autowired
 	private Validator					validator;
 
 
@@ -60,6 +63,10 @@ public class InceptionRecordService {
 
 		//Assertion that the user deleting this administrator has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == inceptionRecord.getBrotherhood().getId());
+
+		//Assertion to make sure that the inception record pictures are URLs
+		if (inceptionRecord.getPhotos() != null && !inceptionRecord.getPhotos().isEmpty())
+			Assert.isTrue(this.brotherhoodService.checkPictures(inceptionRecord.getPhotos()));
 
 		final InceptionRecord saved = this.inceptionRecordRepository.save(inceptionRecord);
 
@@ -94,6 +101,10 @@ public class InceptionRecordService {
 
 		//Assertion that the user modifying this configuration has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());
+
+		//Assertion to make sure that the inception record pictures are URLs
+		if (result.getPhotos() != null && !result.getPhotos().isEmpty())
+			Assert.isTrue(this.brotherhoodService.checkPictures(result.getPhotos()));
 
 		return result;
 

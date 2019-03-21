@@ -3,7 +3,7 @@ package controllers.brotherhood;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,7 +44,7 @@ public class LegalRecordBrotherhoodController extends AbstractController {
 		legalRecords = this.legalRecordService.legalRecordsfromBrotherhood(this.actorService.findByPrincipal().getId());
 
 		result = new ModelAndView("legalRecord/list");
-		result.addObject("legalRecord", legalRecords);
+		result.addObject("legalRecords", legalRecords);
 		result.addObject("requestURI", "legalRecord/brotherhood/list.do");
 
 		return result;
@@ -72,38 +72,49 @@ public class LegalRecordBrotherhoodController extends AbstractController {
 
 		legalRecord = this.legalRecordService.findOne(varId);
 		Assert.notNull(legalRecord);
+
+		if (legalRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
 		result = this.createEditModelAndView(legalRecord);
 
 		return result;
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final LegalRecord legalRecord, final BindingResult binding) {
+	public ModelAndView save(LegalRecord legalRecord, final BindingResult binding) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(legalRecord);
+		try {
+			legalRecord = this.legalRecordService.reconstruct(legalRecord, binding);
+		} catch (final ValidationException oops) {
+			return result = this.createEditModelAndView(legalRecord);
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
+		}
 
-		else
-			try {
-				this.legalRecordService.save(legalRecord);
-				result = new ModelAndView("redirect:/legalRecord/brotherhood/list.do");
+		try {
+			this.legalRecordService.save(legalRecord);
+			result = new ModelAndView("redirect:/legalRecord/brotherhood/list.do");
 
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
-			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
+		}
 		return result;
 	}
 	//Delete
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int legalRecordId) {
+	public ModelAndView delete(@RequestParam final int varId) {
 		ModelAndView result;
-		final LegalRecord legalRecord = this.legalRecordService.findOne(legalRecordId);
+		final LegalRecord legalRecord = this.legalRecordService.findOne(varId);
+
+		if (legalRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
 
 		try {
 			this.legalRecordService.delete(legalRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
+			result = new ModelAndView("redirect:/legalRecord/brotherhood/list.do");
 
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
@@ -115,17 +126,17 @@ public class LegalRecordBrotherhoodController extends AbstractController {
 	public ModelAndView delete(LegalRecord legalRecord, final BindingResult binding) {
 		ModelAndView result;
 
-		try {
-			legalRecord = this.legalRecordService.reconstruct(legalRecord, binding);
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
-		}
-		try {
-			this.legalRecordService.delete(legalRecord);
-			result = new ModelAndView("redirect:/application/brotherhood/list.do");
-		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
-		}
+		legalRecord = this.legalRecordService.findOne(legalRecord.getId());
+
+		if (legalRecord.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			result = this.createEditModelAndView(legalRecord, "legalRecord.delete.error");
+		else
+			try {
+				this.legalRecordService.delete(legalRecord);
+				result = new ModelAndView("redirect:/legalRecord/brotherhood/list.do");
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(legalRecord, "legalRecord.commit.error");
+			}
 
 		return result;
 	}

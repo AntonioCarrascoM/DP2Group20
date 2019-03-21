@@ -26,11 +26,11 @@ public class LinkRecordController extends AbstractController {
 	//Display
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int linkRecordId) {
+	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;
 		LinkRecord linkRecord;
 
-		linkRecord = this.linkRecordService.findOne(linkRecordId);
+		linkRecord = this.linkRecordService.findOne(varId);
 
 		result = new ModelAndView("linkRecord/display");
 		result.addObject("linkRecord", linkRecord);
@@ -41,11 +41,11 @@ public class LinkRecordController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final int varId) {
 		final ModelAndView result;
 		Collection<LinkRecord> linkRecords;
 
-		linkRecords = this.linkRecordService.findAll();
+		linkRecords = this.linkRecordService.linkRecordsfromBrotherhood(varId);
 
 		result = new ModelAndView("linkRecord/list");
 		result.addObject("linkRecords", linkRecords);

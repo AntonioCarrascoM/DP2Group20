@@ -21,7 +21,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import utilities.AbstractTest;
-import domain.Administrator;
 import domain.Area;
 import domain.Brotherhood;
 
@@ -52,8 +51,7 @@ public class AreaServiceTest extends AbstractTest {
 
 	@Autowired
 	private AreaService			areaService;
-	@Autowired
-	private ActorService		actorService;
+
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
 
@@ -88,11 +86,9 @@ public class AreaServiceTest extends AbstractTest {
 
 			if (operation.equals("create")) {
 				Area area;
-				Administrator admin;
 				final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
 
 				area = this.areaService.create();
-				admin = (Administrator) this.actorService.findOne(this.getEntityId(ad));
 				area.setBrotherhoods(brotherhoods);
 				area.setName("test");
 				area.setPictures("pictures");
@@ -143,11 +139,9 @@ public class AreaServiceTest extends AbstractTest {
 
 			if (operation.equals("create")) {
 				Area area;
-				Administrator admin;
 				final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
 
 				area = this.areaService.create();
-				admin = (Administrator) this.actorService.findOne(this.getEntityId(ad));
 				area.setBrotherhoods(brotherhoods);
 				area.setName("test");
 				area.setPictures("pictures");
