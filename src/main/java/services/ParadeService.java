@@ -246,17 +246,22 @@ public class ParadeService {
 	//Other methods
 
 	public Parade copy(final Parade original) {
-		final Parade nueva = original;
+		final Parade nueva = this.create();
 
 		//Assertion that the user modifying this task has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == original.getBrotherhood().getId());
 
-		nueva.setTicker(this.generateTicker());
-		nueva.setParadeStatus(null);
+		nueva.setTitle(original.getTitle());
+		nueva.setDescription(original.getDescription());
+		nueva.setMaxRow(original.getMaxRow());
+		nueva.setMaxColumn(original.getMaxColumn());
+		nueva.setMoment(original.getMoment());
+		nueva.setParadeStatus(original.getParadeStatus());
 		nueva.setRejectionReason(null);
 		nueva.setFinalMode(false);
 
-		return this.paradeRepository.save(nueva);
+		final Parade saved = this.paradeRepository.save(nueva);
+		return saved;
 	}
 
 	//Selects a random sponsorship

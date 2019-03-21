@@ -122,7 +122,7 @@ public class ParadeBrotherhoodController extends AbstractController {
 		else
 			try {
 				this.paradeService.delete(parade);
-				result = new ModelAndView("redirect:list.do");
+				result = new ModelAndView("redirect:parade/brotherhood/list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(parade, "parade.commit.error");
 			}
@@ -149,10 +149,40 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 		try {
 			this.paradeService.delete(parade);
+			parades = brotherhood.getParades();
 			result.addObject("parades", parades);
-			result.addObject("requestURI", "parade/list.do");
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("requestURI", "parade/brotherhood/list.do");
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:parade/brotherhood/list.do");
+		}
+
+		return result;
+	}
+
+	//Copy 
+
+	@RequestMapping(value = "/copy", method = RequestMethod.GET)
+	public ModelAndView copy(@RequestParam final int varId) {
+		ModelAndView result;
+		Collection<Parade> parades;
+		final Brotherhood brotherhood = (Brotherhood) this.actorService.findByPrincipal();
+		final Parade parade = this.paradeService.findOne(varId);
+
+		result = new ModelAndView("parade/list");
+
+		//Assertion the user has the correct privilege
+		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
+			return new ModelAndView("redirect:/welcome/index.do");
+
+		try {
+			this.paradeService.copy(parade);
+			parades = brotherhood.getParades();
+			result.addObject("parades", parades);
+			result.addObject("brotherhood", brotherhood);
+			result.addObject("requestURI", "parade/brotherhood/list.do");
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:parade/brotherhood/list.do");
 		}
 
 		return result;
