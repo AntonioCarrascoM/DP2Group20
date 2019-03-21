@@ -107,15 +107,17 @@ public class AreaService {
 		result.setName(area.getName());
 		result.setPictures(area.getPictures());
 
-		Assert.isTrue(this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authAdmin));
-
-		if (result.getPictures() != null && !result.getPictures().isEmpty())
-			Assert.isTrue(this.brotherhoodService.checkPictures(result.getPictures()));
-
 		this.validator.validate(result, binding);
 
 		if (binding.hasErrors())
 			throw new ValidationException();
+
+		//Assertion the user has the correct privilege
+		Assert.isTrue(this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authAdmin));
+
+		//Assertion the pictures have the correct pattern
+		if (result.getPictures() != null && !result.getPictures().isEmpty())
+			Assert.isTrue(this.brotherhoodService.checkPictures(result.getPictures()));
 
 		return result;
 

@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,7 @@ import services.AdministratorService;
 import services.AreaService;
 import services.BrotherhoodService;
 import services.ChapterService;
+import services.ConfigurationService;
 import services.FinderService;
 import services.MemberService;
 import services.ParadeService;
@@ -40,6 +42,7 @@ import services.SponsorshipService;
 import controllers.AbstractController;
 import domain.Actor;
 import domain.Administrator;
+import domain.Configuration;
 import forms.FormObjectAdministrator;
 
 @Controller
@@ -87,6 +90,9 @@ public class AdministratorController extends AbstractController {
 	@Autowired
 	private SponsorService			sponsorService;
 
+	@Autowired
+	private ConfigurationService	configurationService;
+
 
 	//Creation
 
@@ -95,7 +101,11 @@ public class AdministratorController extends AbstractController {
 		final ModelAndView result;
 		FormObjectAdministrator foa;
 
+		final Configuration config = this.configurationService.findAll().iterator().next();
+
 		foa = new FormObjectAdministrator();
+		foa.setPhone(config.getCountryCode());
+
 		result = this.createEditModelAndView(foa);
 
 		return result;
@@ -145,18 +155,17 @@ public class AdministratorController extends AbstractController {
 
 		try {
 			administrator = this.administratorService.reconstructPruned(administrator, binding);
+		} catch (final ValidationException oops) {
+			return this.editModelAndView(administrator);
 		} catch (final Throwable oops) {
-			return result = this.editModelAndView(administrator, "administrator.commit.error");
+			return this.editModelAndView(administrator, "administrator.commit.error");
 		}
-		if (binding.hasErrors())
-			result = this.editModelAndView(administrator);
-		else
-			try {
-				this.administratorService.save(administrator);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.editModelAndView(administrator, "administrator.commit.error");
-			}
+		try {
+			this.administratorService.save(administrator);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(administrator, "administrator.commit.error");
+		}
 		return result;
 	}
 	//Create POST

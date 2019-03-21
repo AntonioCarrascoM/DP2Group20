@@ -41,7 +41,7 @@
 		<hr>
 			<br />
 			<a href="${sponsorship.targetURL}">
-				<img src="${sponsorship.banner}" width="468" height="450">
+				<img src="${sponsorship.banner}" width="208" height="250">
 			</a>
 			<br/>
 		<hr>

@@ -18,8 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
 import services.AreaService;
 import services.ChapterService;
+import services.ConfigurationService;
 import domain.Area;
 import domain.Chapter;
+import domain.Configuration;
 import forms.FormObjectChapter;
 
 @Controller
@@ -29,13 +31,16 @@ public class ChapterController extends AbstractController {
 	//Services
 
 	@Autowired
-	private ChapterService	chapterService;
+	private ChapterService			chapterService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private AreaService		areaService;
+	private AreaService				areaService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	//Creation
@@ -44,8 +49,11 @@ public class ChapterController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView result;
 		FormObjectChapter foc;
+		final Configuration config = this.configurationService.findAll().iterator().next();
 
 		foc = new FormObjectChapter();
+		foc.setPhone(config.getCountryCode());
+
 		result = this.createEditModelAndView(foc);
 
 		return result;

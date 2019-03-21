@@ -75,15 +75,12 @@ public class ProclaimChapterController extends AbstractController {
 			return this.createEditModelAndView(proclaim, "proclaim.commit.error");
 		}
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(proclaim);
-		else
-			try {
-				this.proclaimService.save(proclaim);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(proclaim, "proclaim.commit.error");
-			}
+		try {
+			this.proclaimService.save(proclaim);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(proclaim, "proclaim.commit.error");
+		}
 		return result;
 	}
 

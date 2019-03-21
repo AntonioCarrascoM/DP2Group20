@@ -3,6 +3,8 @@ package controllers.actor;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -102,19 +104,18 @@ public class BoxController extends AbstractController {
 
 		try {
 			box = this.boxService.reconstruct(box, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(box);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(box, "box.commit.error");
+			return this.createEditModelAndView(box, "box.commit.error");
 		}
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(box);
-		else
-			try {
-				this.boxService.save(box);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(box, "box.commit.error");
-			}
+		try {
+			this.boxService.save(box);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(box, "box.commit.error");
+		}
 		return result;
 	}
 

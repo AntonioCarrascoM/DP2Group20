@@ -3,6 +3,8 @@ package controllers.brotherhood;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -96,6 +98,8 @@ public class RequestBrotherhoodController {
 
 		try {
 			request = this.requestService.reconstruct(request, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(request);
 		} catch (final Throwable oops) {
 			final Collection<Request> requests = req.getParade().getRequests();
 			result = new ModelAndView("request/list");
@@ -104,17 +108,12 @@ public class RequestBrotherhoodController {
 			return result;
 		}
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(request);
-		//		else if (request.getCustomRow() != null && request.getCustomColumn() != null && this.requestService.checkPosition(request) == false)
-		//			result = this.createEditModelAndView(request, "request.place.error");
-		else
-			try {
-				saved = this.requestService.save(request);
-				result = new ModelAndView("redirect:/request/brotherhood/list.do?varId=" + saved.getParade().getId());
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(request, "request.commit.error");
-			}
+		try {
+			saved = this.requestService.save(request);
+			result = new ModelAndView("redirect:/request/brotherhood/list.do?varId=" + saved.getParade().getId());
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(request, "request.commit.error");
+		}
 		return result;
 	}
 

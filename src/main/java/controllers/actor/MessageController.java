@@ -3,6 +3,8 @@ package controllers.actor;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -102,28 +104,27 @@ public class MessageController extends AbstractController {
 
 		try {
 			message = this.messageService.reconstruct(message, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(message);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(message, "message.commit.error");
+			return this.createEditModelAndView(message, "message.commit.error");
 		}
 
 		final Box box = this.boxService.getSystemBoxByName(message.getSender().getId(), "Out box");
 
-		if (binding.hasErrors())
-			result = this.createCreateModelAndView(message);
-		else
-			try {
-				final Collection<Box> boxList = message.getBoxes();
-				boxList.add(box);
-				message.setBoxes(boxList);
+		try {
+			final Collection<Box> boxList = message.getBoxes();
+			boxList.add(box);
+			message.setBoxes(boxList);
 
-				final Message saved = this.messageService.save(message);
-				this.messageService.send(saved, saved.getRecipient());
-				result = new ModelAndView("redirect:/box/list.do");
+			final Message saved = this.messageService.save(message);
+			this.messageService.send(saved, saved.getRecipient());
+			result = new ModelAndView("redirect:/box/list.do");
 
-			} catch (final Throwable oops) {
+		} catch (final Throwable oops) {
 
-				result = this.createCreateModelAndView(message, "message.commit.error");
-			}
+			result = this.createCreateModelAndView(message, "message.commit.error");
+		}
 
 		return result;
 	}

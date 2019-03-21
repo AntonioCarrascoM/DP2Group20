@@ -4,6 +4,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -166,13 +168,16 @@ public class BoxService {
 		result.setName(box.getName());
 		result.setParent(box.getParent());
 
+		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		//The five default boxes cannot be modified or moved.
 		Assert.isTrue(!result.isSystem());
 
 		//Assertion that the user modifying this box has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getActor().getId());
-
-		this.validator.validate(result, binding);
 
 		return result;
 

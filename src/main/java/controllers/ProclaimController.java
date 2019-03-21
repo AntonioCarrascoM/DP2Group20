@@ -23,9 +23,6 @@ public class ProclaimController extends AbstractController {
 	private ProclaimService	proclaimService;
 
 
-	//	@Autowired
-	//	private CategoryService		categoryService;
-
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		final ModelAndView result;
