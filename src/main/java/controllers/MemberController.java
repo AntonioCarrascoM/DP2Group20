@@ -4,6 +4,7 @@ package controllers;
 import java.util.Collection;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.ConfigurationService;
 import services.MemberService;
+import domain.Configuration;
 import domain.Member;
 import forms.FormObjectMember;
 
@@ -26,10 +29,13 @@ public class MemberController extends AbstractController {
 	//Services
 
 	@Autowired
-	private MemberService	memberService;
+	private MemberService			memberService;
 
 	@Autowired
-	private ActorService	actorService;
+	private ActorService			actorService;
+
+	@Autowired
+	private ConfigurationService	configurationService;
 
 
 	//Edition
@@ -51,8 +57,11 @@ public class MemberController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView result;
 		FormObjectMember fom;
+		final Configuration config = this.configurationService.findAll().iterator().next();
 
 		fom = new FormObjectMember();
+		fom.setPhone(config.getCountryCode());
+
 		result = this.createEditModelAndView(fom);
 
 		return result;
@@ -64,19 +73,17 @@ public class MemberController extends AbstractController {
 
 		try {
 			member = this.memberService.reconstructPruned(member, binding);
+		} catch (final ValidationException oops) {
+			return this.editModelAndView(member);
 		} catch (final Throwable oops) {
-			return result = this.editModelAndView(member, "member.commit.error");
+			return this.editModelAndView(member, "member.commit.error");
 		}
-		if (binding.hasErrors())
-			result = this.editModelAndView(member);
-
-		else
-			try {
-				this.memberService.save(member);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.editModelAndView(member, "member.commit.error");
-			}
+		try {
+			this.memberService.save(member);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(member, "member.commit.error");
+		}
 		return result;
 	}
 
@@ -89,19 +96,18 @@ public class MemberController extends AbstractController {
 
 		try {
 			member = this.memberService.reconstruct(fom, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(fom);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(fom, "member.reconstruct.error");
+			return this.createEditModelAndView(fom, "member.reconstruct.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(fom);
 
-		else
-			try {
-				this.memberService.save(member);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(fom, "member.commit.error");
-			}
+		try {
+			this.memberService.save(member);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(fom, "member.commit.error");
+		}
 		return result;
 	}
 

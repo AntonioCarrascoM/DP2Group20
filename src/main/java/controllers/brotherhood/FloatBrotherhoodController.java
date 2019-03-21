@@ -3,6 +3,8 @@ package controllers.brotherhood;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -106,19 +108,17 @@ public class FloatBrotherhoodController extends AbstractController {
 
 		try {
 			f = this.floatService.reconstruct(f, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(f);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(f, "float.commit.error");
+			return this.createEditModelAndView(f, "float.commit.error");
 		}
-
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(f);
-		else
-			try {
-				this.floatService.save(f);
-				result = new ModelAndView("redirect:list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(f, "float.commit.error");
-			}
+		try {
+			this.floatService.save(f);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(f, "float.commit.error");
+		}
 		return result;
 	}
 

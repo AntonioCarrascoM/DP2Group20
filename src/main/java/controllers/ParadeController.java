@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ParadeService;
+import services.SponsorshipService;
 import domain.Parade;
+import domain.Sponsorship;
 
 @Controller
 @RequestMapping("parade")
@@ -20,7 +22,10 @@ public class ParadeController extends AbstractController {
 	//Services
 
 	@Autowired
-	private ParadeService	paradeService;
+	private ParadeService		paradeService;
+
+	@Autowired
+	private SponsorshipService	sponsorshipService;
 
 
 	//	@Autowired
@@ -59,12 +64,19 @@ public class ParadeController extends AbstractController {
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;
-		Parade parade;
+		final Parade parade;
+		Sponsorship sponsorship;
+
+		sponsorship = this.paradeService.selectRandomSponsorship(varId);
+
+		if (sponsorship != null)
+			this.sponsorshipService.saveFromParade(sponsorship);
 
 		parade = this.paradeService.findOne(varId);
 
 		result = new ModelAndView("parade/display");
 		result.addObject("parade", parade);
+		result.addObject("sponsorship", sponsorship);
 		result.addObject("requestURI", "parade/display.do");
 
 		return result;

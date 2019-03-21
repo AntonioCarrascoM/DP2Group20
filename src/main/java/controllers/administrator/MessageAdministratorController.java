@@ -3,6 +3,8 @@ package controllers.administrator;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -54,8 +56,10 @@ public class MessageAdministratorController extends AbstractController {
 
 		try {
 			message = this.messageService.reconstructBroadcast(message, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(message);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(message, "message.commit.error");
+			return this.createEditModelAndView(message, "message.commit.error");
 		}
 
 		try {

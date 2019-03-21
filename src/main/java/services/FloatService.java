@@ -4,6 +4,8 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,6 +114,8 @@ public class FloatService {
 		result.setPictures(f.getPictures());
 
 		this.validator.validate(result, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		//Assertion that the user modifying this configuration has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getBrotherhood().getId());

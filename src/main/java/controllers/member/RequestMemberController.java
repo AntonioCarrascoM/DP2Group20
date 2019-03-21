@@ -3,6 +3,8 @@ package controllers.member;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -62,6 +64,8 @@ public class RequestMemberController extends AbstractController {
 
 		try {
 			request = this.requestService.reconstruct(request, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(request);
 		} catch (final Throwable oops) {
 			final Collection<Request> requests = req.getParade().getRequests();
 			result = new ModelAndView("request/list");
@@ -73,15 +77,12 @@ public class RequestMemberController extends AbstractController {
 		if (request.getId() != 0)
 			result = this.createEditModelAndView(request);
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(request);
-		else
-			try {
-				saved = this.requestService.save(request);
-				result = new ModelAndView("redirect:/request/member/display.do?varId=" + saved.getId());
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(request, "request.commit.error");
-			}
+		try {
+			saved = this.requestService.save(request);
+			result = new ModelAndView("redirect:/request/member/display.do?varId=" + saved.getId());
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(request, "request.commit.error");
+		}
 		return result;
 	}
 

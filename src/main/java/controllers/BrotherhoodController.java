@@ -4,6 +4,7 @@ package controllers;
 import java.util.Collection;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import services.ActorService;
 import services.AreaService;
 import services.BrotherhoodService;
 import services.ChapterService;
+import services.ConfigurationService;
 import services.InceptionRecordService;
 import services.LegalRecordService;
 import services.LinkRecordService;
@@ -26,6 +28,7 @@ import services.PeriodRecordService;
 import domain.Area;
 import domain.Brotherhood;
 import domain.Chapter;
+import domain.Configuration;
 import domain.InceptionRecord;
 import forms.FormObjectBrotherhood;
 
@@ -62,6 +65,9 @@ public class BrotherhoodController extends AbstractController {
 	@Autowired
 	private LinkRecordService			linkRecordService;
 
+	@Autowired
+	private ConfigurationService		configurationService;
+
 
 	//Creation
 
@@ -69,8 +75,10 @@ public class BrotherhoodController extends AbstractController {
 	public ModelAndView create() {
 		final ModelAndView result;
 		FormObjectBrotherhood fob;
+		final Configuration config = this.configurationService.findAll().iterator().next();
 
 		fob = new FormObjectBrotherhood();
+		fob.setPhone(config.getCountryCode());
 		result = this.createEditModelAndView(fob);
 
 		return result;
@@ -97,42 +105,38 @@ public class BrotherhoodController extends AbstractController {
 
 		try {
 			brotherhood = this.brotherhoodService.reconstruct(fob, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(fob);
 		} catch (final Throwable oops) {
-			return result = this.createEditModelAndView(fob, "brotherhood.reconstruct.error");
+			return this.createEditModelAndView(fob, "brotherhood.reconstruct.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(fob);
 
-		else
-			try {
-				this.brotherhoodService.save(brotherhood);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(fob, "brotherhood.commit.error");
-			}
+		try {
+			this.brotherhoodService.save(brotherhood);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(fob, "brotherhood.commit.error");
+		}
 		return result;
 	}
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(Brotherhood brotherhood, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
 			brotherhood = this.brotherhoodService.reconstructPruned(brotherhood, binding);
+		} catch (final ValidationException oops) {
+			return this.editModelAndView(brotherhood);
 		} catch (final Throwable oops) {
-			return result = this.editModelAndView(brotherhood, "brotherhood.commit.error");
+			return this.editModelAndView(brotherhood, "brotherhood.commit.error");
 		}
 
-		if (binding.hasErrors())
-			result = this.editModelAndView(brotherhood);
-
-		else
-			try {
-				this.brotherhoodService.save(brotherhood);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.editModelAndView(brotherhood, "brotherhood.commit.error");
-			}
+		try {
+			this.brotherhoodService.save(brotherhood);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(brotherhood, "brotherhood.commit.error");
+		}
 		return result;
 	}
 

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.validation.ValidationException;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -343,6 +345,9 @@ public class MessageService {
 
 		this.validator.validate(result, binding);
 
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		//Assertion that the user modifying this message has the correct privilege, that is, he or she is the sender or recipient.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getSender().getId() || this.actorService.findByPrincipal().getId() == result.getRecipient().getId());
 
@@ -367,6 +372,9 @@ public class MessageService {
 		result.setPriority(m.getPriority());
 
 		this.validator.validate(result, binding);
+
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		//Assertion that the user modifying this message has the correct privilege, that is, he or she is the sender or recipient.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getSender().getId() || this.actorService.findByPrincipal().getId() == result.getRecipient().getId());
