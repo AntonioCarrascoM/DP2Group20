@@ -55,7 +55,7 @@ public class SponsorServiceTest extends AbstractTest {
 				"sponsor1", null, "sponsor2", "edit2", IllegalArgumentException.class
 			},//Negative test: Another sponsor tries to edit others data
 			{
-				null, "", null, "create", ConstraintViolationException.class
+				null, " ", null, "create", ConstraintViolationException.class
 			}
 		//Negative test: Registering a sponsor without password invalid email
 		};
@@ -84,11 +84,9 @@ public class SponsorServiceTest extends AbstractTest {
 				sponsor.setAddress("calle");
 				sponsor.setPhoto("");
 				sponsor.setPhone("666666666");
-				sponsor.getUserAccount().setPassword(st);
-				sponsor.getUserAccount().setUsername("sponsorTesting");
+				sponsor.getUserAccount().setPassword("test");
+				sponsor.getUserAccount().setUsername(st);
 				sponsor.setEmail("email@email.com");
-
-				sponsor.setName("Test");
 				this.sponsorService.save(sponsor);
 			}
 			super.authenticate(username);
