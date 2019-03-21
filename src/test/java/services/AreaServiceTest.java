@@ -10,10 +10,9 @@
 
 package services;
 
-import java.util.Date;
+import java.util.Collection;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,15 +21,16 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import utilities.AbstractTest;
-import domain.Chapter;
-import domain.Proclaim;
+import domain.Administrator;
+import domain.Area;
+import domain.Brotherhood;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
 })
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-public class ProclaimServiceTest extends AbstractTest {
+public class AreaServiceTest extends AbstractTest {
 
 	// System under test ------------------------------------------------------
 
@@ -51,18 +51,20 @@ public class ProclaimServiceTest extends AbstractTest {
 	//	}
 
 	@Autowired
-	private ProclaimService	proclaimService;
+	private AreaService			areaService;
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
+	@Autowired
+	private BrotherhoodService	brotherhoodService;
 
 
 	@Test
-	public void ProclaimPositiveTest() {
+	public void AreaPositiveTest() {
 		final Object testingData[][] = {
 
 			{
-				"chapter1", "chapter1", null, "create", null
-			}, //A chapter creates a proclaim
+				"admin1", "admin1", null, "create", null
+			}, //A admin creates a area
 
 		//A chapter can't edit a proclaim that doesn't belong to him
 		};
@@ -77,7 +79,7 @@ public class ProclaimServiceTest extends AbstractTest {
 				super.rollbackTransaction();
 			}
 	}
-	protected void templatePositiveTest(final String username, final String ch, final String proclaimId, final String operation, final Class<?> expected) {
+	protected void templatePositiveTest(final String username, final String ad, final String areaId, final String operation, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -85,18 +87,19 @@ public class ProclaimServiceTest extends AbstractTest {
 			super.authenticate(username);
 
 			if (operation.equals("create")) {
-				Proclaim proclaim;
-				Chapter chapter;
+				Area area;
+				Administrator admin;
+				final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
 
-				proclaim = this.proclaimService.create();
-				chapter = (Chapter) this.actorService.findOne(this.getEntityId(ch));
-				proclaim.setDescription("test");
-				proclaim.setPublicationMoment(new Date(System.currentTimeMillis() - 1000));
-				proclaim.setChapter(chapter);
-				this.proclaimService.save(proclaim);
+				area = this.areaService.create();
+				admin = (Administrator) this.actorService.findOne(this.getEntityId(ad));
+				area.setBrotherhoods(brotherhoods);
+				area.setName("test");
+				area.setPictures("pictures");
+				this.areaService.save(area);
 
 			}
-			this.proclaimService.flush();
+			this.areaService.flush();
 			super.unauthenticate();
 
 		} catch (final Throwable oops) {
@@ -107,19 +110,16 @@ public class ProclaimServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void ProclaimNegativeTest() {
+	public void AreaNegativeTest() {
 		final Object testingData[][] = {
 
 			{
-				"chapter1", null, null, "create", AssertionError.class
-			}, //Proclaim can't be created without chapter
+				"admin1", null, null, "create", AssertionError.class
+			}, //Area can't be created without admin
 			{
 
-				"chapter2", "chapter1", null, "create", IllegalArgumentException.class
-			}, //The creator of a proclaim must be the principal
-			{
-				"chapter1", "chapter1", null, "createPastDate", ConstraintViolationException.class
-			}, //Date must be in the past
+				"admin2", "admin1", null, "create", IllegalArgumentException.class
+			}, //The creator of a area must be the principal
 
 		};
 
@@ -134,7 +134,7 @@ public class ProclaimServiceTest extends AbstractTest {
 			}
 	}
 
-	protected void templateNegativeTest(final String username, final String ch, final String proclaimId, final String operation, final Class<?> expected) {
+	protected void templateNegativeTest(final String username, final String ad, final String proclaimId, final String operation, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -142,30 +142,19 @@ public class ProclaimServiceTest extends AbstractTest {
 			super.authenticate(username);
 
 			if (operation.equals("create")) {
-				Proclaim proclaim;
-				Chapter chapter;
+				Area area;
+				Administrator admin;
+				final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
 
-				proclaim = this.proclaimService.create();
-				chapter = (Chapter) this.actorService.findOne(this.getEntityId(ch));
-				proclaim.setDescription("test");
-				proclaim.setPublicationMoment(new Date(System.currentTimeMillis() - 1000));
-				proclaim.setChapter(chapter);
-				this.proclaimService.save(proclaim);
-
-			} else if (operation.equals("createPastDate")) {
-				Proclaim proclaim;
-				Chapter chapter;
-
-				proclaim = this.proclaimService.create();
-				chapter = (Chapter) this.actorService.findOne(this.getEntityId(ch));
-				proclaim.setChapter(chapter);
-				proclaim.setPublicationMoment(new Date(System.currentTimeMillis() + 2000));
-				proclaim.setDescription("test");
-
-				this.proclaimService.save(proclaim);
+				area = this.areaService.create();
+				admin = (Administrator) this.actorService.findOne(this.getEntityId(ad));
+				area.setBrotherhoods(brotherhoods);
+				area.setName("test");
+				area.setPictures("pictures");
+				this.areaService.save(area);
 
 			}
-			this.proclaimService.flush();
+			this.areaService.flush();
 			super.unauthenticate();
 
 		} catch (final Throwable oops) {

@@ -88,6 +88,10 @@ public class AreaService {
 		this.areaRepository.delete(area);
 	}
 
+	public void flush() {
+		this.areaRepository.flush();
+	}
+
 	//Reconstruct
 
 	public Area reconstruct(final Area area, final BindingResult binding) {
