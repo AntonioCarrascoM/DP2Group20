@@ -68,8 +68,6 @@
 	
 	<display:column property="isActive" title="${isActive}" sortable="true" />
 	
-	<display:column property="sponsor.name" title="${sponsor}" sortable="true" />
-	
 	<%-- Edit --%>	
 		<spring:url var="editUrl" value="sponsorship/sponsor/edit.do">
 			<spring:param name="sponsorshipId" value="${row.id}" />
@@ -78,6 +76,14 @@
 			<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 		</display:column>		
 
+	<%-- Display --%>
+		<spring:url var="displayUrl" value="sponsorship/sponsor/display.do">
+			<spring:param name="sponsorshipId" value="${row.id}" />
+		</spring:url>
+		<display:column title="${display}">
+			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
+		</display:column>
+		
 	<!--  Activate sponsorship -->
 
 	<spring:url var="activateURL" value="sponsorship/sponsor/activate.do">
@@ -111,9 +117,11 @@
 	<display:column title="${msgPay}">
 		<a href="${payURL}" onclick="return confirm('${msgConfirmPay}')" ><jstl:out value="${msgPay}" /></a>
 	</display:column>
+	
+	
 </display:table>
 
-		<spring:url var="createUrl" value="sponsorship/sponsor/create.do"/>
-		<a href="${createUrl}"><jstl:out value="${create}"/></a>
+	<spring:url var="createUrl" value="sponsorship/sponsor/create.do"/>
+	<a href="${createUrl}"><jstl:out value="${create}"/></a>
 
 </security:authorize>

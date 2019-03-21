@@ -34,20 +34,37 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 
 	@Test
-	public void driver() {
+	public void SponsorshipPositiveTest() {
 		final Object testingData[][] = {
 			{
-				"sponsor1", null, "sponsorship1", "edit", null
-			},//Positive: A sponsor edits his sponsorship
+				"sponsor1", null, "sponsorship3", "edit", null
+			}
+			//Positive: A sponsor edits his sponsorship
+			, {
+				"sponsor1", null, "parade3", "create", null
+			}
+		//Positive: A sponsor tries to create a sponsorship
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			try {
+				super.startTransaction();
+				this.template((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
+			} catch (final Throwable oops) {
+				throw new RuntimeException(oops);
+			} finally {
+				super.rollbackTransaction();
+			}
+	}
+
+	@Test
+	public void SponsorshipNegativeTest() {
+		final Object testingData[][] = {
 			{
 				"sponsor1", null, "sponsorship4", "edit2", IllegalArgumentException.class
 			},//Negative: A sponsor tries to edit a sponsorship that not owns
 			{
-				"sponsor1", null, "parade1", "create", null
-			},
-			//Positive: A sponsor tries to create a sponsorship
-			{
-				"sponsor1", null, "parade1", "create2", ConstraintViolationException.class
+				"sponsor1", null, "parade3", "create2", ConstraintViolationException.class
 			}
 		//Negative: A sponsor tries to create an invalid sponsorship
 		};
@@ -62,7 +79,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 				super.rollbackTransaction();
 			}
 	}
-
 	protected void template(final String username, final String st, final String id, final String operation, final Class<?> expected) {
 		Class<?> caught;
 
@@ -73,12 +89,11 @@ public class SponsorshipServiceTest extends AbstractTest {
 				final Sponsorship sponsorship = this.sponsorshipService.findOne(this.getEntityId(id));
 				sponsorship.setBanner("https://www.test.com");
 				this.sponsorshipService.save(sponsorship);
-				System.out.println(sponsorship.getBanner());
+
 			} else if (operation.equals("edit2")) {
 				final Sponsorship sponsorship = this.sponsorshipService.findOne(this.getEntityId(id));
 				sponsorship.setBanner("https://www.test.com");
 				this.sponsorshipService.save(sponsorship);
-				System.out.println(sponsorship.getBanner());
 			} else if (operation.equals("create")) {
 				final Sponsorship s = this.sponsorshipService.create();
 				final CreditCard c = new CreditCard();
@@ -95,7 +110,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 				s.setParade(this.paradeService.findOne(this.getEntityId(id)));
 
 				this.sponsorshipService.save(s);
-				System.out.println(s.getBanner());
 			} else if (operation.equals("create2")) {
 				final Sponsorship s = this.sponsorshipService.create();
 				final CreditCard c = new CreditCard();
@@ -112,7 +126,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 				s.setParade(this.paradeService.findOne(this.getEntityId(id)));
 
 				this.sponsorshipService.save(s);
-				System.out.println(s.getBanner());
 			}
 			this.sponsorService.flush();
 			super.unauthenticate();

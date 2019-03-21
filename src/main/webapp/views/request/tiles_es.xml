@@ -17,12 +17,12 @@
 <tiles-definitions>
 
 	<definition name="request/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar petición" />
+		<put-attribute name="title" value="Editar peticion" />
 		<put-attribute name="body" value="/views/request/edit.jsp" />
 	</definition>
 	
 	<definition name="request/create" extends="master.page">	
-		<put-attribute name="title" value="Crear petición" />
+		<put-attribute name="title" value="Crear peticion" />
 		<put-attribute name="body" value="/views/request/edit.jsp" />
 	</definition>	
 	
@@ -32,7 +32,7 @@
 	</definition>
 	
 	<definition name="request/display" extends="master.page">	
-		<put-attribute name="title" value="Mostrar petición" />
+		<put-attribute name="title" value="Mostrar peticion" />
 		<put-attribute name="body" value="/views/request/display.jsp" />
 	</definition>
 	
