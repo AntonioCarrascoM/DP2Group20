@@ -140,7 +140,7 @@ public class AreaService {
 	}
 
 	//The ratio of areas that are not co-ordinated by any chapters
-	public Double[] ratioAreasNotCoordinated() {
+	public Double ratioAreasNotCoordinated() {
 		return this.areaRepository.ratioAreasNotCoordinated();
 	}
 

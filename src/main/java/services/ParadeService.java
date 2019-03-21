@@ -330,7 +330,7 @@ public class ParadeService {
 	}
 
 	//The ratio of parades in final mode grouped by status.
-	public Double[] ratioParadesInFinalModeGroupByStatus() {
+	public Collection<Double> ratioParadesInFinalModeGroupByStatus() {
 		return this.paradeRepository.ratioParadesInFinalModeGroupByStatus();
 	}
 

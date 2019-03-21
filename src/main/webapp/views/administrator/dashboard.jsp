@@ -34,6 +34,18 @@
 <spring:message code="administrator.queryb13" var="queryb13" />
 <spring:message code="administrator.queryb2" var="queryb2" />
 <spring:message code="administrator.queryb3" var="queryb3" />
+<spring:message code="administrator.querycp1" var="querycp1" />
+<spring:message code="administrator.querycp2" var="querycp2" />
+<spring:message code="administrator.querycp3" var="querycp3" />
+<spring:message code="administrator.querybp1" var="querybp1" />
+<spring:message code="administrator.querybp2" var="querybp2" />
+<spring:message code="administrator.querybp3" var="querybp3" />
+<spring:message code="administrator.querybp4" var="querybp4" />
+<spring:message code="administrator.querybp5" var="querybp5" />
+<spring:message code="administrator.queryap1" var="queryap1" />
+<spring:message code="administrator.queryap2" var="queryap2" />
+<spring:message code="administrator.queryap3" var="queryap3" />
+
 <spring:message code="administrator.return" var="returnMsg" />
 
 <security:authorize access="hasRole('ADMIN')" >
@@ -103,6 +115,52 @@
   		<tr>
     		<td><jstl:out value="${queryb3}" /></td>
     		<td><jstl:out value="${ratioEmptyVersusNonEmptyFinders}" /></td> 
+  		</tr>
+  		
+  
+  		<tr>
+    		<td><jstl:out value="${querycp1}" /></td>
+    		<td><jstl:out value="${avgMinMaxStddevOfRecordsPerHistory}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querycp2}" /></td>
+    		<td><jstl:out value="${largestBrotherhoodsByHistory}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querycp3}" /></td>
+    		<td><jstl:out value="${largestBrotherhoodsByHistoryThanAvg}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querybp1}" /></td>
+    		<td><jstl:out value="${ratioAreasNotCoordinated}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querybp2}" /></td>
+    		<td><jstl:out value="${avgMinMaxStddevParadesCoordinatedByChapter}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querybp3}" /></td>
+    		<td><jstl:out value="${chaptersWith10PerCentParadesCoordinateThanAvg}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querybp4}" /></td>
+    		<td><jstl:out value="${ratioParadesInDraftModeVsFinalMode}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${querybp5}" /></td>
+    		<td><jstl:out value="${ratioParadesInFinalModeGroupByStatus}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${queryap1}" /></td>
+    		<td><jstl:out value="${ratioOfActiveSponsorships}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${queryap2}" /></td>
+    		<td><jstl:out value="${avgMinMaxAndStddevOfActiveSponsorshipsPerSponsor}" /></td> 
+  		</tr>
+  		<tr>
+    		<td><jstl:out value="${queryap3}" /></td>
+    		<td><jstl:out value="${top5SponsorsByActiveSponsorships}" /></td> 
   		</tr>
   		
 	</table>

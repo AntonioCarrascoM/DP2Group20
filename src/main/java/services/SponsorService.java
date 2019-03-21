@@ -187,8 +187,13 @@ public class SponsorService {
 	}
 
 	//The top-5 sponsors in terms of number of active sponsorships.
-	public Collection<Sponsor> top5SponsorsByActiveSponsorships() {
-		return this.sponsorRepository.top5SponsorsByActiveSponsorships();
+	public Collection<String> top5SponsorsByActiveSponsorships() {
+		final ArrayList<String> sponsors = (ArrayList<String>) this.sponsorRepository.top5SponsorsByActiveSponsorships();
+		if (sponsors.size() >= 5) {
+			final ArrayList<String> top = new ArrayList<String>(sponsors.subList(0, 4));
+			return top;
+		} else
+			return sponsors;
 	}
 
 	public void flush() {
