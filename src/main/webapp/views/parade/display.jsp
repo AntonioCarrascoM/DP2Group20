@@ -33,8 +33,6 @@
 <spring:message code="parade.maxColumn" var="maxColumn" />
 <spring:message code="parade.formatDate" var="formatDate" />
 
-
-
 <%-- For the selected parade, display the following information: --%>
 
 <jstl:if test="${sponsorship != null}">

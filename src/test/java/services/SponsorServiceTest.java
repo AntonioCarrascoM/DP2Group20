@@ -2,6 +2,7 @@
 package services;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,18 +29,12 @@ public class SponsorServiceTest extends AbstractTest {
 
 
 	@Test
-	public void driver() {
+	public void SponsorPositiveTest() {
 		final Object testingData[][] = {
 			{
 				"sponsor1", null, "sponsor1", "edit", null
-			},//Positive test: A sponsor edit his data
-			{
-				"sponsor1", null, "sponsor2", "edit2", IllegalArgumentException.class
-			},//Negative test: Another sponsor tries to edit others data
-			{
-				null, "test", null, "create", AssertionError.class
 			}
-		//Negative test: Registering a sponsor with invalid make
+		//Positive test: A sponsor edit his data
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -53,6 +48,28 @@ public class SponsorServiceTest extends AbstractTest {
 			}
 	}
 
+	@Test
+	public void SponsorNegativeTest() {
+		final Object testingData[][] = {
+			{
+				"sponsor1", null, "sponsor2", "edit2", IllegalArgumentException.class
+			},//Negative test: Another sponsor tries to edit others data
+			{
+				null, "", null, "create", ConstraintViolationException.class
+			}
+		//Negative test: Registering a sponsor without password invalid email
+		};
+
+		for (int i = 0; i < testingData.length; i++)
+			try {
+				super.startTransaction();
+				this.template((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (Class<?>) testingData[i][4]);
+			} catch (final Throwable oops) {
+				throw new RuntimeException(oops);
+			} finally {
+				super.rollbackTransaction();
+			}
+	}
 	protected void template(final String username, final String st, final String sponsorId, final String operation, final Class<?> expected) {
 		Class<?> caught;
 
@@ -67,31 +84,26 @@ public class SponsorServiceTest extends AbstractTest {
 				sponsor.setAddress("calle");
 				sponsor.setPhoto("");
 				sponsor.setPhone("666666666");
-				sponsor.getUserAccount().setPassword("1234");
+				sponsor.getUserAccount().setPassword(st);
 				sponsor.getUserAccount().setUsername("sponsorTesting");
-				sponsor.setEmail(st);
+				sponsor.setEmail("email@email.com");
 
 				sponsor.setName("Test");
 				this.sponsorService.save(sponsor);
-				System.out.println(sponsor.getName());
 			}
 			super.authenticate(username);
 			if (operation.equals("edit")) {
 				Sponsor sponsor;
-
 				sponsor = this.sponsorService.findOne(this.getEntityId(sponsorId));
 
 				sponsor.setName("Test");
 				this.sponsorService.save(sponsor);
-				System.out.println(sponsor.getName());
 			} else if (operation.equals("edit2")) {
 				Sponsor sponsor;
-
 				sponsor = this.sponsorService.findOne(this.getEntityId(sponsorId));
 
 				sponsor.setName("Test");
 				this.sponsorService.save(sponsor);
-				System.out.println(sponsor.getName());
 			}
 			this.sponsorService.flush();
 			super.unauthenticate();

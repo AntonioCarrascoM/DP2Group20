@@ -94,6 +94,22 @@ public class SponsorshipSponsorController {
 		return result;
 	}
 
+	//Display 
+
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam final int sponsorshipId) {
+		ModelAndView result;
+		Sponsorship sponsorship;
+
+		sponsorship = this.sponsorshipService.findOne(sponsorshipId);
+
+		result = new ModelAndView("sponsorship/display");
+		result.addObject("sponsorship", sponsorship);
+		result.addObject("requestURI", "sponsorship/sponsor/display.do");
+
+		return result;
+	}
+
 	//Delete
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")

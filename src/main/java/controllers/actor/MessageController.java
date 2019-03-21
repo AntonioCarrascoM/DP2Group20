@@ -197,7 +197,7 @@ public class MessageController extends AbstractController {
 		config = this.configurationService.findAll().iterator().next();
 		priorities = config.getPriorityList();
 
-		//No sé porqué no se muestran los mensajes del binding
+		//No se porque no se muestran los mensajes del binding
 		//final Collection<Box> boxes = message.getBoxes();
 
 		result = new ModelAndView("message/create");

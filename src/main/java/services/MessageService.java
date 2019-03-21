@@ -302,10 +302,10 @@ public class MessageService {
 		final Collection<Member> activeMembers = this.memberService.activeMembersOfBrotherhood(b.getId());
 
 		final Message msg = this.create();
-		msg.setSubject("A parade has been published / Se ha publicado una procesion.");
-		msg.setBody("A parade has been published / Se ha publicado una procesion.");
+		msg.setSubject("A parade has been published / Se ha publicado un desfile.");
+		msg.setBody("A parade has been published / Se ha publicado un desfile.");
 		msg.setPriority("HIGH");
-		msg.setTags("Parade published / Procesion publicada");
+		msg.setTags("Parade published / Desfile publicado");
 		msg.setSent(new Date(System.currentTimeMillis() - 1));
 
 		if (!activeMembers.isEmpty())
