@@ -47,10 +47,7 @@
 		<value>/views/periodRecord/messages</value>
 		<value>/views/linkRecord/messages</value>
 		<value>/views/miscellaneousRecord/messages</value>
-<<<<<<< HEAD
-=======
 		<value>/views/proclaim/messages</value>
->>>>>>> 95fc2b59a3d36afa2fce3b3f2039c8605495525e
 	</util:list>
 
 </beans>
