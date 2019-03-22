@@ -53,6 +53,7 @@ public class MemberService {
 		final UserAccount account = new UserAccount();
 		account.setAuthorities(Arrays.asList(a));
 		account.setBanned(false);
+		account.setInactive(false);
 
 		final Member member = new Member();
 		member.setSpammer(false);

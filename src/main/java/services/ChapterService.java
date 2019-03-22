@@ -51,6 +51,7 @@ public class ChapterService {
 		final UserAccount account = new UserAccount();
 		account.setAuthorities(Arrays.asList(a));
 		account.setBanned(false);
+		account.setInactive(false);
 
 		final Chapter chapter = new Chapter();
 		chapter.setSpammer(false);

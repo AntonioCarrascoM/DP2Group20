@@ -55,6 +55,7 @@ public class BrotherhoodService {
 		final UserAccount account = new UserAccount();
 		account.setAuthorities(Arrays.asList(a));
 		account.setBanned(false);
+		account.setInactive(false);
 
 		final Brotherhood brotherhood = new Brotherhood();
 		brotherhood.setSpammer(false);
