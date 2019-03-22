@@ -1597,7 +1597,7 @@
 				<value>ha sido seleccionado</value>
 			</list>
 		</property>
-		<property name="countryCode" value="+34" />
+		<property name="countryCode" value="+34 " />
 		<property name="expireFinderMinutes" value="60" />
 		<property name="maxFinderResults" value="10" />
 		<property name="positiveWords">
