@@ -132,7 +132,7 @@ public class RequestService {
 
 		reqs = this.requestForRowColumnAndParade(r.getCustomRow(), r.getCustomColumn(), r.getParade().getId());
 
-		if (reqs.isEmpty() || reqs.iterator().next() == r)
+		if (reqs.isEmpty() || (reqs.contains(r) && reqs.size() == 1))
 			res = true;
 
 		return res;

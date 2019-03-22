@@ -131,12 +131,12 @@ public class UserAccount extends DomainEntity implements UserDetails {
 		return this.banned;
 	}
 
-	public Boolean getInactive() {
-		return this.inactive;
-	}
-
 	public void setBanned(final Boolean banned) {
 		this.banned = banned;
+	}
+
+	public Boolean getInactive() {
+		return this.inactive;
 	}
 
 	public void setInactive(final Boolean inactive) {
