@@ -51,6 +51,7 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	private String					username;
 	private String					password;
 	private Boolean					banned;
+	private Boolean					inactive;
 	private Collection<Authority>	authorities;
 
 
@@ -129,8 +130,17 @@ public class UserAccount extends DomainEntity implements UserDetails {
 	public Boolean getBanned() {
 		return this.banned;
 	}
+
+	public Boolean getInactive() {
+		return this.inactive;
+	}
+
 	public void setBanned(final Boolean banned) {
 		this.banned = banned;
+	}
+
+	public void setInactive(final Boolean inactive) {
+		this.inactive = inactive;
 	}
 
 }

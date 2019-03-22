@@ -51,6 +51,7 @@ public class SponsorService {
 		final UserAccount account = new UserAccount();
 		account.setAuthorities(Arrays.asList(a));
 		account.setBanned(false);
+		account.setInactive(false);
 
 		final Sponsor sponsor = new Sponsor();
 		sponsor.setSpammer(false);

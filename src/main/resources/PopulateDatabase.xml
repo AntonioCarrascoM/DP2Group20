@@ -22,6 +22,7 @@
 		<property name="username" value="admin" />
 		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -35,6 +36,7 @@
 		<property name="username" value="brotherhood1" />
 		<property name="password" value="479e3180a45b21ea8e88beb0c45aa8ed" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -48,6 +50,7 @@
 		<property name="username" value="brotherhood2" />
 		<property name="password" value="88f1b810c40cd63107fb758fef4d77db" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -61,6 +64,7 @@
 		<property name="username" value="brotherhood3" />
 		<property name="password" value="cb8f36c7d5bbbc6aa5798a0e5796ebd5" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -74,6 +78,7 @@
 		<property name="username" value="member1" />
 		<property name="password" value="c7764cfed23c5ca3bb393308a0da2306" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -87,6 +92,7 @@
 		<property name="username" value="member2" />
 		<property name="password" value="88ed421f060aadcacbd63f28d889797f" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -100,6 +106,7 @@
 		<property name="username" value="member3" />
 		<property name="password" value="3ef4802d8a37022fd187fbd829d1c4d6" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -113,6 +120,7 @@
 		<property name="username" value="chapter1" />
 		<property name="password" value="178494d73a41f7d68e80f685324d3662" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -126,6 +134,7 @@
 		<property name="username" value="chapter2" />
 		<property name="password" value="07a29f2348d728fad16c5260823f93ef" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -139,6 +148,7 @@
 		<property name="username" value="chapter3" />
 		<property name="password" value="4cf7b4e4bb6d429f0f08bc498e397d81" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -152,6 +162,7 @@
 		<property name="username" value="sponsor1" />
 		<property name="password" value="42c63ad66d4dc07ed17753772bef96d6" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -165,6 +176,7 @@
 		<property name="username" value="sponsor2" />
 		<property name="password" value="3dc67f80a03324e01b1640f45d107485" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -178,6 +190,7 @@
 		<property name="username" value="super" />
 		<property name="password" value="1b3231655cebb7a1f783eddf27d254ca" />
 		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
