@@ -48,16 +48,28 @@
 	requestURI="${requestURI}" id="row">
 
 	<%-- Attributes --%>
-
-	<display:column property="title" title="${title}" sortable="true" />
+	<jstl:if test="${row.paradeStatus.name == 'SUBMITTED'}">
+		<jstl:set var="colorValue" value="grey"/>
+	</jstl:if>
+	<jstl:if test="${row.paradeStatus.name == 'ACCEPTED'}">
+		<jstl:set var="colorValue" value="green"/>
+	</jstl:if>
+	<jstl:if test="${row.paradeStatus.name == 'REJECTED'}">
+		<jstl:set var="colorValue" value="red"/>
+	</jstl:if>
+	<jstl:if test="${row.paradeStatus.name == null}">
+		<jstl:set var="colorValue" value="whyte"/>
+	</jstl:if>
 	
-	<display:column property="ticker" title="${ticker}" sortable="true" />
+	<display:column property="title" title="${title}" sortable="true" style="background-color:${colorValue}"/>
 	
-	<display:column title="${moment}" sortable="true">
+	<display:column property="ticker" title="${ticker}" sortable="true" style="background-color:${colorValue}"/>
+	
+	<display:column title="${moment}" sortable="true" style="background-color:${colorValue}">
 		<fmt:formatDate value="${row.moment}" pattern="${formatDate}" />
 	</display:column>	
 	<security:authorize access="hasRole('CHAPTER')">
-		<display:column property="paradeStatus" title="${paradeStatusMsg}" sortable="true" />
+		<display:column property="paradeStatus" title="${paradeStatusMsg}" sortable="true" style="background-color:${colorValue}"/>
 	</security:authorize>
 		
 	<security:authorize access="hasRole('BROTHERHOOD')">
@@ -66,7 +78,7 @@
 	<spring:url var="requestsUrl" value="request/brotherhood/list.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${msgListRequest}">
+		<display:column title="${msgListRequest}" style="background-color:${colorValue}">
 			<a href="${requestsUrl}"><jstl:out value="${msgListRequest}" /></a>
 		</display:column>
 		
@@ -74,13 +86,13 @@
 	<spring:url var="segmentsUrl" value="segment/brotherhood/list.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${msgPath}">
+		<display:column title="${msgPath}" style="background-color:${colorValue}">
 			<a href="${segmentsUrl}"><jstl:out value="${msgPath}" /></a>
 		</display:column>
 	<spring:url var="createSegmentUrl" value="segment/brotherhood/create.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${msgCreateSegment}">
+		<display:column title="${msgCreateSegment}" style="background-color:${colorValue}">
 		<jstl:if test="${row.finalMode eq false}">
 			<a href="${createSegmentUrl}"><jstl:out value="${msgCreateSegment}" /></a>
 			</jstl:if>
@@ -90,7 +102,7 @@
 		<spring:url var="displayUrl" value="parade/display.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${display}">
+		<display:column title="${display}" style="background-color:${colorValue}">
 			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
 		</display:column>
 		
@@ -99,7 +111,7 @@
 		<spring:url var="editUrl" value="parade/brotherhood/edit.do">
 		<spring:param name="varId" value="${row.id}" />
 	</spring:url>
-	<display:column title="${edit}">
+	<display:column title="${edit}" style="background-color:${colorValue}">
 	<jstl:if test="${row.finalMode eq false}">
 	
 		<a href="${editUrl}"><jstl:out value="${edit}" /></a>
@@ -112,7 +124,7 @@
 		<spring:url var="deleteUrl" value="parade/brotherhood/delete.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${msgDelete}">
+		<display:column title="${msgDelete}" style="background-color:${colorValue}">
 		<jstl:if test="${row.finalMode eq false}">
 				<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out
 						value="${msgDelete}" /></a>
@@ -124,7 +136,7 @@
 		<spring:url var="deletePathUrl" value="segment/brotherhood/delete.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${msgDeletePath}">
+		<display:column title="${msgDeletePath}" style="background-color:${colorValue}">
 		<jstl:if test="${row.finalMode eq false}">
 		<a href="${deletePathUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out	value="${msgDeletePath}" /></a>
 		</jstl:if>
@@ -135,7 +147,7 @@
 		<spring:url var="copyUrl" value="parade/brotherhood/copy.do">
 		<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-		<display:column title="${msgCopy}">
+		<display:column title="${msgCopy}" style="background-color:${colorValue}">
 		<a href="${copyUrl}" onclick="return confirm('${msgConfirm}')"> <jstl:out value="${msgCopy}" /></a>
 		</display:column>
 	
@@ -146,7 +158,7 @@
 		<spring:param name="varId" value="${row.id}" />
 	</spring:url>
 	
-	<display:column title="${msgCreateRequest}">
+	<display:column title="${msgCreateRequest}" style="background-color:${colorValue}">
 			<a href="${requestUrl}"><jstl:out value="${msgCreateRequest}" /></a>
 	</display:column>
 	</security:authorize>
@@ -159,19 +171,19 @@
 	
 	
 	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'SUBMITTED'}">
-		<display:column title="${edit}">
+		<display:column title="${edit}" style="background-color:${colorValue}">
 		<a href="${editUrl}"><jstl:out value="${paradeStatusMsg}" /></a>
 		</display:column>
 	</jstl:if>
 	
 	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'REJECTED' and empty row.rejectionReason}">
-		<display:column title="${edit}">
+		<display:column title="${edit}" style="background-color:${colorValue}">
 		<a href="${editUrl}"><jstl:out value="${rejectionReasonMsg}" /></a>
 		</display:column>
 	</jstl:if>
 	
 	<jstl:if test="${row.finalMode eq true and row.paradeStatus.name == 'REJECTED' and not empty row.rejectionReason}">
-		<display:column property="rejectionReason" title="${rejectionReasonMsg}" sortable="true" />
+		<display:column property="rejectionReason" title="${rejectionReasonMsg}" sortable="true"  style="background-color:${colorValue}"/>
 	</jstl:if>
 		
 	
