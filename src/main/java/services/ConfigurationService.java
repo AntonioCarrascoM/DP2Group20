@@ -129,7 +129,7 @@ public class ConfigurationService {
 				configuration.setCountryCode("+" + number + " ");
 		} else if (StringUtils.isNumericSpace(number)) {
 			final int largo = number.length();
-			number = number.substring(0, largo);
+			number = number.substring(0, largo - 1);
 			final Integer numero = Integer.parseInt(number);
 			if (numero < 1 || numero > 999)
 				res = false;
