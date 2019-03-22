@@ -61,7 +61,7 @@
 					<li><a href="socialProfile/list.do"><spring:message
 								code="master.page.socialProfile" /> </a></li>
 
-					<li><a href="actor/deactivate"><spring:message
+					<li><a href="actor/deactivate.do"><spring:message
 								code="master.page.deactivate" /> </a></li>
 								
 					<li><a href="j_spring_security_logout"><spring:message

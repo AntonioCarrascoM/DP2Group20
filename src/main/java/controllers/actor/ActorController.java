@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,7 @@ import domain.Actor;
 import domain.Area;
 
 @Controller
-@RequestMapping("/actor")
+@RequestMapping("actor")
 public class ActorController extends AbstractController {
 
 	//Services
@@ -32,6 +33,23 @@ public class ActorController extends AbstractController {
 	@Autowired
 	private AreaService		areaService;
 
+
+	//Deactivate
+
+	@RequestMapping(value = "/deactivate", method = RequestMethod.GET)
+	public ModelAndView deactivate() {
+		Actor actor;
+
+		actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor);
+
+		actor.getUserAccount().setInactive(true);
+		this.actorService.save(actor);
+
+		SecurityContextHolder.clearContext();
+
+		return new ModelAndView("redirect:/welcome/index.do");
+	}
 
 	//Edition
 
