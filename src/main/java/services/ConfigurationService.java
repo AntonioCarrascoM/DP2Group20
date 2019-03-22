@@ -4,6 +4,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +53,12 @@ public class ConfigurationService {
 
 		//Checking that the configuration at least has the 3 basic priorities: LOW, NEUTRAL and HIGH
 		this.checkPriorities(configuration);
+
 		//Checking that the configuration at least has the 5 basic makes: VISA, MCARD, AMEX, DINNERS, FLY
 		this.checkCreditCardList(configuration);
+
+		//Assertion to make sure that the country code is valid.
+		Assert.isTrue(this.checkCountryCode(configuration));
 
 		final Configuration saved = this.configurationRepository.save(configuration);
 
@@ -106,5 +111,31 @@ public class ConfigurationService {
 				configuration.getPriorityList().add("HIGH");
 		}
 		return configuration.getPriorityList();
+	}
+
+	//Assertion to make sure that the country code is between 1 and 999.
+	private Boolean checkCountryCode(final Configuration configuration) {
+		Boolean res = true;
+
+		final String cc = configuration.getCountryCode();
+		String number = cc.substring(1);
+		if (StringUtils.isNumeric(number)) {
+
+			final Integer numero = Integer.parseInt(number);
+
+			if (numero < 1 || numero > 999)
+				res = false;
+			else
+				configuration.setCountryCode("+" + number + " ");
+		} else if (StringUtils.isNumericSpace(number)) {
+			final int largo = number.length();
+			number = number.substring(0, largo);
+			final Integer numero = Integer.parseInt(number);
+			if (numero < 1 || numero > 999)
+				res = false;
+			else
+				configuration.setCountryCode("+" + number + " ");
+		}
+		return res;
 	}
 }
