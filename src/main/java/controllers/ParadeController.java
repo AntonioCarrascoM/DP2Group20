@@ -38,7 +38,7 @@ public class ParadeController extends AbstractController {
 		final ModelAndView result;
 		final Collection<Parade> parades;
 
-		parades = this.paradeService.finalParadesForBrotherhood(varId);
+		parades = this.paradeService.finalAcceptedParadesForBrotherhood(varId);
 
 		result = new ModelAndView("parade/list");
 		result.addObject("parades", parades);
@@ -52,7 +52,7 @@ public class ParadeController extends AbstractController {
 		final ModelAndView result;
 		Collection<Parade> parades;
 
-		parades = this.paradeService.getFinalParades();
+		parades = this.paradeService.getFinalAcceptedParades();
 
 		result = new ModelAndView("parade/list");
 		result.addObject("parades", parades);

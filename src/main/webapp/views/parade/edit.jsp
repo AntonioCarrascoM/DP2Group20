@@ -98,7 +98,6 @@
 	
 	<form:hidden path="id" />
 	
-	<jstl:if test="${parade.paradeStatus.name == 'SUBMITTED'}">
 	<form:label path="paradeStatus">
 					<jstl:out value="${paradeStatus}" />:
 		</form:label>
@@ -110,13 +109,10 @@
 				<form:errors cssClass="error" path="paradeStatus" />
 				<br />
 				<br />
-		</jstl:if>
-		<jstl:if test="${empty parade.rejectionReason and parade.paradeStatus.name == 'REJECTED'}">	
 			<acme:textarea
 		 		code = "parade.rejectionReason" 
 		 		path="rejectionReason"/>
 		 		<br/>
-		</jstl:if>	
 		
 	
 	</security:authorize>

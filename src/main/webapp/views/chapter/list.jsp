@@ -25,6 +25,7 @@
 <spring:message code="chapter.display" var="msgDisplay" />
 <spring:message code="chapter.members" var="msgMembers" />
 <spring:message code="chapter.brotherhoods" var="msgBrotherhoods" />
+<spring:message code="chapter.proclaims" var="msgProclaims" />
 <spring:message code="chapter.area" var="msgArea"/>
 
 
@@ -49,6 +50,14 @@
 
 	<display:column title="${msgArea}">
 		<a href="${areaURL}"><jstl:out value="${msgArea}" /></a>
+	</display:column>
+
+	<spring:url var="proclaimsUrl" value="proclaim/listByChapter.do">
+		<spring:param name="varId" value="${row.id}" />
+	</spring:url>
+
+	<display:column title="${msgProclaims}">
+		<a href="${proclaimsUrl}"><jstl:out value="${msgProclaims}" /></a>
 	</display:column>
 
 	<spring:url var="brotherhoodUrl" value="brotherhood/listByChapter.do">

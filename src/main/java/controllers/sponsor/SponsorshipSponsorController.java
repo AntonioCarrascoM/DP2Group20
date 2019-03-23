@@ -265,7 +265,7 @@ public class SponsorshipSponsorController {
 		ModelAndView result;
 
 		final Collection<String> makes = this.configurationService.findAll().iterator().next().getCreditCardList();
-		final Collection<Parade> parades = this.paradeService.paradesAccepted();
+		final Collection<Parade> parades = this.paradeService.getFinalAcceptedParades();
 
 		result = new ModelAndView("sponsorship/edit");
 		result.addObject("sponsorship", sponsorship);
