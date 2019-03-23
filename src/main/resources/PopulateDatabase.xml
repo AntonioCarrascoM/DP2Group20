@@ -2090,7 +2090,7 @@
 		<property name="maxColumn" value="7"/>
 		<property name="moment" value="25/04/2020 10:20" />
 		<property name="finalMode" value="true" />
-		<property name="paradeStatus" value="SUBMITTED" /> 
+		<property name="paradeStatus" value="ACCEPTED" /> 
 		<property name="rejectionReason"><null/></property>
  		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
@@ -2126,8 +2126,6 @@
 		</property>
 		<property name="requests">
 			<list>
-				<ref bean="request2" />
-				<ref bean="request3" />
 			</list>
 		</property>
 	</bean>
@@ -2149,6 +2147,8 @@
 		</property>
 		<property name="requests">
 			<list>
+				<ref bean="request2" />
+				<ref bean="request3" />
 			</list>
 		</property>
 	</bean>
