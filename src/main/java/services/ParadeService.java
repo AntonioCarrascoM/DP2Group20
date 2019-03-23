@@ -76,7 +76,6 @@ public class ParadeService {
 		final Brotherhood b = (Brotherhood) this.actorService.findByPrincipal();
 		p.setBrotherhood(b);
 		p.setFinalMode(false);
-		p.setRejectionReason("There is no reason yet");
 		p.setRequests(new ArrayList<Request>());
 		p.setFloats(new ArrayList<Float>());
 
@@ -193,6 +192,7 @@ public class ParadeService {
 	//Reconstruct
 
 	public Parade reconstruct(final Parade p, final BindingResult binding) {
+		Assert.notNull(p);
 		Parade result = new Parade();
 		final Authority authBroth = new Authority();
 		authBroth.setAuthority(Authority.BROTHERHOOD);
@@ -225,6 +225,9 @@ public class ParadeService {
 
 		if (binding.hasErrors())
 			throw new ValidationException();
+
+		if (result.getParadeStatus() != null && result.getParadeStatus().equals(ParadeStatus.REJECTED) && (result.getRejectionReason() == null || "".equals(result.getRejectionReason())))
+			throw new NullPointerException();
 
 		final Date date = result.getMoment();
 		final DateFormat fecha = new SimpleDateFormat("yyyy/MM/dd");
@@ -358,6 +361,16 @@ public class ParadeService {
 	//Parades with final mode for an area
 	public Collection<Parade> finalParadesByArea(final int id) {
 		return this.paradeRepository.finalParadesByArea(id);
+	}
+
+	//Listing of parades with finalMode = true and paradeStatus = accepted that belong to a certain brotherhood.
+	public Collection<Parade> finalAcceptedParadesForBrotherhood(final int varId) {
+		return this.paradeRepository.finalAcceptedParadesForBrotherhood(varId);
+	}
+
+	//Listing of the parades with finalMode = true
+	public Collection<Parade> getFinalAcceptedParades() {
+		return this.paradeRepository.getFinalAcceptedParades();
 	}
 
 }

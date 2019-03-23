@@ -66,6 +66,8 @@ public class ParadeChapterController extends AbstractController {
 			parade = this.paradeService.reconstruct(parade, binding);
 		} catch (final ValidationException oops) {
 			return result = this.createEditModelAndView(parade);
+		} catch (final NullPointerException oops) {
+			return result = this.createEditModelAndView(parade, "parade.rejectionReason.error");
 		} catch (final Throwable oops) {
 			return result = this.createEditModelAndView(parade, "parade.commit.error");
 		}
