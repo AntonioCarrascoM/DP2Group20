@@ -100,6 +100,12 @@ public class RequestBrotherhoodController {
 			request = this.requestService.reconstruct(request, binding);
 		} catch (final ValidationException oops) {
 			return this.createEditModelAndView(request);
+		} catch (final RuntimeException oops) {
+			final Collection<Request> requests = req.getParade().getRequests();
+			result = new ModelAndView("request/list");
+			result.addObject("requests", requests);
+			result.addObject("message", "request.maxPosition.error");
+			return result;
 		} catch (final Throwable oops) {
 			final Collection<Request> requests = req.getParade().getRequests();
 			result = new ModelAndView("request/list");
@@ -130,7 +136,14 @@ public class RequestBrotherhoodController {
 	protected ModelAndView createEditModelAndView(final Request request, final String messageCode) {
 		ModelAndView result;
 
+		final Request req = this.requestService.findOne(request.getId());
+
+		final Integer maxRow = req.getParade().getMaxRow();
+		final Integer maxColumn = req.getParade().getMaxColumn();
+
 		result = new ModelAndView("request/edit");
+		result.addObject("maxRow", maxRow);
+		result.addObject("maxColumn", maxColumn);
 		result.addObject("request", request);
 		result.addObject("message", messageCode);
 		result.addObject("requestURI", "request/brotherhood/edit.do");

@@ -168,6 +168,9 @@ public class RequestService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 
+		if (result.getCustomColumn() != null && result.getCustomRow() != null && (result.getCustomColumn() > result.getParade().getMaxColumn() || result.getCustomRow() > result.getParade().getMaxRow()))
+			throw new RuntimeException();
+
 		//Assertion that the user modifying this request has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getMember().getId() || this.actorService.findByPrincipal().getId() == result.getParade().getBrotherhood().getId());
 
