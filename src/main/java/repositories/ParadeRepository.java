@@ -55,4 +55,8 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	//Listing of the parades with finalMode = true
 	@Query("select p from Parade p where p.finalMode = true and p.paradeStatus='1'")
 	Collection<Parade> getFinalAcceptedParades();
+
+	//Listing of the parades group by status
+	@Query("select p from Parade p where p.brotherhood.id=?1 order by p.paradeStatus")
+	Collection<Parade> getParadesByStatus(int id);
 }

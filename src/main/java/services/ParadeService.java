@@ -373,4 +373,9 @@ public class ParadeService {
 		return this.paradeRepository.getFinalAcceptedParades();
 	}
 
+	//Listing of the parades group by status
+	public Collection<Parade> getParadesByStatus(final int id) {
+		return this.paradeRepository.getParadesByStatus(id);
+	}
+
 }
