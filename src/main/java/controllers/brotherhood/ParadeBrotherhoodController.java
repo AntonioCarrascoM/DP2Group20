@@ -42,7 +42,7 @@ public class ParadeBrotherhoodController extends AbstractController {
 		Brotherhood brotherhood;
 
 		brotherhood = (Brotherhood) this.actorService.findByPrincipal();
-		parades = brotherhood.getParades();
+		parades = this.paradeService.getParadesByStatus(brotherhood.getId());
 
 		result = new ModelAndView("parade/list");
 		result.addObject("parades", parades);
