@@ -132,10 +132,8 @@
 		</spring:url>
 		<display:column title="${edit}" style="background-color:${colorValue}">
 			<jstl:if test="${row.finalMode eq false}">
-
 				<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 			</jstl:if>
-
 		</display:column>
 
 		<%-- Delete --%>
@@ -174,29 +172,25 @@
 			<a href="${copyUrl}" onclick="return confirm('${msgConfirm}')"> <jstl:out
 					value="${msgCopy}" /></a>
 		</display:column>
-
 	</security:authorize>
 
 	<security:authorize access="hasRole('MEMBER')">
 		<spring:url var="requestUrl" value="request/member/create.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-
 		<display:column title="${msgCreateRequest}"
 			style="background-color:${colorValue}">
 			<a href="${requestUrl}"><jstl:out value="${msgCreateRequest}" /></a>
 		</display:column>
 	</security:authorize>
-
+	
 	<security:authorize access="hasRole('CHAPTER')">
 		<spring:url var="editUrl" value="parade/chapter/edit.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-
 		<display:column property="rejectionReason"
 			title="${rejectionReasonMsg}" sortable="true"
 			style="background-color:${colorValue}" />
-
 
 		<display:column title="${edit}" style="background-color:${colorValue}">
 			<jstl:if

@@ -29,7 +29,7 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	Collection<Parade> finalParadesForBrotherhood(int varId);
 
 	//Parades which a member can do requests
-	@Query("select p from Member m join m.enrolments e join e.brotherhood b join b.parades p where p.finalMode=1 and e.dropOutMoment=null and m.id=?1 and p not in (select p from Member m join m.requests r join r.parade p where r.status!='2' and m.id=?1)")
+	@Query("select p from Member m join m.enrolments e join e.brotherhood b join b.parades p where p.finalMode='1' and p.paradeStatus='1' and e.dropOutMoment=null and m.id=?1 and p not in (select p from Member m join m.requests r join r.parade p where r.status!='2' and m.id=?1)")
 	Collection<Parade> paradesForRequestByMember(int varId);
 
 	//The ratio of parades in draft mode versus parades in final mode

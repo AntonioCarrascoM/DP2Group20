@@ -2192,7 +2192,7 @@
 		<property name="customColumn" value="3" />
 		<property name="reason" value="Don't have a reason yet." />
 		<property name="member" ref="member2" />
-		<property name="parade" ref="parade2" />
+		<property name="parade" ref="parade3" />
 	</bean>
 	
 	<bean id="request3" class="domain.Request">
@@ -2201,7 +2201,7 @@
 		<property name="customColumn"><null/></property>
 		<property name="reason" value="You don't meet the requirements" />
 		<property name="member" ref="member2" />
-		<property name="parade" ref="parade2" />
+		<property name="parade" ref="parade3" />
 	</bean>
 	
 	<bean id="request4" class="domain.Request">
