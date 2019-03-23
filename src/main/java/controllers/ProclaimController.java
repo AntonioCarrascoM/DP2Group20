@@ -37,6 +37,20 @@ public class ProclaimController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/listByChapter", method = RequestMethod.GET)
+	public ModelAndView listByChapter(@RequestParam final int varId) {
+		final ModelAndView result;
+		Collection<Proclaim> proclaims;
+
+		proclaims = this.proclaimService.getProclaimsForChapter(varId);
+
+		result = new ModelAndView("proclaim/list");
+		result.addObject("proclaims", proclaims);
+		result.addObject("requestURI", "proclaim/list.do");
+
+		return result;
+	}
+
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int varId) {
 		ModelAndView result;

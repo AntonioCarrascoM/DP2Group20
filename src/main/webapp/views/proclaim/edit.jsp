@@ -31,13 +31,6 @@
 <spring:message code="proclaim.save.confirm" var="msgConf" />
 <spring:message code="proclaim.save" var="save" />
 
-
-
-
-
-
-
-
 <security:authorize access="hasRole('CHAPTER')">
 
 <form:form action="${requestURI}" modelAttribute="proclaim">

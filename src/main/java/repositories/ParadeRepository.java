@@ -40,11 +40,19 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	@Query("select count(p)*1./(select count(p1) from Parade p1 where p1.finalMode='1') from Parade p where p.finalMode='1' group by p.paradeStatus")
 	Collection<Double> ratioParadesInFinalModeGroupByStatus();
 
-	//Parades with status accpeted
+	//Parades with status accepted
 	@Query("select p from Parade p where p.paradeStatus = 1")
 	Collection<Parade> paradesAccepted();
 
 	//Parades with final mode for an area
-	@Query("select p from Parade p join p.brotherhood b join b.area a where p.finalMode='1' and a.id=?1")
+	@Query("select p from Parade p join p.brotherhood b join b.area a where p.finalMode='1' and a.id=?1 order by p.paradeStatus")
 	Collection<Parade> finalParadesByArea(int id);
+
+	//Listing of parades with finalMode = true and paradeStatus = accepted that belong to a certain brotherhood.
+	@Query("select p from Parade p where p.finalMode=1 and p.paradeStatus='1' and p.brotherhood.id=?1")
+	Collection<Parade> finalAcceptedParadesForBrotherhood(int varId);
+
+	//Listing of the parades with finalMode = true
+	@Query("select p from Parade p where p.finalMode = true and p.paradeStatus='1'")
+	Collection<Parade> getFinalAcceptedParades();
 }
