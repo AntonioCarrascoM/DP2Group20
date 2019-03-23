@@ -1,6 +1,8 @@
 
 package controllers.actor;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.validation.Valid;
@@ -15,11 +17,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
 import services.ActorService;
 import services.AreaService;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Administrator;
 import domain.Area;
+import domain.Brotherhood;
+import domain.Chapter;
+import domain.Member;
+import domain.Sponsor;
 
 @Controller
 @RequestMapping("actor")
@@ -51,6 +64,108 @@ public class ActorController extends AbstractController {
 		return new ModelAndView("redirect:/welcome/index.do");
 	}
 
+	//Export data
+
+	@RequestMapping(value = "/exportData", method = RequestMethod.GET)
+	public ModelAndView exportData() {
+		final Actor principal = this.actorService.findByPrincipal();
+
+		final Brotherhood brotherhood = new Brotherhood();
+		final Authority authBrotherhood = new Authority();
+		authBrotherhood.setAuthority(Authority.BROTHERHOOD);
+
+		final Chapter chapter = new Chapter();
+		final Authority authChapter = new Authority();
+		authChapter.setAuthority(Authority.CHAPTER);
+
+		final Sponsor sponsor = new Sponsor();
+		final Authority authSponsor = new Authority();
+		authSponsor.setAuthority(Authority.SPONSOR);
+
+		final Administrator admin = new Administrator();
+		final Authority authAdmin = new Authority();
+		authAdmin.setAuthority(Authority.ADMIN);
+
+		final Member member = new Member();
+		final Authority authMember = new Authority();
+		authMember.setAuthority(Authority.MEMBER);
+
+		final ObjectMapper mapper = new ObjectMapper();
+
+		if (principal != null)
+			try {
+				if (principal.getUserAccount().getAuthorities().contains(authBrotherhood)) {
+					final Brotherhood brotherhoodPrincipal = (Brotherhood) this.actorService.findByPrincipal();
+					brotherhood.setName(brotherhoodPrincipal.getName());
+					brotherhood.setMiddleName(brotherhoodPrincipal.getMiddleName());
+					brotherhood.setSurname(brotherhoodPrincipal.getSurname());
+					brotherhood.setPhoto(brotherhoodPrincipal.getPhoto());
+					brotherhood.setEmail(brotherhoodPrincipal.getEmail());
+					brotherhood.setPhone(brotherhoodPrincipal.getPhone());
+					brotherhood.setAddress(brotherhoodPrincipal.getAddress());
+					brotherhood.setTitle(brotherhoodPrincipal.getTitle());
+					brotherhood.setEstablishmentDate(brotherhoodPrincipal.getEstablishmentDate());
+					brotherhood.setPictures(brotherhoodPrincipal.getPictures());
+					mapper.writeValue(new File("C:\\Temp\\MyPersonalData.txt"), brotherhood);
+					return new ModelAndView("redirect:/welcome/index.do");
+				} else if (principal.getUserAccount().getAuthorities().contains(authChapter)) {
+					final Chapter chapterPrincipal = (Chapter) this.actorService.findByPrincipal();
+					chapter.setName(chapterPrincipal.getName());
+					chapter.setMiddleName(chapterPrincipal.getMiddleName());
+					chapter.setSurname(chapterPrincipal.getSurname());
+					chapter.setPhoto(chapterPrincipal.getPhoto());
+					chapter.setEmail(chapterPrincipal.getEmail());
+					chapter.setPhone(chapterPrincipal.getPhone());
+					chapter.setAddress(chapterPrincipal.getAddress());
+					chapter.setTitle(chapterPrincipal.getTitle());
+					mapper.writeValue(new File("C:\\Temp\\MyPersonalData.txt"), chapter);
+					return new ModelAndView("redirect:/welcome/index.do");
+				} else if (principal.getUserAccount().getAuthorities().contains(authSponsor)) {
+					final Sponsor sponsorPrincipal = (Sponsor) this.actorService.findByPrincipal();
+					sponsor.setName(sponsorPrincipal.getName());
+					sponsor.setMiddleName(sponsorPrincipal.getMiddleName());
+					sponsor.setSurname(sponsorPrincipal.getSurname());
+					sponsor.setPhoto(sponsorPrincipal.getPhoto());
+					sponsor.setEmail(sponsorPrincipal.getEmail());
+					sponsor.setPhone(sponsorPrincipal.getPhone());
+					sponsor.setAddress(sponsorPrincipal.getAddress());
+					mapper.writeValue(new File("C:\\Temp\\MyPersonalData.txt"), sponsor);
+					return new ModelAndView("redirect:/welcome/index.do");
+				} else if (principal.getUserAccount().getAuthorities().contains(authAdmin)) {
+					final Administrator adminPrincipal = (Administrator) this.actorService.findByPrincipal();
+					admin.setName(adminPrincipal.getName());
+					admin.setMiddleName(adminPrincipal.getMiddleName());
+					admin.setSurname(adminPrincipal.getSurname());
+					admin.setPhoto(adminPrincipal.getPhoto());
+					admin.setEmail(adminPrincipal.getEmail());
+					admin.setPhone(adminPrincipal.getPhone());
+					admin.setAddress(adminPrincipal.getAddress());
+					mapper.writeValue(new File("C:\\Temp\\MyPersonalData.txt"), admin);
+					return new ModelAndView("redirect:/welcome/index.do");
+				} else if (principal.getUserAccount().getAuthorities().contains(authMember)) {
+					final Member memberPrincipal = (Member) this.actorService.findByPrincipal();
+					member.setName(memberPrincipal.getName());
+					member.setMiddleName(memberPrincipal.getMiddleName());
+					member.setSurname(memberPrincipal.getSurname());
+					member.setPhoto(memberPrincipal.getPhoto());
+					member.setEmail(memberPrincipal.getEmail());
+					member.setPhone(memberPrincipal.getPhone());
+					member.setAddress(memberPrincipal.getAddress());
+					mapper.writeValue(new File("C:\\Temp\\MyPersonalData.txt"), member);
+					return new ModelAndView("redirect:/welcome/index.do");
+				}
+			} catch (final JsonGenerationException e) {
+				e.printStackTrace();
+			} catch (final JsonMappingException e) {
+				e.printStackTrace();
+			} catch (final IOException e) {
+				e.printStackTrace();
+			}
+		else
+			return new ModelAndView("redirect:/welcome/index.do");
+		return new ModelAndView("redirect:/welcome/index.do");
+
+	}
 	//Edition
 
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
