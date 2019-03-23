@@ -29,6 +29,7 @@
 <spring:message code="request.customColumn" var="customColumn" />
 <spring:message code="request.reason" var="reason" />
 <spring:message code="request.parade" var="parade" />
+<spring:message code="request.maxMsg" var="maxMsg" />
 <spring:message code="request.status.delete.error" var="deleteStatus" />
 <spring:message code="request.reason.disclaimer" var="reasonDisclaimer" />
 
@@ -59,14 +60,6 @@
 				<br />
 				<br />
 
-				<%-- <form:label path="reason">
-					<jstl:out value="${reasonDisclaimer}" />:
-		</form:label>
-				<br />
-				<br />
-				<form:textarea path="reason" />
-				<br /> --%>
-				
 			 <acme:textarea
 		 		code="request.reason" 
 		 		path="reason"/>
@@ -83,32 +76,18 @@
 	<security:authorize access="hasRole('BROTHERHOOD')">
 		<jstl:if test="${request.id != 0}">
 			<jstl:if test="${request.status.name == 'APPROVED'}">
-			
-				<%-- <form:label path="customRow">
-					<jstl:out value="${customRow}" />:
-	</form:label>
-				<form:input path="customRow" />
-				<form:errors cssClass="error" path="customRow" />
-				<br /> --%>
 				
-				
-				 <acme:textarea
+				 <acme:textbox
 		 		code="request.customRow" 
 		 		path="customRow"/>
+		 	<jstl:out value="${maxMsg}"/><jstl:out value="${maxRow}"/>
 		 	<br /> 
+		 	<br/>
 				
-				
-					<%-- <form:label path="customColumn">
-					<jstl:out value="${customColumn}" />:
-	</form:label>
-				<form:input path="customColumn" />
-				<form:errors cssClass="error" path="customColumn" />
-				<br /> --%>
-				
-				
-				 <acme:textarea
+				 <acme:textbox
 		 		code="request.customColumn" 
 		 		path="customColumn"/>
+		 		<jstl:out value="${maxMsg}"/><jstl:out value="${maxColumn}"/>
 		 	<br />
 
 			</jstl:if>
@@ -138,22 +117,16 @@
 	
 
 	<%-- Buttons --%>
-	<%-- <input type="submit" name="save" value="${save}" />
-			&nbsp;  --%>
 		
 		<acme:submit code="request.save" name="save"/>
 			
 <security:authorize access="hasRole('BROTHERHOOD')">
-<%--  	<input type="button" name="cancel" value="${cancel}" 
-		onclick="javascript: relativeRedir('welcome/index.do');" /> --%>
 		
 		<acme:cancel code="request.cancel" url ="/welcome/index.do" />
 		
 </security:authorize>
 
 <security:authorize access="hasRole('MEMBER')">
-	<%-- <input type="button" name="cancel" value="${cancel}"
-		onclick="javascript: relativeRedir('brotherhood/list.do');"> --%>
 		
 		<acme:cancel code="request.cancel" url ="/brotherhood/list.do" />
 		
