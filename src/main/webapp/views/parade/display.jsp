@@ -73,8 +73,7 @@
 	<jstl:out value="${parade.finalMode}"/>
 	<br />
 
-
-		<%-- Mostrar floats --%>
+	<%-- Mostrar floats --%>
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
 
