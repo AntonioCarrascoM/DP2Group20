@@ -78,13 +78,11 @@
 
 	<display:column title="${moment}" sortable="true"
 		style="background-color:${colorValue}">
-
 		<fmt:formatDate value="${row.moment}" pattern="${formatDate}" />
 	</display:column>
 	<security:authorize access="hasRole('CHAPTER')">
 		<display:column property="paradeStatus" title="${paradeStatusMsg}"
 			sortable="true" style="background-color:${colorValue}" />
-
 	</security:authorize>
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
@@ -95,7 +93,6 @@
 		</spring:url>
 		<display:column title="${msgListRequest}"
 			style="background-color:${colorValue}">
-
 			<a href="${requestsUrl}"><jstl:out value="${msgListRequest}" /></a>
 		</display:column>
 
@@ -105,7 +102,6 @@
 		</spring:url>
 		<display:column title="${msgPath}"
 			style="background-color:${colorValue}">
-
 			<a href="${segmentsUrl}"><jstl:out value="${msgPath}" /></a>
 		</display:column>
 		<spring:url var="createSegmentUrl"
@@ -117,7 +113,6 @@
 			<jstl:if test="${row.finalMode eq false}">
 				<a href="${createSegmentUrl}"><jstl:out
 						value="${msgCreateSegment}" /></a>
-
 			</jstl:if>
 		</display:column>
 
@@ -127,7 +122,6 @@
 		</spring:url>
 		<display:column title="${display}"
 			style="background-color:${colorValue}">
-
 			<a href="${displayUrl}"><jstl:out value="${display}" /></a>
 		</display:column>
 
@@ -138,10 +132,8 @@
 		</spring:url>
 		<display:column title="${edit}" style="background-color:${colorValue}">
 			<jstl:if test="${row.finalMode eq false}">
-
 				<a href="${editUrl}"><jstl:out value="${edit}" /></a>
 			</jstl:if>
-
 		</display:column>
 
 		<%-- Delete --%>
@@ -152,7 +144,6 @@
 		<display:column title="${msgDelete}"
 			style="background-color:${colorValue}">
 			<jstl:if test="${row.finalMode eq false}">
-
 				<a href="${deleteUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out
 						value="${msgDelete}" /></a>
 			</jstl:if>
@@ -169,7 +160,6 @@
 				<a href="${deletePathUrl}" onclick="return confirm('${msgConfirm}')"><jstl:out
 						value="${msgDeletePath}" /></a>
 			</jstl:if>
-
 		</display:column>
 
 		<%-- Copy--%>
@@ -181,34 +171,26 @@
 			style="background-color:${colorValue}">
 			<a href="${copyUrl}" onclick="return confirm('${msgConfirm}')"> <jstl:out
 					value="${msgCopy}" /></a>
-
 		</display:column>
-
 	</security:authorize>
 
 	<security:authorize access="hasRole('MEMBER')">
-
 		<spring:url var="requestUrl" value="request/member/create.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-
 		<display:column title="${msgCreateRequest}"
 			style="background-color:${colorValue}">
-
 			<a href="${requestUrl}"><jstl:out value="${msgCreateRequest}" /></a>
 		</display:column>
 	</security:authorize>
-
+	
 	<security:authorize access="hasRole('CHAPTER')">
-
 		<spring:url var="editUrl" value="parade/chapter/edit.do">
 			<spring:param name="varId" value="${row.id}" />
 		</spring:url>
-
 		<display:column property="rejectionReason"
 			title="${rejectionReasonMsg}" sortable="true"
 			style="background-color:${colorValue}" />
-
 
 		<display:column title="${edit}" style="background-color:${colorValue}">
 			<jstl:if
@@ -221,7 +203,6 @@
 				<a href="${editUrl}"><jstl:out value="${rejectionReasonMsg}" /></a>
 			</jstl:if>
 		</display:column>
-
 
 	</security:authorize>
 
