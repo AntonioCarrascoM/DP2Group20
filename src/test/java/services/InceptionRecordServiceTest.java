@@ -35,7 +35,7 @@ public class InceptionRecordServiceTest extends AbstractTest {
 	@Test
 	public void InceptionRecordPositiveTest() {
 		final Object testingData[][] = {
-			//Total sentence coverage : Coverage 93.3% | Covered Instructions 83 | Missed Instructions 6 | Total Instructions 89
+			//Total sentence coverage : Coverage 95.1% | Covered Instructions 117 | Missed Instructions 6 | Total Instructions 123
 			{
 				"brotherhood1", null, "inceptionRecord1", "edit", null
 			},
@@ -76,22 +76,12 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			{
 				"brotherhood1", null, "inceptionRecord1", "delete", null
 			},
-			/*
-			 * Positive: A brotherhood tries to delete a inceptionRecord
-			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
-			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Data coverage : We deleted an inceptionRecord .
-			 * Exception expected: None. A Brotherhood can delete his inceptionRecords.
-			 */
-			{
-				"brotherhood1", "brotherhood1", null, "create", null
-			}
 		/*
-		 * Positive: A brotherhood tries to create a inceptionRecord
+		 * Positive: A brotherhood tries to delete a inceptionRecord
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage : We created a inceptionRecord with an accepted parade (parade3) and a valid VISA credit card.
-		 * Exception expected: None. A Brotherhood can create inceptionRecords.
+		 * Data coverage : We deleted an inceptionRecord .
+		 * Exception expected: None. A Brotherhood can delete his inceptionRecords.
 		 */
 
 		};
@@ -110,7 +100,7 @@ public class InceptionRecordServiceTest extends AbstractTest {
 	@Test
 	public void InceptionRecordNegativeTest() {
 		final Object testingData[][] = {
-			//Total sentence coverage : Coverage 94.1% | Covered Instructions 95 | Missed Instructions 6 | Total Instructions 101
+			//Total sentence coverage : Coverage 93.8% | Covered Instructions 91 | Missed Instructions 6 | Total Instructions 97
 			{
 				"brotherhood1", null, "inceptionRecord2", "edit4", IllegalArgumentException.class
 			},
@@ -120,16 +110,6 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
 			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (photos) with a user that is not the owner.
 			 * Exception expected: IllegalArgumentException. A Brotherhood can not edit inceptionRecords from another brotherhood.
-			 */
-			//			{
-			//				"brotherhood1", "notAnUrl", null, "create2", ConstraintViolationException.class
-			//			},
-			/*
-			 * Negative: A brotherhood tries to create an invalid inceptionRecord
-			 * Requisite tested: Functional requirement - 16.1 An actor who is autenticated as a brotherhood must be
-			 * able to create inceptionRecords
-			 * Data coverage : We tried to create a inceptionRecord with an invalid Photos url.
-			 * Exception expected: ConstraintViolationException. The InceptionRecord photos field must be a valid url.
 			 */
 			{
 				"brotherhood1", null, "inceptionRecord2", "delete", IllegalArgumentException.class
@@ -182,22 +162,6 @@ public class InceptionRecordServiceTest extends AbstractTest {
 				inceptionRecord.setTitle("This is not going to work");
 
 				this.inceptionRecordService.save(inceptionRecord);
-
-			} else if (operation.equals("create")) {
-				final InceptionRecord ir = this.inceptionRecordService.create();
-				ir.setTitle("Positive create");
-				ir.setDescription("description");
-				ir.setPhotos("https://www.photos.com");
-
-				this.inceptionRecordService.save(ir);
-
-			} else if (operation.equals("create2")) {
-				final InceptionRecord ir = this.inceptionRecordService.create();
-				ir.setTitle("Negative creation");
-				ir.setDescription("description");
-				ir.setPhotos(st);
-
-				this.inceptionRecordService.save(ir);
 
 			} else if (operation.equals("delete")) {
 				final InceptionRecord inceptionRecord = this.inceptionRecordService.findOne(this.getEntityId(id));

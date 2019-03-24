@@ -65,6 +65,7 @@ public class InceptionRecordService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == inceptionRecord.getBrotherhood().getId());
 		if (inceptionRecord.getId() == 0)
 			Assert.isTrue(this.inceptionRecordfromBrotherhood(inceptionRecord.getBrotherhood().getId()) == null);
+
 		//Assertion to make sure that the inception record pictures are URLs
 		if (inceptionRecord.getPhotos() != null && !inceptionRecord.getPhotos().isEmpty())
 			Assert.isTrue(this.brotherhoodService.checkPictures(inceptionRecord.getPhotos()));
