@@ -259,7 +259,7 @@ public class ParadeService {
 		nueva.setMaxRow(original.getMaxRow());
 		nueva.setMaxColumn(original.getMaxColumn());
 		nueva.setMoment(original.getMoment());
-		nueva.setParadeStatus(original.getParadeStatus());
+		nueva.setParadeStatus(null);
 		nueva.setRejectionReason(null);
 		nueva.setFinalMode(false);
 
