@@ -86,8 +86,9 @@ public class SegmentService {
 
 		final Collection<Segment> segments = this.getSegmentsForParade(varId);
 
-		for (final Segment s : segments)
-			this.segmentRepository.delete(s);
+		if (segments.size() != 0)
+			for (final Segment s : segments)
+				this.segmentRepository.delete(s);
 	}
 
 	//Reconstruct (when it is edited)
@@ -180,6 +181,10 @@ public class SegmentService {
 		else
 			lastSegment = orderedSegments.iterator().next();
 		return lastSegment;
+	}
+
+	public void flush() {
+		this.segmentRepository.flush();
 	}
 
 }
