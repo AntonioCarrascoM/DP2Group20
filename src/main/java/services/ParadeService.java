@@ -117,7 +117,7 @@ public class ParadeService {
 		final Parade saved = this.paradeRepository.save(p);
 
 		//Sending notification to members
-		if (saved.getFinalMode() == true)
+		if (saved.getFinalMode() == true && saved.getParadeStatus().equals(ParadeStatus.ACCEPTED))
 			this.messageService.paradePublished(saved);
 
 		return saved;
@@ -214,11 +214,14 @@ public class ParadeService {
 		} else if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authChapter)) {
 			result = this.paradeRepository.findOne(p.getId());
 
-			if (result.getParadeStatus().equals(ParadeStatus.SUBMITTED))
+			if (p.getParadeStatus().equals(ParadeStatus.SUBMITTED)) {
 				result.setParadeStatus(p.getParadeStatus());
-			if (result.getParadeStatus().equals(ParadeStatus.REJECTED))
+				result.setRejectionReason(null);
+			}
+			if (p.getParadeStatus().equals(ParadeStatus.REJECTED)) {
+				result.setParadeStatus(p.getParadeStatus());
 				result.setRejectionReason(p.getRejectionReason());
-
+			}
 		}
 
 		this.validator.validate(result, binding);

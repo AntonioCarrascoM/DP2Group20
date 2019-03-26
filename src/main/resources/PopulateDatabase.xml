@@ -2190,7 +2190,7 @@
 		<property name="status" value="APPROVED" />
 		<property name="customRow" value="2" />
 		<property name="customColumn" value="3" />
-		<property name="reason" value="Don't have a reason yet." />
+		<property name="reason"><null/></property>
 		<property name="member" ref="member2" />
 		<property name="parade" ref="parade3" />
 	</bean>
@@ -2208,7 +2208,7 @@
 		<property name="status" value="APPROVED" />
 		<property name="customRow" value="1" />
 		<property name="customColumn" value="0" />
-		<property name="reason" value="You meet the requirements" />
+		<property name="reason"><null/></property>
 		<property name="member" ref="member1" />
 		<property name="parade" ref="parade1" />
 	</bean>
@@ -2217,7 +2217,7 @@
 		<property name="status" value="APPROVED" />
 		<property name="customRow" value="1" />
 		<property name="customColumn" value="1" />
-		<property name="reason" value="Hello bro, good morning" />
+		<property name="reason"><null/></property>
 		<property name="member" ref="member2" />
 		<property name="parade" ref="parade1" />
 	</bean>
