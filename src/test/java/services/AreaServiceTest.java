@@ -10,8 +10,6 @@
 
 package services;
 
-import java.util.ArrayList;
-
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
 
@@ -22,9 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import utilities.AbstractTest;
-import domain.Administrator;
 import domain.Area;
-import domain.Brotherhood;
 
 @ContextConfiguration(locations = {
 	"classpath:spring/junit.xml"
@@ -41,11 +37,7 @@ public class AreaServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private AreaService				areaService;
-	@Autowired
-	private ActorService			actorService;
-	@Autowired
-	private AdministratorService	administratorService;
+	private AreaService	areaService;
 
 
 	@Test
@@ -54,14 +46,14 @@ public class AreaServiceTest extends AbstractTest {
 			//Total sentence coverage : Coverage 91.7% | Covered Instructions 66 | Missed Instructions 6 | Total Instructions 72
 
 			{
-				"admin1", "admin1", null, "create", null
-			}, //A admin creates a area
+				"admin", null, null, "create", null
+			},
 		/*
-		 * Positive test: An admin creates his area.
+		 * Positive test: An admin edit an area.
 		 * Requisite tested: Functional requirement - 22.1 An actor who is authenticated as an administrator must be
-		 * able to manage the areas in the system, which includes listing them, creating them, updating them, and deleting them.
-		 * Exception expected: None. An Administrator can create areas.
-		 * Data coverage : We created a area with a not blank name and not blank url.
+		 * able to manage the areas in the system, which includes updating them.
+		 * Data coverage : We created an area providing two out of two possible attributes (name and pictures)
+		 * Exception expected: None. An Administrator can create areas if valid attributes are provided.
 		 */
 
 		};
@@ -85,14 +77,10 @@ public class AreaServiceTest extends AbstractTest {
 
 			if (operation.equals("create")) {
 				Area area;
-				Administrator admin;
 
 				area = this.areaService.create();
-				admin = this.administratorService.create();
 				area.setName("name");
-				area.setPictures("url");
-				area.setBrotherhoods(new ArrayList<Brotherhood>());
-
+				area.setPictures("https://www.google.es");
 				this.areaService.save(area);
 
 			}
@@ -112,12 +100,12 @@ public class AreaServiceTest extends AbstractTest {
 			//Total sentence coverage : Coverage 94.7% | Covered Instructions 108 | Missed Instructions 6 | Total Instructions 114
 
 			{
-				"chapter1", "chapter1", null, "create2", ConstraintViolationException.class
+				"admin", null, null, "create2", ConstraintViolationException.class
 			}, /*
 				 * Negative: is tried to create a area with a non valid name.
 				 * Requisite tested: Functional requirement - 22.1 An actor who is authenticated as an administrator must be
 				 * able to manage the areas in the system, which includes listing them, creating them, updating them, and deleting them.
-				 * Data coverage : We created a area with not valid name.
+				 * Data coverage : We tried to create an area with just one of its two attributes. We provided a valid url but not a valid name.
 				 * Exception expected: ConstraintViolationException. An area must be created with a valid name.
 				 */
 
@@ -143,13 +131,10 @@ public class AreaServiceTest extends AbstractTest {
 
 			if (operation.equals("create2")) {
 				Area area;
-				Administrator admin;
 
 				area = this.areaService.create();
-				admin = this.administratorService.create();
-				area.setName("name");
+				area.setName(null);
 				area.setPictures("https://www.google.es");
-				area.setBrotherhoods(new ArrayList<Brotherhood>());
 				this.areaService.save(area);
 
 			}

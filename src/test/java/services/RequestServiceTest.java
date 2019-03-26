@@ -44,8 +44,8 @@ public class RequestServiceTest extends AbstractTest {
 		/*
 		 * Positive test: A member creates his request.
 		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
+		 * Data coverage : We created a request by providing 4 out of 4 editable attributes.
 		 * Exception expected: None. A Member can create requests.
-		 * Data coverage : We created a request with an approved status.
 		 */
 		};
 
@@ -71,7 +71,7 @@ public class RequestServiceTest extends AbstractTest {
 		/*
 		 * Negative test: Creating a request with invalid customRow.
 		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
-		 * Data coverage : We created a request with an invalid customRow.
+		 * Data coverage : We created a request with 1 invalid out of 4 attribute.
 		 * Exception expected: ConstraintViolationException. CustomRow cannot be less than zero.
 		 */
 		};

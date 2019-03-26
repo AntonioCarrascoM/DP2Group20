@@ -43,29 +43,28 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood edits his miscellaneousRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
+			 * Data coverage : From 3 editable attributes we tried to edit 1 attribute (description) with valid data.
 			 * Exception expected: None. A Brotherhood can edit his miscellaneousRecords.
-			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (description) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
 			 */
 
 			{
 				"brotherhood1", null, "miscellaneousRecord1", "delete", null
 			},
 			/*
-			 * Positive: A brotherhood tries to delete a miscellaneousRecord
+			 * Positive: A brotherhood tries to delete a miscellaneousRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Data coverage : We deleted an miscellaneousRecord .
+			 * Data coverage : We deleted an miscellaneousRecord.
 			 * Exception expected: None. A Brotherhood can delete his miscellaneousRecords.
 			 */
 			{
 				"brotherhood1", null, null, "create", null
 			}
 		/*
-		 * Positive: A brotherhood tries to create a Miscellaneous Record
+		 * Positive: A brotherhood tries to create a Miscellaneous Record.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage : We created a miscellaneousRecord with valid parameters.
+		 * Data coverage : We created a miscellaneousRecord with 2 out of 2 valid parameters.
 		 * Exception expected: None. A Brotherhood can create miscellaneousRecords.
 		 */
 
@@ -93,7 +92,7 @@ public class MiscellaneousRecordServiceTest extends AbstractTest {
 		 * Negative: A brotherhood tries to edit a miscellaneousRecord that not owns.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage :We tried to edit a miscellaneous record with an user that is not the owner.
+		 * Data coverage :We tried to edit 1 out of 2 miscellaneous record attributes with an user that is not the owner.
 		 * Exception expected: IllegalArgumentException. A Brotherhood can not edit miscellaneousRecords from another brotherhood.
 		 */
 

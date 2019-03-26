@@ -44,19 +44,18 @@ public class LegalRecordServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood edits his legalRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Exception expected: None. A Brotherhood can edit his legalRecords.
 			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (description) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
+			 * Exception expected: None. A Brotherhood can edit his legalRecords.
 			 */
 
 			{
 				"brotherhood1", null, "legalRecord1", "delete", null
 			},
 		/*
-		 * Positive: A brotherhood tries to delete a legalRecord
+		 * Positive: A brotherhood tries to delete a legalRecord.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage : We deleted an legalRecord .
+		 * Data coverage : We deleted an legalRecord.
 		 * Exception expected: None. A Brotherhood can delete his legalRecords.
 		 */
 
@@ -84,7 +83,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 			 * Negative: A brotherhood tries to edit a inceptionRecord that not owns.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Data coverage :We tried to edit a miscellaneous record with an user that is not the owner.
+			 * Data coverage : We tried to edit a miscellaneous record with an user that is not the owner.
 			 * Exception expected: IllegalArgumentException. A Brotherhood can not delete inceptionRecords from another brotherhood.
 			 */
 			{
@@ -94,7 +93,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 		 * Negative: A brotherhood tries to create a legalRecord with wrong parameters.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage :A brotherhood tries to create a legal record with a negative VAT number.
+		 * Data coverage : We brotherhood tries to create a legal record with a negative VAT number.
 		 * Exception expected: IllegalArgumentException. A Brotherhood can not delete inceptionRecords from another brotherhood.
 		 */
 

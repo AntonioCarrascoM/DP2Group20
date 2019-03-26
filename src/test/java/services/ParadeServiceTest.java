@@ -44,8 +44,7 @@ public class ParadeServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood creates a parade
 			 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be
 			 * able to manage their parades which includes creating them.
-			 * Exception expected: None. A Brotherhood can create a parade.
-			 * Data coverage :
+			 * Data coverage : A brotherhood creates a parade with 9 out of 9 valid attributes.
 			 * Exception expected: None. A Brotherhood can create a parade.
 			 */
 			, {
@@ -55,7 +54,7 @@ public class ParadeServiceTest extends AbstractTest {
 		 * Positive: A Brotherhood copies a parade
 		 * Requisite tested: Functional requirement - 3.2 An actor who is authenticated as a brotherhood must be able to
 		 * make a copy of one of their parades
-		 * Data coverage :
+		 * Data coverage : A brotherhood copies a parade with 8 out of 9 valid attributes (but ticker).
 		 * Exception expected: None. A Brotherhood can copy a parade.
 		 */
 		};
@@ -82,7 +81,7 @@ public class ParadeServiceTest extends AbstractTest {
 			 * Negative: A Brotherhood tries to edit a parade that it is on final mode.
 			 * Requisite tested: Functional requirement -3.3 An actor who is authenticated as a brotherhood must be
 			 * able to manage their parades which includes updating them.
-			 * Data coverage :
+			 * Data coverage : A brotherhood tries to edit 1 out of 9 attributes (maxRow).
 			 * Exception expected: IllegalArgumentException. A Brotherhood can not update a parade that it is on final mode.
 			 */
 			{
@@ -92,8 +91,8 @@ public class ParadeServiceTest extends AbstractTest {
 		 * Negative: A Brotherhood tries to edit a parade of another Brotherhood.
 		 * Requisite tested: Functional requirement -3.3 An actor who is authenticated as a brotherhood must be
 		 * able to manage their parades which includes updating them.
-		 * Data coverage :
-		 * Exception expected: IllegalArgumentException. A Brotherhood cannot update an another brotherhood´s parade .
+		 * Data coverage : A brotherhood tries to edit 1 out of 9 parade attributes of another actor (maxRow).
+		 * Exception expected: IllegalArgumentException. A Brotherhood cannot update an another brotherhood´s parade.
 		 */
 		};
 
