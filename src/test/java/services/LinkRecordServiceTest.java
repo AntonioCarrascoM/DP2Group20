@@ -43,16 +43,15 @@ public class LinkRecordServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood edits his linkRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Exception expected: None. A Brotherhood can edit his linkRecords.
 			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (link) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
+			 * Exception expected: None. A Brotherhood can edit his linkRecords.
 			 */
 
 			{
 				"brotherhood1", null, null, "create", null
 			}
 		/*
-		 * Positive: A brotherhood tries to create a Link Record
+		 * Positive: A brotherhood tries to create a Link Record.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
 		 * Data coverage : We created a linkRecord with valid parameters.

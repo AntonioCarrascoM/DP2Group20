@@ -42,21 +42,20 @@ public class SegmentServiceTest extends AbstractTest {
 				"brotherhood1", null, "parade2", "createPositive", null
 			}
 			/*
-			 * Positive test: A brotherhood update a path of their parades by adding a segment
-			 * Requisite tested: Functional requirement - 3.3 An actor who is autenticated as a brotherhood must be
-			 * able to manage the paths of their parades which includes creating them.
-			 * Exception expected: None. A Brotherhood can update a path of their parades.
-			 * Data coverage :
-			 * Exception expected: None. A Brotherhood can edit a segment of their parades as long as parade is not on final mode.
+			 * Positive test: A brotherhood creates a segment.
+			 * Requisite tested: Functional requirement - 10.2 An actor who is authenticated as a brotherhood must be able to manage their parades,
+			 * which creating them
+			 * Data coverage : We tried to create a segment with 6 out of 6 valid editable attributes
+			 * Exception expected: None. A Brotherhood can create a parade
 			 */
 			, {
 				"brotherhood1", null, "parade2", "deletePositive", null
 			}
 		/*
-		 * Positive: A Brotherhood delete his path
-		 * Requisite tested: Functional requirement - 3.3 An actor who is autenticated as a brotherhood must be
+		 * Positive: A Brotherhood delete his path.
+		 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be
 		 * able to manage the paths of their parades which includes deleting them.
-		 * Data coverage :
+		 * Data coverage : We tried to delete all their segments
 		 * Exception expected: None. A Brotherhood can delete a path of their parades as long as parade is not on final mode.
 		 */
 		};
@@ -83,7 +82,7 @@ public class SegmentServiceTest extends AbstractTest {
 			 * Negative: A Brotherhood tries to create a segment of a parade that not owns.
 			 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be able to manage the
 			 * paths of their parades which includes creating them.
-			 * Data coverage :
+			 * Data coverage : A Brotherhood tries to create a segment with 6 out of 6 valid editable attributes.
 			 * Exception expected: IllegalArgumentException. A Brotherhood can not create segments of another brotherhood parade.
 			 */
 			{
@@ -93,7 +92,7 @@ public class SegmentServiceTest extends AbstractTest {
 		 * Negative: A Brotherhood tries to edit an invalid segment with an invalid x destination coordinate.
 		 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be able to manage the
 		 * paths of their parades which includes updating them.
-		 * Data coverage :
+		 * Data coverage : A Brotherhood tries to edit 1 invalid out of 6 editable attributes.
 		 * Exception expected: ConstraintViolationException. X destination coordinate must adhere to a specific pattern.
 		 */
 		};

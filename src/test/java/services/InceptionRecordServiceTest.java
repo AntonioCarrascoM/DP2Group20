@@ -43,9 +43,8 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood edits his inceptionRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
+			 * Data coverage : From 3 editable attributes we tried to edit 1 attribute (description) with valid data.
 			 * Exception expected: None. A Brotherhood can edit his inceptionRecords.
-			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (description) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
 			 */
 
 			{
@@ -57,8 +56,7 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
 			 * Exception expected: None. A Brotherhood can edit his inceptionRecords.
-			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (title) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
+			 * Data coverage : From 3 editable attributes we tried to edit 1 attribute (title) with valid data.
 			 */
 
 			{
@@ -69,18 +67,17 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood edits his inceptionRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
+			 * Data coverage : From 3 editable attributes we tried to edit 1 attribute (photos) with valid data.
 			 * Exception expected: None. A Brotherhood can edit his inceptionRecords.
-			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (photos) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
 			 */
 			{
 				"brotherhood1", null, "inceptionRecord1", "delete", null
 			},
 		/*
-		 * Positive: A brotherhood tries to delete a inceptionRecord
+		 * Positive: A brotherhood tries to delete a inceptionRecord.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage : We deleted an inceptionRecord .
+		 * Data coverage : We deleted an inceptionRecord.
 		 * Exception expected: None. A Brotherhood can delete his inceptionRecords.
 		 */
 
@@ -108,8 +105,8 @@ public class InceptionRecordServiceTest extends AbstractTest {
 			 * Negative: A brotherhood tries to edit a inceptionRecord that not owns.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (photos) with a user that is not the owner.
 			 * Exception expected: IllegalArgumentException. A Brotherhood can not edit inceptionRecords from another brotherhood.
+			 * Data coverage : From 3 editable attributes we tried to edit 1 attribute (photos) with a user that is not the owner.
 			 */
 			{
 				"brotherhood1", null, "inceptionRecord2", "delete", IllegalArgumentException.class

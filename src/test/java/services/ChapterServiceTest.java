@@ -68,7 +68,6 @@ public class ChapterServiceTest extends AbstractTest {
 			 * Negative test: User chapter1 tries to edit personal data of user chapter2.
 			 * Requisite tested: Functional requirement - An actor who is autenticated must be able to edit his personal data.
 			 * Data coverage: From 7 editable atributes we tried to edit 1 atribute (name) with another user.
-			 * IllegalArgumentException: Exception expected
 			 * Exception expected: IllegalArgumentException A chapter cannot edit others personal data.
 			 */
 			{
@@ -116,9 +115,9 @@ public class ChapterServiceTest extends AbstractTest {
 			if (operation.equals("edit")) {
 				Chapter chapter;
 				chapter = this.chapterService.findOne(this.getEntityId(chapterId));
-
 				chapter.setName("Test");
 				this.chapterService.save(chapter);
+
 			} else if (operation.equals("edit2")) {
 				Chapter chapter;
 				chapter = this.chapterService.findOne(this.getEntityId(chapterId));

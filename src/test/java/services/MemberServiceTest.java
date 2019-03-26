@@ -40,8 +40,8 @@ public class MemberServiceTest extends AbstractTest {
 			}
 		/*
 		 * Positive test: A member edit his data.
-		 * Requisite tested: Functional requirement - An actor who is autenticated must be able to edit his personal data.
-		 * Data coverage : From 7 editable atributes we tried to edit 1 atribute (name) with valid data.
+		 * Requisite tested: Functional requirement - An actor who is authenticated must be able to edit his personal data.
+		 * Data coverage : From 7 editable attributes we tried to edit 1 attribute (name) with valid data.
 		 * Exception expected: None. A member can edit his data.
 		 */
 		};
@@ -66,9 +66,8 @@ public class MemberServiceTest extends AbstractTest {
 			},
 			/*
 			 * Negative test: User member1 tries to edit personal data of user member2.
-			 * Requisite tested: Functional requirement - An actor who is autenticated must be able to edit his personal data.
-			 * Data coverage: From 7 editable atributes we tried to edit 1 atribute (name) with another user.
-			 * IllegalArgumentException: Exception expected
+			 * Requisite tested: Functional requirement - An actor who is authenticated must be able to edit his personal data.
+			 * Data coverage: From 7 editable attributes we tried to edit 1 attribute (name) with another user.
 			 * Exception expected: IllegalArgumentException A member cannot edit others personal data.
 			 */
 			{
@@ -76,8 +75,8 @@ public class MemberServiceTest extends AbstractTest {
 			}
 		/*
 		 * Negative test: Registering a member with invalid username.
-		 * Requisite tested: Functional requirement - 15 An actor who is not autenticated must be able to register as Member
-		 * Data coverage: From 9 editable atributes we tried to create a member with 1 atribute (username) with invalid data.
+		 * Requisite tested: Functional requirement - 15 An actor who is not authenticated must be able to register as Member.
+		 * Data coverage: From 9 editable attributes we tried to create a member with 1 attribute (username) with invalid data.
 		 * Exception expected: ConstraintViolationException. Username cannot be blank.
 		 */
 		};
@@ -97,6 +96,7 @@ public class MemberServiceTest extends AbstractTest {
 
 		caught = null;
 		try {
+			super.authenticate(username);
 			if (operation.equals("create")) {
 				final Member member = this.memberService.create();
 
@@ -111,7 +111,6 @@ public class MemberServiceTest extends AbstractTest {
 				member.setEmail("email@email.com");
 				this.memberService.save(member);
 			}
-			super.authenticate(username);
 			if (operation.equals("edit")) {
 				Member member;
 				member = this.memberService.findOne(this.getEntityId(memberId));

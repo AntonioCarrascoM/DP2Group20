@@ -43,9 +43,8 @@ public class PeriodRecordServiceTest extends AbstractTest {
 			 * Positive test: A brotherhood edits his periodRecord.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
+			 * Data coverage : From 3 editable attributes we tried to edit 1 editable attribute (description) with valid data.
 			 * Exception expected: None. A Brotherhood can edit his periodRecords.
-			 * Data coverage : From 3 editable atributes we tried to edit 1 atribute (description) with valid data.
-			 * Exception expected: None. A brotherhood can edit his data.
 			 */
 
 			{
@@ -55,7 +54,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 			 * Positive: A brotherhood tries to delete a periodRecord
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Data coverage : We deleted an periodRecord .
+			 * Data coverage : We deleted a periodRecord .
 			 * Exception expected: None. A Brotherhood can delete his periodRecords.
 			 */
 			{
@@ -65,7 +64,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 		 * Positive: A brotherhood tries to create a Period Record
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage : We created a periodRecord with valid parameters.
+		 * Data coverage : We created a periodRecord with 5 out of 5 valid parameters.
 		 * Exception expected: None. A Brotherhood can create periodRecords.
 		 */
 
@@ -93,7 +92,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 			 * Negative: A brotherhood tries to edit a periodRecord that not owns.
 			 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 			 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-			 * Data coverage :We tried to edit a period record with an user that is not the owner.
+			 * Data coverage : We tried to edit 1 out of 5 editable attributes with an user that is not the owner.
 			 * Exception expected: IllegalArgumentException. A Brotherhood can not edit periodRecords from another brotherhood.
 			 */
 			{
@@ -103,8 +102,8 @@ public class PeriodRecordServiceTest extends AbstractTest {
 		 * Negative: A brotherhood tries to create a period record with wrong parameters.
 		 * Requisite tested: Functional requirement - 3. An actor who is authenticated as a brotherhood must be able to
 		 * manage their history, which includes listing, displaying, creating, updating, and deleting its records.
-		 * Data coverage :A brotherhood tries to create a period record with a end year smaller than the start year
-		 * Exception expected: IllegalArgumentException. Start year must be smaller than end year
+		 * Data coverage : A brotherhood tries to create a period record with 1 invalid attribute out of 5.
+		 * Exception expected: IllegalArgumentException. Start year must be smaller than end year.
 		 */
 		};
 
