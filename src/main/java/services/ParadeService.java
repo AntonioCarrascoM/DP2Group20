@@ -214,14 +214,12 @@ public class ParadeService {
 		} else if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authChapter)) {
 			result = this.paradeRepository.findOne(p.getId());
 
-			if (p.getParadeStatus().equals(ParadeStatus.SUBMITTED)) {
+			if (result.getParadeStatus().equals(ParadeStatus.SUBMITTED)) {
 				result.setParadeStatus(p.getParadeStatus());
 				result.setRejectionReason(null);
 			}
-			if (p.getParadeStatus().equals(ParadeStatus.REJECTED)) {
-				result.setParadeStatus(p.getParadeStatus());
+			if (p.getParadeStatus().equals(ParadeStatus.REJECTED))
 				result.setRejectionReason(p.getRejectionReason());
-			}
 		}
 
 		this.validator.validate(result, binding);
