@@ -148,6 +148,10 @@ public class ChapterService {
 
 	}
 
+	public void flush() {
+		this.chapterRepository.flush();
+	}
+
 	public Chapter reconstructPruned(final Chapter chapter, final BindingResult binding) {
 		Chapter result;
 

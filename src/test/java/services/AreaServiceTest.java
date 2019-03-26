@@ -10,9 +10,10 @@
 
 package services;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import utilities.AbstractTest;
+import domain.Administrator;
 import domain.Area;
 import domain.Brotherhood;
 
@@ -31,40 +33,37 @@ import domain.Brotherhood;
 @Transactional
 public class AreaServiceTest extends AbstractTest {
 
-	// System under test ------------------------------------------------------
+	// System under test: Area ------------------------------------------------------
 
 	// Tests ------------------------------------------------------------------
-
-	// The following are fictitious test cases that are intended to check that 
-	// JUnit works well in this project.  Just righ-click this class and run 
-	// it using JUnit.
-
-	//	@Test
-	//	public void SamplePositiveTest() {
-	//		Assert.isTrue(true);
-	//	}
-	//
-	//	@Test(expected = IllegalArgumentException.class)
-	//	public void SampleNegativeTest() {
-	//		Assert.isTrue(false);
-	//	}
+	// PLEASE READ
+	// The Sentence coverage has been obtained with the tool EclEmma from Eclipse. 
+	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private AreaService			areaService;
-
+	private AreaService				areaService;
 	@Autowired
-	private BrotherhoodService	brotherhoodService;
+	private ActorService			actorService;
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	@Test
 	public void AreaPositiveTest() {
 		final Object testingData[][] = {
+			//Total sentence coverage : Coverage 91.7% | Covered Instructions 66 | Missed Instructions 6 | Total Instructions 72
 
 			{
 				"admin1", "admin1", null, "create", null
 			}, //A admin creates a area
+		/*
+		 * Positive test: An admin creates his area.
+		 * Requisite tested: Functional requirement - 22.1 An actor who is authenticated as an administrator must be
+		 * able to manage the areas in the system, which includes listing them, creating them, updating them, and deleting them.
+		 * Exception expected: None. An Administrator can create areas.
+		 * Data coverage : We created a area with a not blank name and not blank url.
+		 */
 
-		//A chapter can't edit a proclaim that doesn't belong to him
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -77,7 +76,7 @@ public class AreaServiceTest extends AbstractTest {
 				super.rollbackTransaction();
 			}
 	}
-	protected void templatePositiveTest(final String username, final String ad, final String areaId, final String operation, final Class<?> expected) {
+	protected void templatePositiveTest(final String username, final String ch, final String areaId, final String operation, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
@@ -86,12 +85,14 @@ public class AreaServiceTest extends AbstractTest {
 
 			if (operation.equals("create")) {
 				Area area;
-				final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+				Administrator admin;
 
 				area = this.areaService.create();
-				area.setBrotherhoods(brotherhoods);
-				area.setName("test");
-				area.setPictures("pictures");
+				admin = this.administratorService.create();
+				area.setName("name");
+				area.setPictures("url");
+				area.setBrotherhoods(new ArrayList<Brotherhood>());
+
 				this.areaService.save(area);
 
 			}
@@ -108,14 +109,17 @@ public class AreaServiceTest extends AbstractTest {
 	@Test
 	public void AreaNegativeTest() {
 		final Object testingData[][] = {
+			//Total sentence coverage : Coverage 94.7% | Covered Instructions 108 | Missed Instructions 6 | Total Instructions 114
 
 			{
-				"admin1", null, null, "create", AssertionError.class
-			}, //Area can't be created without admin
-			{
-
-				"admin2", "admin1", null, "create", IllegalArgumentException.class
-			}, //The creator of a area must be the principal
+				"chapter1", "chapter1", null, "create2", ConstraintViolationException.class
+			}, /*
+				 * Negative: is tried to create a area with a non valid name.
+				 * Requisite tested: Functional requirement - 22.1 An actor who is authenticated as an administrator must be
+				 * able to manage the areas in the system, which includes listing them, creating them, updating them, and deleting them.
+				 * Data coverage : We created a area with not valid name.
+				 * Exception expected: ConstraintViolationException. An area must be created with a valid name.
+				 */
 
 		};
 
@@ -130,21 +134,22 @@ public class AreaServiceTest extends AbstractTest {
 			}
 	}
 
-	protected void templateNegativeTest(final String username, final String ad, final String proclaimId, final String operation, final Class<?> expected) {
+	protected void templateNegativeTest(final String username, final String ch, final String areaId, final String operation, final Class<?> expected) {
 		Class<?> caught;
 
 		caught = null;
 		try {
 			super.authenticate(username);
 
-			if (operation.equals("create")) {
+			if (operation.equals("create2")) {
 				Area area;
-				final Collection<Brotherhood> brotherhoods = this.brotherhoodService.findAll();
+				Administrator admin;
 
 				area = this.areaService.create();
-				area.setBrotherhoods(brotherhoods);
-				area.setName("test");
-				area.setPictures("pictures");
+				admin = this.administratorService.create();
+				area.setName("name");
+				area.setPictures("https://www.google.es");
+				area.setBrotherhoods(new ArrayList<Brotherhood>());
 				this.areaService.save(area);
 
 			}
