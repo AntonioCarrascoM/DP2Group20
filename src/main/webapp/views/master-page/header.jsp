@@ -64,7 +64,7 @@
 					<li><a href="actor/deactivate.do"><spring:message
 								code="master.page.deactivate" /> </a></li>
 								
-					<li><a href="actor/exportData.do"><spring:message
+					<li><a href="download/myPersonalData.do"><spring:message
 								code="master.page.export" /> </a></li>
 								
 					<li><a href="j_spring_security_logout"><spring:message
