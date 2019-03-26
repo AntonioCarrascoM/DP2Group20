@@ -279,4 +279,8 @@ public class BrotherhoodService {
 	public Collection<Brotherhood> largestBrotherhoodsByHistoryThanAvg() {
 		return this.brotherhoodRepository.largestBrotherhoodsByHistoryThanAvg();
 	}
+
+	public void flush() {
+		this.brotherhoodRepository.flush();
+	}
 }

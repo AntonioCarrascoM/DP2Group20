@@ -378,4 +378,8 @@ public class ParadeService {
 		return this.paradeRepository.getParadesByStatus(id);
 	}
 
+	public void flush() {
+		this.paradeRepository.flush();
+	}
+
 }
