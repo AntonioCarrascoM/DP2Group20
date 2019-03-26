@@ -11,8 +11,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(indexes = {
@@ -51,7 +49,6 @@ public class Request extends DomainEntity {
 		return this.customColumn;
 	}
 
-	@NotBlank
 	public String getReason() {
 		return this.reason;
 	}

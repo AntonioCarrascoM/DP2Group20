@@ -48,7 +48,7 @@ public class RequestBrotherhoodController {
 		if (parade.getBrotherhood().getId() != this.actorService.findByPrincipal().getId())
 			return new ModelAndView("redirect:/welcome/index.do");
 
-		requests = parade.getRequests();
+		requests = this.requestService.requestOrderByStatus(varId);
 
 		result = new ModelAndView("request/list");
 		result.addObject("requests", requests);
@@ -100,14 +100,20 @@ public class RequestBrotherhoodController {
 			request = this.requestService.reconstruct(request, binding);
 		} catch (final ValidationException oops) {
 			return this.createEditModelAndView(request);
+		} catch (final NullPointerException oops) {
+			final Collection<Request> requests = this.requestService.requestOrderByStatus(req.getParade().getId());
+			result = new ModelAndView("request/list");
+			result.addObject("requests", requests);
+			result.addObject("message", "request.reason.error");
+			return result;
 		} catch (final RuntimeException oops) {
-			final Collection<Request> requests = req.getParade().getRequests();
+			final Collection<Request> requests = this.requestService.requestOrderByStatus(req.getParade().getId());
 			result = new ModelAndView("request/list");
 			result.addObject("requests", requests);
 			result.addObject("message", "request.maxPosition.error");
 			return result;
 		} catch (final Throwable oops) {
-			final Collection<Request> requests = req.getParade().getRequests();
+			final Collection<Request> requests = this.requestService.requestOrderByStatus(req.getParade().getId());
 			result = new ModelAndView("request/list");
 			result.addObject("requests", requests);
 			result.addObject("message", "request.reconstruct.error");

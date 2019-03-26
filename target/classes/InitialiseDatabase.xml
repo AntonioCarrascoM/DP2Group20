@@ -18,9 +18,12 @@
 	
 	<!-- User accounts -->
 
+
 	<bean id="userAccount1" class="security.UserAccount">
 		<property name="username" value="admin" />
 		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="banned" value="false"/>
+		<property name="inactive" value="false"/>
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -29,6 +32,7 @@
 			</list>
 		</property>
 	</bean>
+
 	
 	<!-- Other domain beans come here -->	
 	
@@ -60,6 +64,7 @@
 			</list>
 		</property>
 	</bean>
+	
 	
 	<!-- Box beans -->
 	
@@ -138,16 +143,16 @@
 		</property>
 	</bean>
 	
-	<!-- Configuration beans -->
+<!-- Configuration beans -->
 	
 	<bean id="configuration1" class="domain.Configuration">
-		<property name="systemName" value="Acme Madrugá" />
+		<property name="systemName" value="Acme Parade" />
 		<property name="banner"
 			value="https://image.ibb.co/iuaDgV/Untitled.png" />
 		<property name="welcomeES"
-			value="¡Bienvenidos a Acme Madrugá! El lugar para organizar tus procesiones." />
+			value="¡Bienvenidos a Acme Parade! El lugar para organizar tus procesiones." />
 		<property name="welcomeEN"
-			value="Welcome to Acme Madrugá, the site to organise your parades." />
+			value="Welcome to Acme Parade, the site to organise your parades." />
 		<property name="spamWords">
 			<list>
 				<value>sex</value>
@@ -161,7 +166,7 @@
 				<value>ha sido seleccionado</value>
 			</list>
 		</property>
-		<property name="countryCode" value="+34" />
+		<property name="countryCode" value="+34 " />
 		<property name="expireFinderMinutes" value="60" />
 		<property name="maxFinderResults" value="10" />
 		<property name="positiveWords">
@@ -202,7 +207,17 @@
 				<value>LOW</value>
 			</list>
 		</property>
-
+		<property name="creditCardList">
+			<list>
+				<value>VISA</value>
+				<value>MCARD</value>
+				<value>AMEX</value>
+				<value>DINNERS</value>
+				<value>FLY</value>
+			</list>
+		</property>
+	<property name="vat" value="1.21" />
+	<property name="fare" value="5.00" />
 	</bean>
 	
 	<!-- Position beans -->
