@@ -3,7 +3,6 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,18 +98,17 @@ public class BrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(@Valid final FormObjectBrotherhood fob, final BindingResult binding) {
+	public ModelAndView save(final FormObjectBrotherhood fob, final BindingResult binding) {
 		ModelAndView result;
 		Brotherhood brotherhood;
 
 		try {
 			brotherhood = this.brotherhoodService.reconstruct(fob, binding);
 		} catch (final ValidationException oops) {
-			return this.createEditModelAndView(fob);
+			return this.createEditModelAndView(fob, "brotherhood.validation.error");
 		} catch (final Throwable oops) {
 			return this.createEditModelAndView(fob, "brotherhood.reconstruct.error");
 		}
-
 		try {
 			this.brotherhoodService.save(brotherhood);
 			result = new ModelAndView("redirect:/welcome/index.do");

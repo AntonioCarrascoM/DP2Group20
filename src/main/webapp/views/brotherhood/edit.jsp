@@ -41,6 +41,7 @@
 <spring:message code="brotherhood.confirm" var="confirm" />
 <spring:message code="brotherhood.phone.pattern1" var="phonePattern1" />
 <spring:message code="brotherhood.phone.pattern2" var="phonePattern2" />
+<spring:message code="brotherhood.phone.warning" var="phoneWarning" />
 <spring:message code="brotherhood.phone.note" var="phoneNote" />
 
 <security:authorize access="isAnonymous() or hasRole('BROTHERHOOD')">
@@ -65,21 +66,12 @@
 			path="establishmentDate" placeholder="date.ph" />
 		<acme:textarea code="brotherhood.pictures" path="pictures"
 			placeholder="brotherhood.warning" />
-		<jstl:if test="${empty brotherhood.area}">
-			<acme:select code="brotherhood.area" path="area" items="${areas}"
-				itemLabel="name" id="areas" />
 
-			<br />
-		</jstl:if>
-
-		<jstl:if test="${not empty brotherhood.area}">
-
-			<jstl:out value="${msgArea}" />:
-		<jstl:out value="${brotherhood.area.name}" />
-			<br />
-
-		</jstl:if>
+		<br>
+		<jstl:out value="${phoneWarning}" />
+		<br />
 		<jstl:out value="${phonePattern1}" />
+		<br>
 		<jstl:out value="${phonePattern2}" />
 		<br />
 		<%-- Buttons --%>

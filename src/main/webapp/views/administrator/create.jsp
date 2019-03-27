@@ -37,6 +37,7 @@
 <spring:message code="administrator.confirm" var="confirm" />
 <spring:message code="administrator.phone.pattern1" var="phonePattern1" />
 <spring:message code="administrator.phone.pattern2" var="phonePattern2" />
+<spring:message code="administrator.phone.warning" var="phoneWarning" />
 <spring:message code="administrator.phone.note" var="phoneNote" />
 <spring:message code="administrator.terms" var="terms" />
 <spring:message code="administrator.acceptedTerms" var="acceptedTerms" />
@@ -87,8 +88,8 @@
     <form:checkbox path="acceptedTerms" required="required"/>
     <form:errors path="acceptedTerms" cssClass="error" />
     <br/>
-
-		
+	<br/>
+		<jstl:out value="${phoneWarning}" />
 		<br />
 		<jstl:out value="${phonePattern1}" />
 		<br />

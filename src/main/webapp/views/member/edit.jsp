@@ -40,6 +40,7 @@
 <spring:message code="member.cancel" var="cancel" />
 <spring:message code="member.phone.pattern1" var="phonePattern1" />
 <spring:message code="member.phone.pattern2" var="phonePattern2" />
+<spring:message code="member.phone.warning" var="phoneWarning" />
 <spring:message code="member.phone.note" var="phoneNote" />
 
 <security:authorize access="isAnonymous() or hasRole('MEMBER')">
@@ -58,6 +59,10 @@
 	<acme:textbox code="member.phone" path="phone" placeholder="member.phPhone" />
 	<acme:textbox code="member.address" path="address" />
 	
+	
+	<br>
+	<jstl:out value="${phoneWarning}" />
+	<br />
 	<jstl:out value="${phonePattern1}" />
 	<br />
 	<jstl:out value="${phonePattern2}" />

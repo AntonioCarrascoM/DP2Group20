@@ -133,7 +133,7 @@ public class AdministratorService {
 			throw new ValidationException();
 
 		//Assertion that the email is valid according to the checkAdminEmail method.
-		Assert.isTrue(this.actorService.checkUserEmail(result.getEmail()));
+		Assert.isTrue(this.actorService.checkAdminEmail(result.getEmail()));
 
 		//Assertion to check that the address isn't just a white space.
 		Assert.isTrue(this.actorService.checkAddress(result.getAddress()));
@@ -163,7 +163,7 @@ public class AdministratorService {
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == result.getId());
 
 		//Assertion that the email is valid according to the checkAdminEmail method.
-		Assert.isTrue(this.actorService.checkUserEmail(result.getEmail()));
+		Assert.isTrue(this.actorService.checkAdminEmail(result.getEmail()));
 
 		//Assertion to check that the address isn't just a white space.
 		Assert.isTrue(this.actorService.checkAddress(result.getAddress()));
