@@ -92,7 +92,7 @@ public class SponsorController extends AbstractController {
 		try {
 			sponsor = this.sponsorService.reconstruct(fos, binding);
 		} catch (final ValidationException oops) {
-			return this.createEditModelAndView(fos);
+			return this.createEditModelAndView(fos, "sponsor.validation.error");
 		} catch (final Throwable oops) {
 			return this.createEditModelAndView(fos, "sponsor.reconstruct.error");
 		}

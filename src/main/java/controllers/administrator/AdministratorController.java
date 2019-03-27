@@ -13,7 +13,6 @@ package controllers.administrator;
 import java.util.Arrays;
 import java.util.Collection;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,28 +169,25 @@ public class AdministratorController extends AbstractController {
 	}
 	//Create POST
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(@Valid final FormObjectAdministrator foa, final BindingResult binding) {
+	public ModelAndView save(final FormObjectAdministrator foa, final BindingResult binding) {
 		ModelAndView result;
 		Administrator administrator;
 
 		try {
 			administrator = this.administratorService.reconstruct(foa, binding);
+		} catch (final ValidationException oops) {
+			return this.createEditModelAndView(foa, "administrator.validation.error");
 		} catch (final Throwable oops) {
 			return result = this.createEditModelAndView(foa, "administrator.reconstruct.error");
 		}
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(foa);
-
-		else
-			try {
-				this.administratorService.save(administrator);
-				result = new ModelAndView("redirect:/welcome/index.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(foa, "administrator.commit.error");
-			}
+		try {
+			this.administratorService.save(administrator);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(foa, "administrator.commit.error");
+		}
 		return result;
 	}
-
 	//Dashboard
 
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)

@@ -44,6 +44,7 @@
 <spring:message code="brotherhood.secondPassword" var="secondPassword" />
 <spring:message code="brotherhood.phone.pattern1" var="phonePattern1" />
 <spring:message code="brotherhood.phone.pattern2" var="phonePattern2" />
+<spring:message code="brotherhood.phone.warning" var="phoneWarning" />
 <spring:message code="brotherhood.phone.note" var="phoneNote" />
 
 <security:authorize access="isAnonymous() or hasRole('BROTHERHOOD')">
@@ -96,6 +97,8 @@
     	<br>
     
 
+		<jstl:out value="${phoneWarning}" />
+		<br />
 		 <jstl:out value="${phonePattern1}" />
 		<br />
 		<jstl:out value="${phonePattern2}" />

@@ -42,6 +42,7 @@
 <spring:message code="chapter.secondPassword" var="secondPassword" />
 <spring:message code="chapter.phone.pattern1" var="phonePattern1" />
 <spring:message code="chapter.phone.pattern2" var="phonePattern2" />
+<spring:message code="chapter.phone.warning" var="phoneWarning" />
 <spring:message code="chapter.phone.note" var="phoneNote" />
 
 <security:authorize access="isAnonymous()">
@@ -91,7 +92,8 @@
     <br/>
     	<br>
     
-
+		<jstl:out value="${phoneWarning}" />
+		<br />
 		 <jstl:out value="${phonePattern1}" />
 		<br />
 		<jstl:out value="${phonePattern2}" />

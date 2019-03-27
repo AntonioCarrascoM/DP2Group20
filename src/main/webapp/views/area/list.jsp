@@ -84,12 +84,23 @@
 	
 		<display:column title="${selfAssign}">
 			<a href="${selfAssignURL}"><jstl:out value="${selfAssign}" /></a>
-   		</display:column>
+   		</display:column>	
+   		
+		</security:authorize>
+		
+		<security:authorize access="hasRole('BROTHERHOOD')">
 	
-
+		<spring:url var="selfAssignURL"
+			value="area/brotherhood/selfAssign.do">
+			<spring:param name="varId"
+				value="${row.id}"/>
+		</spring:url>
 	
-	
-</security:authorize>
+		<display:column title="${selfAssign}">
+			<a href="${selfAssignURL}"><jstl:out value="${selfAssign}" /></a>
+   		</display:column>	
+   		
+		</security:authorize>
 </display:table>
 
 <security:authorize access="hasRole('ADMIN')">

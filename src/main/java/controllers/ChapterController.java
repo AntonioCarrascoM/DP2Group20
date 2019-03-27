@@ -3,7 +3,6 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,14 +73,14 @@ public class ChapterController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(@Valid final FormObjectChapter foc, final BindingResult binding) {
+	public ModelAndView save(final FormObjectChapter foc, final BindingResult binding) {
 		ModelAndView result;
 		Chapter chapter;
 
 		try {
 			chapter = this.chapterService.reconstruct(foc, binding);
 		} catch (final ValidationException oops) {
-			return result = this.createEditModelAndView(foc);
+			return result = this.createEditModelAndView(foc, "chapter.validation.error");
 		} catch (final Throwable oops) {
 			return result = this.createEditModelAndView(foc, "chapter.commit.error");
 		}

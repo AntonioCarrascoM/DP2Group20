@@ -37,6 +37,7 @@
 <spring:message code="administrator.confirm" var="confirm" />
 <spring:message code="administrator.phone.pattern1" var="phonePattern1" />
 <spring:message code="administrator.phone.pattern2" var="phonePattern2" />
+<spring:message code="administrator.phone.warning" var="phoneWarning" />
 <spring:message code="administrator.phone.note" var="phoneNote" />
 
 <security:authorize access="hasRole('ADMIN')">
@@ -55,6 +56,10 @@
 		<acme:textbox code="administrator.email" path="email" placeholder="mail.ph"/>
 		<acme:textbox code="administrator.phone" path="phone" placeholder="phone.ph"/>
 		<acme:textbox code="administrator.address" path="address"/>
+		
+		<br>
+		<jstl:out value="${phoneWarning}" />
+		<br />
 		<jstl:out value="${phonePattern1}" />
 		<br />
 		<jstl:out value="${phonePattern2}" />

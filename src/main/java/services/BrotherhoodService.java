@@ -177,8 +177,6 @@ public class BrotherhoodService {
 		result.setTitle(brotherhood.getTitle());
 		result.setEstablishmentDate(brotherhood.getEstablishmentDate());
 		result.setPictures(brotherhood.getPictures());
-		if (result.getArea() == null)
-			result.setArea(brotherhood.getArea());
 
 		this.validator.validate(result, binding);
 		if (binding.hasErrors())

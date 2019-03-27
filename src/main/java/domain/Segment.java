@@ -35,7 +35,6 @@ public class Segment extends DomainEntity {
 
 	//Getters
 
-	//TODO Hacer que la origin coord de un segmento sea la destination coord del anterior segmento de esa parade
 	@NotBlank
 	@Pattern(regexp = "^[-+]?([1-8]?\\d(\\.\\d+)?|90(\\.0+)?)$")
 	public String getOriginCoordX() {
@@ -56,8 +55,6 @@ public class Segment extends DomainEntity {
 	public String getDestinationCoordY() {
 		return this.destinationCoordY;
 	}
-	//TODO Hacer que la origin date de un segmento sea la destination date del anterior segmento de esa parade
-	//TODO Ver como podemos poner solo la hora, aunque como está actualmente se guarda en la bdd bien (solo la hora y los min)
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")

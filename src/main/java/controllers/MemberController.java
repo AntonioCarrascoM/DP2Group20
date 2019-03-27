@@ -3,7 +3,6 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,16 +87,15 @@ public class MemberController extends AbstractController {
 	}
 
 	//Create POST
-
 	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "create")
-	public ModelAndView save(@Valid final FormObjectMember fom, final BindingResult binding) {
+	public ModelAndView save(final FormObjectMember fom, final BindingResult binding) {
 		ModelAndView result;
 		Member member;
 
 		try {
 			member = this.memberService.reconstruct(fom, binding);
 		} catch (final ValidationException oops) {
-			return this.createEditModelAndView(fom);
+			return this.createEditModelAndView(fom, "member.validation.error");
 		} catch (final Throwable oops) {
 			return this.createEditModelAndView(fom, "member.reconstruct.error");
 		}

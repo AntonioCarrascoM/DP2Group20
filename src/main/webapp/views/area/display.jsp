@@ -30,5 +30,5 @@
 	<br /> 
 	
 	<jstl:out value="${msgPictures}" />:
-	<jstl:out value="${area.pictures}" />
+	<a href="${area.pictures}"><jstl:out value="${area.pictures}" /></a>
 	<br />

@@ -40,6 +40,7 @@
 <spring:message code="sponsor.cancel" var="cancel" />
 <spring:message code="sponsor.phone.pattern1" var="phonePattern1" />
 <spring:message code="sponsor.phone.pattern2" var="phonePattern2" />
+<spring:message code="sponsor.phone.warning" var="phoneWarning" />
 <spring:message code="sponsor.phone.note" var="phoneNote" />
 
 <security:authorize access="isAnonymous() or hasRole('SPONSOR')">
@@ -58,6 +59,9 @@
 	<acme:textbox code="sponsor.phone" path="phone" placeholder="sponsor.phPhone" />
 	<acme:textbox code="sponsor.address" path="address" />
 	
+	<br>
+	<jstl:out value="${phoneWarning}" />
+	<br />
 	<jstl:out value="${phonePattern1}" />
 	<br />
 	<jstl:out value="${phonePattern2}" />

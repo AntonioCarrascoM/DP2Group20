@@ -222,10 +222,12 @@
 	
 			<li><a href="area/chapter/listA.do"><spring:message
 					code="master.page.area.listA" /></a></li>
-				
-					
-					
-					
+		</security:authorize>
+		
+		<security:authorize access="hasRole('BROTHERHOOD')">
+	
+			<li><a href="area/brotherhood/listA.do"><spring:message
+					code="master.page.area.listA" /></a></li>
 		</security:authorize>
 
 	</ul>

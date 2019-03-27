@@ -40,6 +40,7 @@
 <spring:message code="sponsor.cancel" var="cancel" />
 <spring:message code="sponsor.phone.pattern1" var="phonePattern1" />
 <spring:message code="sponsor.phone.pattern2" var="phonePattern2" />
+<spring:message code="sponsor.phone.warning" var="phoneWarning" />
 <spring:message code="sponsor.phone.note" var="phoneNote" />
 <spring:message code="sponsor.terms" var="terms" />
 <spring:message code="sponsor.acceptedTerms" var="acceptedTerms" />
@@ -91,7 +92,8 @@
     <form:errors path="acceptedTerms" cssClass="error" />
     <br/>
     <br/>
-
+	<jstl:out value="${phoneWarning}" />
+	<br>
 	<jstl:out value="${phonePattern1}" />
 	<br />
 	<jstl:out value="${phonePattern2}" />
