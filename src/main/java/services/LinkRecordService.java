@@ -102,4 +102,8 @@ public class LinkRecordService {
 	public Collection<LinkRecord> linkRecordsfromBrotherhood(final int brotherhoodId) {
 		return this.linkRecordRepository.linkRecordsfromBrotherhood(brotherhoodId);
 	}
+
+	public void flush() {
+		this.linkRecordRepository.flush();
+	}
 }

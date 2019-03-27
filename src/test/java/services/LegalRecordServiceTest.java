@@ -28,8 +28,6 @@ public class LegalRecordServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private SponsorService		brotherhoodService;
-	@Autowired
 	private LegalRecordService	legalRecordService;
 
 
@@ -137,7 +135,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 
 			}
 
-			this.brotherhoodService.flush();
+			this.legalRecordService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

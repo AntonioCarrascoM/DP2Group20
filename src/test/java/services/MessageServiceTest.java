@@ -27,9 +27,7 @@ public class MessageServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private BrotherhoodService	brotherhoodService;
-	@Autowired
-	private MessageService		messageService;
+	private MessageService	messageService;
 
 
 	@Test
@@ -71,8 +69,8 @@ public class MessageServiceTest extends AbstractTest {
 			 * Negative: A brotherhood tries to edit a message that not owns.
 			 * Requisite tested: FFunctional requirement - 27.2 An actor who is authenticated as a brotherhood must be able to
 			 * manage his or her message boxes, except for the system boxes.
-			 * Exception expected: IllegalArgumentException. A Brotherhood can not edit messages from another brotherhood.
 			 * Data coverage : From 3 editable attributes we tried to edit 1 attribute (photos) with a user that is not the owner.
+			 * Exception expected: IllegalArgumentException. A Brotherhood can not edit messages from another brotherhood.
 			 */
 			{
 				"brotherhood1", null, "message1", "delete", IllegalArgumentException.class
@@ -115,7 +113,7 @@ public class MessageServiceTest extends AbstractTest {
 
 			}
 
-			this.brotherhoodService.flush();
+			this.messageService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

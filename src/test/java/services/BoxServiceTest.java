@@ -27,11 +27,9 @@ public class BoxServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService	actorService;
 	@Autowired
-	private BoxService			boxService;
-	@Autowired
-	private BrotherhoodService	brotherhoodService;
+	private BoxService		boxService;
 
 
 	@Test
@@ -45,8 +43,8 @@ public class BoxServiceTest extends AbstractTest {
 		 * Positive test: A brotherhood create a box.
 		 * Requisite tested: Functional requirement - 27.2 An actor who is authenticated as a brotherhood must be able to
 		 * manage his or her message boxes, except for the system boxes.
-		 * Data coverage : We created a box with valid parameters.
-		 * Exception expected: None. A Brotherhood can create boxs.
+		 * Data coverage : We created a box with 2 out of 2 valid parameters.
+		 * Exception expected: None. A Brotherhood can create boxes.
 		 */
 
 		};
@@ -73,7 +71,7 @@ public class BoxServiceTest extends AbstractTest {
 			 * Negative: A brotherhood tries to edit a system box.
 			 * Requisite tested: Functional requirement - 27.2 An actor who is authenticated as a brotherhood must be able to
 			 * manage his or her message boxes, except for the system boxes.
-			 * Data coverage : We tried to edit a system box.
+			 * Data coverage : We tried to edit 1 invalid out of 2 system box attributes.
 			 * Exception expected: IllegalArgumentException. A Brotherhood cannot edit system boxes
 			 */
 			{
@@ -124,7 +122,7 @@ public class BoxServiceTest extends AbstractTest {
 
 			}
 
-			this.brotherhoodService.flush();
+			this.boxService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

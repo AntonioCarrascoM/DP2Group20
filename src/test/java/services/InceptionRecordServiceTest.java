@@ -27,8 +27,6 @@ public class InceptionRecordServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private BrotherhoodService		brotherhoodService;
-	@Autowired
 	private InceptionRecordService	inceptionRecordService;
 
 
@@ -164,10 +162,9 @@ public class InceptionRecordServiceTest extends AbstractTest {
 				final InceptionRecord inceptionRecord = this.inceptionRecordService.findOne(this.getEntityId(id));
 
 				this.inceptionRecordService.delete(inceptionRecord);
-
 			}
 
-			this.brotherhoodService.flush();
+			this.inceptionRecordService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

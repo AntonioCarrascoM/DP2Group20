@@ -233,4 +233,8 @@ public class RequestService {
 	public Collection<Request> requestOrderByStatus(final int id) {
 		return this.requestRepository.requestOrderByStatus(id);
 	}
+
+	public void flush() {
+		this.requestRepository.flush();
+	}
 }

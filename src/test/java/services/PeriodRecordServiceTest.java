@@ -27,8 +27,6 @@ public class PeriodRecordServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private SponsorService		brotherhoodService;
-	@Autowired
 	private PeriodRecordService	periodRecordService;
 
 
@@ -162,7 +160,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 
 			}
 
-			this.brotherhoodService.flush();
+			this.periodRecordService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

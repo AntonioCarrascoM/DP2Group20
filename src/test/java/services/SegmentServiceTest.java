@@ -52,7 +52,7 @@ public class SegmentServiceTest extends AbstractTest {
 				"brotherhood1", null, "parade2", "deletePositive", null
 			}
 		/*
-		 * Positive: A Brotherhood delete his path.
+		 * Positive test: A Brotherhood delete his path.
 		 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be
 		 * able to manage the paths of their parades which includes deleting them.
 		 * Data coverage : We tried to delete all their segments
@@ -79,7 +79,7 @@ public class SegmentServiceTest extends AbstractTest {
 				"brotherhood1", null, "parade3", "createNegative", IllegalArgumentException.class
 			},
 			/*
-			 * Negative: A Brotherhood tries to create a segment of a parade that not owns.
+			 * Negative test: A Brotherhood tries to create a segment of a parade that not owns.
 			 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be able to manage the
 			 * paths of their parades which includes creating them.
 			 * Data coverage : A Brotherhood tries to create a segment with 6 out of 6 valid editable attributes.
@@ -89,7 +89,7 @@ public class SegmentServiceTest extends AbstractTest {
 				"brotherhood1", null, "parade2", "editNegative", ConstraintViolationException.class
 			}
 		/*
-		 * Negative: A Brotherhood tries to edit an invalid segment with an invalid x destination coordinate.
+		 * Negative test: A Brotherhood tries to edit an invalid segment with an invalid x destination coordinate.
 		 * Requisite tested: Functional requirement - 3.3 An actor who is authenticated as a brotherhood must be able to manage the
 		 * paths of their parades which includes updating them.
 		 * Data coverage : A Brotherhood tries to edit 1 invalid out of 6 editable attributes.

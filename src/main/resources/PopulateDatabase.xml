@@ -1706,6 +1706,17 @@
 		<property name="member" ref="member3" />
 	</bean>
 	
+	<bean id="enrolment5" class="domain.Enrolment">
+		<property name="moment" value="2017/09/07" />
+		<property name="position" ref="position1" />
+		<property name="brotherhoodToMember" value="true"/>
+		<property name="dropOutMoment">
+			<null/>
+		</property>
+		<property name="brotherhood" ref="brotherhood1" />
+		<property name="member" ref="member3" />
+	</bean>
+	
 	<!-- Finder beans (vacío)-->
 	
 	<!-- Proclaim beans -->

@@ -20,12 +20,16 @@ import domain.SocialProfile;
 @Transactional
 public class SocialProfileTest extends AbstractTest {
 
-	// System under test: Member ------------------------------------------------------
+	// System under test: SocialProfile ------------------------------------------------------
 
 	// Tests ------------------------------------------------------------------
+	// PLEASE READ
+	// The Sentence coverage has been obtained with the tool EclEmma from Eclipse. 
+	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
 	private MemberService			memberService;
+
 	@Autowired
 	private SocialProfileService	socialProfileService;
 
@@ -111,7 +115,7 @@ public class SocialProfileTest extends AbstractTest {
 
 				this.socialProfileService.save(s);
 			}
-			this.memberService.flush();
+			this.socialProfileService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

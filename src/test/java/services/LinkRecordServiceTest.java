@@ -27,8 +27,6 @@ public class LinkRecordServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private SponsorService		brotherhoodService;
-	@Autowired
 	private LinkRecordService	linkRecordService;
 
 
@@ -125,7 +123,7 @@ public class LinkRecordServiceTest extends AbstractTest {
 
 			}
 
-			this.brotherhoodService.flush();
+			this.linkRecordService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

@@ -98,4 +98,8 @@ public class MiscellaneousRecordService {
 	public Collection<MiscellaneousRecord> miscellaneousRecordsfromBrotherhood(final int brotherhoodId) {
 		return this.miscellaneousRecordRepository.miscellaneousRecordsfromBrotherhood(brotherhoodId);
 	}
+
+	public void flush() {
+		this.miscellaneousRecordRepository.flush();
+	}
 }
