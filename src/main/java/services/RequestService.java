@@ -37,6 +37,9 @@ public class RequestService {
 	private MessageService		messageService;
 
 	@Autowired
+	private ParadeService		paradeService;
+
+	@Autowired
 	private Validator			validator;
 
 
@@ -52,7 +55,7 @@ public class RequestService {
 
 		final Member m = (Member) this.actorService.findByPrincipal();
 		request.setMember(m);
-		request.setReason("There is no reason yet / No existe un motivo todavia");
+		request.setReason(null);
 		return request;
 	}
 
@@ -69,8 +72,15 @@ public class RequestService {
 	public Request save(final Request request) {
 		Assert.notNull(request);
 
+		final Authority a = new Authority();
+		a.setAuthority(Authority.MEMBER);
+
 		//Assertion that the user modifying this request has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getId() == request.getMember().getId() || this.actorService.findByPrincipal().getId() == request.getParade().getBrotherhood().getId());
+
+		//Assertion to make sure that a member is able to create a request for a certain parade
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(a))
+			Assert.isTrue(this.paradeService.paradesForRequestByMember(((Member) this.actorService.findByPrincipal()).getId()).contains(request.getParade()));
 
 		//Assertion to make sure that the column and row numbers are less than the maximum allowed.
 		if (request.getCustomColumn() != null && request.getCustomRow() != null)
@@ -155,8 +165,14 @@ public class RequestService {
 			result = this.requestRepository.findOne(r.getId());
 
 			if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authBrotherhood) && result.getStatus() != Status.APPROVED) {
-				result.setStatus(r.getStatus());
-				result.setReason(r.getReason());
+				if (r.getStatus().equals(Status.APPROVED)) {
+					result.setStatus(r.getStatus());
+					result.setReason(null);
+				}
+				if (r.getStatus().equals(Status.REJECTED)) {
+					result.setStatus(r.getStatus());
+					result.setReason(r.getReason());
+				}
 			} else if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authBrotherhood) && result.getStatus() == Status.APPROVED) {
 				result.setCustomColumn(r.getCustomColumn());
 				result.setCustomRow(r.getCustomRow());
@@ -168,7 +184,10 @@ public class RequestService {
 		if (binding.hasErrors())
 			throw new ValidationException();
 
-		if (result.getCustomColumn() != null && result.getCustomRow() != null && (result.getCustomColumn() > result.getParade().getMaxColumn() || result.getCustomRow() > result.getParade().getMaxRow()))
+		if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authBrotherhood))
+			if (result.getStatus().equals(Status.REJECTED) && (result.getReason() == null || "".equals(result.getReason())))
+				throw new NullPointerException();
+		if (result.getStatus().equals(Status.APPROVED) && result.getCustomColumn() != null && result.getCustomRow() != null && (result.getCustomColumn() > result.getParade().getMaxColumn() || result.getCustomRow() > result.getParade().getMaxRow()))
 			throw new RuntimeException();
 
 		//Assertion that the user modifying this request has the correct privilege.
@@ -208,5 +227,10 @@ public class RequestService {
 	//Returns a request for a certain column number, row number and parade.
 	public Collection<Request> requestForRowColumnAndParade(final int row, final int column, final int pid) {
 		return this.requestRepository.requestForRowColumnAndParade(row, column, pid);
+	}
+
+	//List of the requests for a certain parade ordered by status.
+	public Collection<Request> requestOrderByStatus(final int id) {
+		return this.requestRepository.requestOrderByStatus(id);
 	}
 }

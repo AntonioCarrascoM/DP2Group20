@@ -267,11 +267,20 @@ public class BrotherhoodService {
 
 	//The brotherhood with the largest history.
 	public Collection<Brotherhood> largestBrotherhoodsByHistory() {
-		return this.brotherhoodRepository.largestBrotherhoodsByHistory();
+		final ArrayList<Brotherhood> brotherhoods = (ArrayList<Brotherhood>) this.brotherhoodRepository.largestBrotherhoodsByHistory();
+		if (brotherhoods.size() >= 1) {
+			final ArrayList<Brotherhood> top = new ArrayList<Brotherhood>(brotherhoods.subList(0, 1));
+			return top;
+		} else
+			return brotherhoods;
 	}
 
 	//The brotherhoods whose history is larger than the average.
 	public Collection<Brotherhood> largestBrotherhoodsByHistoryThanAvg() {
 		return this.brotherhoodRepository.largestBrotherhoodsByHistoryThanAvg();
+	}
+
+	public void flush() {
+		this.brotherhoodRepository.flush();
 	}
 }

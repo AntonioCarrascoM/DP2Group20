@@ -32,23 +32,12 @@ import domain.Proclaim;
 @Transactional
 public class ProclaimServiceTest extends AbstractTest {
 
-	// System under test ------------------------------------------------------
+	// System under test: Proclaim ------------------------------------------------------
 
 	// Tests ------------------------------------------------------------------
-
-	// The following are fictitious test cases that are intended to check that 
-	// JUnit works well in this project.  Just righ-click this class and run 
-	// it using JUnit.
-
-	//	@Test
-	//	public void SamplePositiveTest() {
-	//		Assert.isTrue(true);
-	//	}
-	//
-	//	@Test(expected = IllegalArgumentException.class)
-	//	public void SampleNegativeTest() {
-	//		Assert.isTrue(false);
-	//	}
+	// PLEASE READ
+	// The Sentence coverage has been obtained with the tool EclEmma from Eclipse. 
+	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
 	private ProclaimService	proclaimService;
@@ -59,12 +48,19 @@ public class ProclaimServiceTest extends AbstractTest {
 	@Test
 	public void ProclaimPositiveTest() {
 		final Object testingData[][] = {
+			//Total sentence coverage : Coverage 91.7% | Covered Instructions 66 | Missed Instructions 6 | Total Instructions 72
 
 			{
-				"chapter1", "chapter1", null, "create", null
-			}, //A chapter creates a proclaim
+				"chapter1", null, null, "create", null
+			},
+		/*
+		 * Positive test: A chapter creates his proclaim.
+		 * Requisite tested: Functional requirement - 17.1 An actor who is authenticated as a chapter must be
+		 * able to publish a proclaim.
+		 * Data coverage : We created a proclaim with a past publicationMoment and a description.
+		 * Exception expected: None. A Chapter can create/publish proclaims.
+		 */
 
-		//A chapter can't edit a proclaim that doesn't belong to him
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -86,13 +82,10 @@ public class ProclaimServiceTest extends AbstractTest {
 
 			if (operation.equals("create")) {
 				Proclaim proclaim;
-				Chapter chapter;
 
 				proclaim = this.proclaimService.create();
-				chapter = (Chapter) this.actorService.findOne(this.getEntityId(ch));
 				proclaim.setDescription("test");
 				proclaim.setPublicationMoment(new Date(System.currentTimeMillis() - 1000));
-				proclaim.setChapter(chapter);
 				this.proclaimService.save(proclaim);
 
 			}
@@ -109,17 +102,37 @@ public class ProclaimServiceTest extends AbstractTest {
 	@Test
 	public void ProclaimNegativeTest() {
 		final Object testingData[][] = {
+			//Total sentence coverage : Coverage 94.7% | Covered Instructions 108 | Missed Instructions 6 | Total Instructions 114
 
 			{
 				"chapter1", null, null, "create", AssertionError.class
-			}, //Proclaim can't be created without chapter
+			},
+			/*
+			 * Negative: It is tried to create a proclaim without chapter.
+			 * Requisite tested: Functional requirement - 17.1 An actor who is authenticated as a chapter must be
+			 * able to publish a proclaim.
+			 * Data coverage : We created a proclaim with 2 out of 2 valid attributes.
+			 * Exception expected: AssertionError. A proclaim must be created by an existing chapter.
+			 */
 			{
 
 				"chapter2", "chapter1", null, "create", IllegalArgumentException.class
-			}, //The creator of a proclaim must be the principal
+			}, /*
+				 * Negative: It is tried to create a proclaim by a non principal chapter
+				 * Requisite tested: Functional requirement - 17.1 An actor who is authenticated as a chapter must be
+				 * able to publish a proclaim.
+				 * Data coverage : We created a proclaim with 2 out of 2 valid attributes.
+				 * Exception expected: IllegalArgumentException. A proclaim must be created by a chapter principal
+				 */
 			{
 				"chapter1", "chapter1", null, "createPastDate", ConstraintViolationException.class
-			}, //Date must be in the past
+			}, /*
+				 * Negative: It is tried to create a proclaim with a future publicationMoment
+				 * Requisite tested: Functional requirement - 17.1 An actor who is authenticated as a chapter must be
+				 * able to publish a proclaim.
+				 * Data coverage : We created a proclaim with a 1 invalid out of 2 editable attributes .
+				 * Exception expected: ConstraintViolationException. A proclaim must be created with a past publicationMoment.
+				 */
 
 		};
 

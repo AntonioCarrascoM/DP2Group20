@@ -36,11 +36,17 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void RequestPositiveTest() {
 		final Object testingData[][] = {
+			//Total sentence coverage : Coverage 91.7% | Covered Instructions 66 | Missed Instructions 6 | Total Instructions 72
 
 			{
 				"member1", null, "parade3", "create", null
 			}
-		//Positive test: A member tries to create a request
+		/*
+		 * Positive test: A member creates his request.
+		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
+		 * Data coverage : We created a request by providing 4 out of 4 editable attributes.
+		 * Exception expected: None. A Member can create requests.
+		 */
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -57,12 +63,17 @@ public class RequestServiceTest extends AbstractTest {
 	@Test
 	public void RequestNegativeTest() {
 		final Object testingData[][] = {
+			//Total sentence coverage : Coverage 92.1% | Covered Instructions 70 | Missed Instructions 6 | Total Instructions 76
 
 			{
 				"member1", null, "parade3", "create2", ConstraintViolationException.class
 			}
-		//Negative test: A member tries to create an invalid request
-		//Exception expected: ConstraintViolationException. CustomRow cannot be negative.
+		/*
+		 * Negative test: Creating a request with invalid customRow.
+		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
+		 * Data coverage : We created a request with 1 invalid out of 4 attribute.
+		 * Exception expected: ConstraintViolationException. CustomRow cannot be less than zero.
+		 */
 		};
 
 		for (int i = 0; i < testingData.length; i++)

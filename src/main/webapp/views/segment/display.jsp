@@ -22,10 +22,8 @@
 
 <%-- Stored message variables --%>
 
-<spring:message code="segment.originCoordinatesX" var="originCoordinatesX" />
-<spring:message code="segment.originCoordinatesY" var="originCoordinatesY" />
-<spring:message code="segment.destinationCoordinatesX" var="destinationCoordinatesX" />
-<spring:message code="segment.destinationCoordinatesY" var="destinationCoordinatesY" />
+<spring:message code="segment.originCoordinates" var="originCoordinates" />
+<spring:message code="segment.destinationCoordinates" var="destinationCoordinates" />
 <spring:message code="segment.originDate" var="originDate" />
 <spring:message code="segment.destinationDate" var="destinationDate" />
 <spring:message code="segment.formatDate" var="formatDate" />
@@ -35,21 +33,18 @@
 <security:authorize access="hasRole('BROTHERHOOD')">
 <%-- For the selected position, display the following information: --%>
 
-	<jstl:out value="${originCoordinatesX}" />:
-	<jstl:out value="${segment.originCoordX}" />
+	<jstl:out value="${originCoordinates}" />:
+	(<jstl:out value="${segment.originCoordX}" />,
+	<jstl:out value="${segment.originCoordY}" />)
 	<br />
 	
-	<jstl:out value="${originCoordinatesY}" />:
-	<jstl:out value="${segment.originCoordY}" />
-	<br />
 	
-	<jstl:out value="${destinationCoordinatesX}" />:
-	<jstl:out value="${segment.destinationCoordX}" />
-	<br />
 	
-	<jstl:out value="${destinationCoordinatesY}" />:
-	<jstl:out value="${segment.destinationCoordY}" />
+	<jstl:out value="${destinationCoordinates}" />:
+	(<jstl:out value="${segment.destinationCoordX}" />,
+	<jstl:out value="${segment.destinationCoordY}" />)
 	<br />
+
 	
 	<jstl:out value="${originDate}" />:
 	<fmt:formatDate value="${segment.originDate}" pattern="${formatDate}"/>

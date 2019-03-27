@@ -117,7 +117,7 @@ public class ParadeService {
 		final Parade saved = this.paradeRepository.save(p);
 
 		//Sending notification to members
-		if (saved.getFinalMode() == true)
+		if (saved.getFinalMode() == true && saved.getParadeStatus().equals(ParadeStatus.ACCEPTED))
 			this.messageService.paradePublished(saved);
 
 		return saved;
@@ -214,11 +214,12 @@ public class ParadeService {
 		} else if (this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authChapter)) {
 			result = this.paradeRepository.findOne(p.getId());
 
-			if (result.getParadeStatus().equals(ParadeStatus.SUBMITTED))
+			if (result.getParadeStatus().equals(ParadeStatus.SUBMITTED)) {
 				result.setParadeStatus(p.getParadeStatus());
-			if (result.getParadeStatus().equals(ParadeStatus.REJECTED))
+				result.setRejectionReason(null);
+			}
+			if (p.getParadeStatus().equals(ParadeStatus.REJECTED))
 				result.setRejectionReason(p.getRejectionReason());
-
 		}
 
 		this.validator.validate(result, binding);
@@ -259,7 +260,7 @@ public class ParadeService {
 		nueva.setMaxRow(original.getMaxRow());
 		nueva.setMaxColumn(original.getMaxColumn());
 		nueva.setMoment(original.getMoment());
-		nueva.setParadeStatus(original.getParadeStatus());
+		nueva.setParadeStatus(null);
 		nueva.setRejectionReason(null);
 		nueva.setFinalMode(false);
 
@@ -371,6 +372,15 @@ public class ParadeService {
 	//Listing of the parades with finalMode = true
 	public Collection<Parade> getFinalAcceptedParades() {
 		return this.paradeRepository.getFinalAcceptedParades();
+	}
+
+	//Listing of the parades group by status
+	public Collection<Parade> getParadesByStatus(final int id) {
+		return this.paradeRepository.getParadesByStatus(id);
+	}
+
+	public void flush() {
+		this.paradeRepository.flush();
 	}
 
 }

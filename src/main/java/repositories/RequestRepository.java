@@ -27,4 +27,8 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
 	//Returns a request for a certain column number, row number and parade.
 	@Query("select r from Request r where r.customRow=?1 and r.customColumn=?2 and r.status='1' and r.parade.id=?3")
 	Collection<Request> requestForRowColumnAndParade(int row, int column, int pid);
+
+	//List of the requests for a certain parade ordered by status.
+	@Query("select r from Request r where r.parade.id=?1 order by r.status")
+	Collection<Request> requestOrderByStatus(int id);
 }

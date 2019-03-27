@@ -47,9 +47,8 @@ public class SponsorshipServiceTest extends AbstractTest {
 			 * Positive test: A sponsor edits his sponsorship.
 			 * Requisite tested: Functional requirement - 16.1 An actor who is autenticated as a sponsor must be
 			 * able to edit his sponsorship.
-			 * Exception expected: None. A Sponsor can edit his sponsorships.
 			 * Data coverage : From 9 editable atributes we tried to edit 1 atribute (banner) with valid data.
-			 * Exception expected: None. A sponsor can edit his data.
+			 * Exception expected: None. A Sponsor can edit his sponsorships.
 			 */
 			, {
 				"sponsor1", null, "parade3", "create", null
@@ -83,9 +82,9 @@ public class SponsorshipServiceTest extends AbstractTest {
 			},
 			/*
 			 * Negative: A sponsor tries to edit a sponsorship that not owns.
-			 * Requisite tested: Functional requirement - 16.1 An actor who is autenticated as a sponsor must be
+			 * Requisite tested: Functional requirement - 16.1 An actor who is authenticated as a sponsor must be
 			 * able to edit his sponsorship.
-			 * Data coverage : From 9 editable atributes we tried to edit 1 atribute (banner) with a user that is not the owner.
+			 * Data coverage : From 9 editable attributes we tried to edit 1 attribute (banner).
 			 * Exception expected: IllegalArgumentException. A Sponsor can not edit sponsorships from another sponsor.
 			 */
 			{
@@ -93,11 +92,10 @@ public class SponsorshipServiceTest extends AbstractTest {
 			}
 		/*
 		 * Negative: A sponsor tries to create an invalid sponsorship
-		 * Requisite tested: Functional requirement - 16.1 An actor who is autenticated as a sponsor must be
+		 * Requisite tested: Functional requirement - 16.1 An actor who is authenticated as a sponsor must be
 		 * able to create sponsorships
-		 * Data coverage : We tried to create a sponsorship with an accepted parade (parade3) a valid VISA credit card
-		 * and a invalid banner.
-		 * Exception expected: IllegalArgumentException. The Sponsorship Banner must be a valid url.
+		 * Data coverage : We tried to create a sponsorship providing 1 invalid out of 9 editable attributes
+		 * Exception expected: ConstraintViolationException. The Sponsorship Banner must be a valid url.
 		 */
 		};
 

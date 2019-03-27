@@ -2090,7 +2090,7 @@
 		<property name="maxColumn" value="7"/>
 		<property name="moment" value="25/04/2020 10:20" />
 		<property name="finalMode" value="true" />
-		<property name="paradeStatus" value="SUBMITTED" /> 
+		<property name="paradeStatus" value="ACCEPTED" /> 
 		<property name="rejectionReason"><null/></property>
  		<property name="brotherhood" ref="brotherhood1" />
 		<property name="floats">
@@ -2126,8 +2126,6 @@
 		</property>
 		<property name="requests">
 			<list>
-				<ref bean="request2" />
-				<ref bean="request3" />
 			</list>
 		</property>
 	</bean>
@@ -2149,6 +2147,8 @@
 		</property>
 		<property name="requests">
 			<list>
+				<ref bean="request2" />
+				<ref bean="request3" />
 			</list>
 		</property>
 	</bean>
@@ -2190,9 +2190,9 @@
 		<property name="status" value="APPROVED" />
 		<property name="customRow" value="2" />
 		<property name="customColumn" value="3" />
-		<property name="reason" value="Don't have a reason yet." />
+		<property name="reason"><null/></property>
 		<property name="member" ref="member2" />
-		<property name="parade" ref="parade2" />
+		<property name="parade" ref="parade3" />
 	</bean>
 	
 	<bean id="request3" class="domain.Request">
@@ -2201,14 +2201,14 @@
 		<property name="customColumn"><null/></property>
 		<property name="reason" value="You don't meet the requirements" />
 		<property name="member" ref="member2" />
-		<property name="parade" ref="parade2" />
+		<property name="parade" ref="parade3" />
 	</bean>
 	
 	<bean id="request4" class="domain.Request">
 		<property name="status" value="APPROVED" />
 		<property name="customRow" value="1" />
 		<property name="customColumn" value="0" />
-		<property name="reason" value="You meet the requirements" />
+		<property name="reason"><null/></property>
 		<property name="member" ref="member1" />
 		<property name="parade" ref="parade1" />
 	</bean>
@@ -2217,7 +2217,7 @@
 		<property name="status" value="APPROVED" />
 		<property name="customRow" value="1" />
 		<property name="customColumn" value="1" />
-		<property name="reason" value="Hello bro, good morning" />
+		<property name="reason"><null/></property>
 		<property name="member" ref="member2" />
 		<property name="parade" ref="parade1" />
 	</bean>
