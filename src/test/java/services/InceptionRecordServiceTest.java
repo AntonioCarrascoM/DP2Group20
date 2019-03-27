@@ -27,7 +27,7 @@ public class InceptionRecordServiceTest extends AbstractTest {
 	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
 	@Autowired
-	private SponsorService			brotherhoodService;
+	private BrotherhoodService		brotherhoodService;
 	@Autowired
 	private InceptionRecordService	inceptionRecordService;
 
