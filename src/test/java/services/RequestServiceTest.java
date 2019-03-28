@@ -2,7 +2,6 @@
 package services;
 
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +20,13 @@ import domain.Status;
 @Transactional
 public class RequestServiceTest extends AbstractTest {
 
-	// System under test: Member ------------------------------------------------------
+	// System under test: Request ------------------------------------------------------
 
 	// Tests ------------------------------------------------------------------
+	// PLEASE READ
+	// The Sentence coverage has been obtained with the tool EclEmma from Eclipse. 
+	// Since having one @Test for every case is not optimal we divided the user cases in two cases. Positives and Negatives.
 
-	@Autowired
-	private MemberService	memberService;
 	@Autowired
 	private RequestService	requestService;
 	@Autowired
@@ -39,11 +39,12 @@ public class RequestServiceTest extends AbstractTest {
 			//Total sentence coverage : Coverage 91.7% | Covered Instructions 66 | Missed Instructions 6 | Total Instructions 72
 
 			{
-				"member1", null, "parade3", "create", null
+				"member3", null, "parade1", "create", null
 			}
 		/*
 		 * Positive test: A member creates his request.
-		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
+		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests
+		 * to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
 		 * Data coverage : We created a request by providing 4 out of 4 editable attributes.
 		 * Exception expected: None. A Member can create requests.
 		 */
@@ -66,13 +67,13 @@ public class RequestServiceTest extends AbstractTest {
 			//Total sentence coverage : Coverage 92.1% | Covered Instructions 70 | Missed Instructions 6 | Total Instructions 76
 
 			{
-				"member1", null, "parade3", "create2", ConstraintViolationException.class
+				"member1", null, "parade3", "create2", IllegalArgumentException.class
 			}
 		/*
-		 * Negative test: Creating a request with invalid customRow.
+		 * Negative test: Creating a request to a parade with existing rejected request by the same member
 		 * Requisite tested: Functional requirement - 11.1 An actor who is authenticated as a member must be able to manage his or her requests to march on a procession, which includes listing them by status, showing, creating them, and deleting them.
-		 * Data coverage : We created a request with 1 invalid out of 4 attribute.
-		 * Exception expected: ConstraintViolationException. CustomRow cannot be less than zero.
+		 * Data coverage : We created a request with 4 valid out of 4 attributes.
+		 * Exception expected: IllegalArgumentException. A member cannot request to a parade again if he has an rejected one to the same parade.
 		 */
 		};
 
@@ -107,14 +108,14 @@ public class RequestServiceTest extends AbstractTest {
 				final Request s = this.requestService.create();
 
 				s.setStatus(Status.APPROVED);
-				s.setCustomRow(-1);
+				s.setCustomRow(1);
 				s.setCustomColumn(3);
 				s.setReason("This is a reason");
 				s.setParade(this.paradeService.findOne(this.getEntityId(id)));
 
 				this.requestService.save(s);
 			}
-			this.memberService.flush();
+			this.requestService.flush();
 			super.unauthenticate();
 		} catch (final Throwable oops) {
 			caught = oops.getClass();

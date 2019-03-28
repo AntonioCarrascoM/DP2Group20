@@ -117,4 +117,8 @@ public class InceptionRecordService {
 	public InceptionRecord inceptionRecordfromBrotherhood(final int brotherhoodId) {
 		return this.inceptionRecordRepository.inceptionRecordfromBrotherhood(brotherhoodId);
 	}
+
+	public void flush() {
+		this.inceptionRecordRepository.flush();
+	}
 }

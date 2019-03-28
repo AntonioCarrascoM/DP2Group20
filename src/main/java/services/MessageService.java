@@ -393,4 +393,8 @@ public class MessageService {
 	public Collection<Message> sentMessagesForActor(final int id) {
 		return this.messageRepository.sentMessagesForActor(id);
 	}
+
+	public void flush() {
+		this.messageRepository.flush();
+	}
 }

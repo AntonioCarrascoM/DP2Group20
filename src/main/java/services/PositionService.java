@@ -54,14 +54,12 @@ public class PositionService {
 
 		final Authority authAdmin = new Authority();
 		authAdmin.setAuthority(Authority.ADMIN);
+
 		//Assertion that the user modifying this position has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authAdmin));
 
 		final Position saved = this.positionRepository.save(position);
-		//		this.actorService.checkSpam(saved.getSystemName());
-		//		this.actorService.checkSpam(saved.getBanner());
-		//		this.actorService.checkSpam(saved.getWelcomeEN());
-		//		this.actorService.checkSpam(saved.getWelcomeES());
+
 		return saved;
 	}
 	public void delete(final Position position) {
@@ -69,8 +67,13 @@ public class PositionService {
 
 		final Authority authAdmin = new Authority();
 		authAdmin.setAuthority(Authority.ADMIN);
+
 		//Assertion that the user modifying this sponsorship has the correct privilege.
 		Assert.isTrue(this.actorService.findByPrincipal().getUserAccount().getAuthorities().contains(authAdmin));
+
+		//Assertion that the position is not used
+		final Collection<Position> usedPositions = this.getUsedPositions();
+		Assert.isTrue(!usedPositions.contains(position));
 
 		final Collection<Enrolment> enrolments = this.enrolmentService.getEnrolmentsFromAPosition(position.getId());
 		if (!enrolments.isEmpty())
@@ -97,6 +100,10 @@ public class PositionService {
 	// A histogram of positions.
 	public Collection<Integer> histogramOfPositions2() {
 		return this.positionRepository.histogramOfPositions2();
+	}
+
+	public void flush() {
+		this.positionRepository.flush();
 	}
 
 }

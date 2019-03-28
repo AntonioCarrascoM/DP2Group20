@@ -103,4 +103,8 @@ public class LegalRecordService {
 	public Collection<LegalRecord> legalRecordsfromBrotherhood(final int brotherhoodId) {
 		return this.legalRecordRepository.legalRecordsfromBrotherhood(brotherhoodId);
 	}
+
+	public void flush() {
+		this.legalRecordRepository.flush();
+	}
 }

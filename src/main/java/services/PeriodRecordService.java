@@ -121,4 +121,8 @@ public class PeriodRecordService {
 	public Collection<PeriodRecord> periodRecordsfromBrotherhood(final int brotherhoodId) {
 		return this.periodRecordRepository.periodRecordsfromBrotherhood(brotherhoodId);
 	}
+
+	public void flush() {
+		this.periodRecordRepository.flush();
+	}
 }

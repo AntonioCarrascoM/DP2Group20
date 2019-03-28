@@ -205,4 +205,8 @@ public class BoxService {
 	public Collection<Box> getBoxesByMessageAndActor(final int actorId, final int messageId) {
 		return this.boxRepository.getBoxesByMessageAndActor(actorId, messageId);
 	}
+
+	public void flush() {
+		this.boxRepository.flush();
+	}
 }
