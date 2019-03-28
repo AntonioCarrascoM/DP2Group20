@@ -225,4 +225,7 @@ public class EnrolmentService {
 		return this.enrolmentRepository.histogramOfPositions();
 	}
 
+	public void flush() {
+		this.enrolmentRepository.flush();
+	}
 }

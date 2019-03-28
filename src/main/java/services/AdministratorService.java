@@ -181,4 +181,8 @@ public class AdministratorService {
 	public Collection<Administrator> spammerAdministrators() {
 		return this.administratorRepository.spammerAdministrators();
 	}
+
+	public void flush() {
+		this.administratorRepository.flush();
+	}
 }
